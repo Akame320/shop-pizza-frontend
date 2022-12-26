@@ -6,7 +6,7 @@
     <main class="layout-user-main">
       <UIInputText
           v-model="v$.form.email.$model"
-          :error="v$.form.email.$errors[0]?.$message"
+          :error="v$.form.email.$errors[0]?.$message || error"
           name="email"
       />
       <UIInputText
@@ -49,22 +49,25 @@ export default {
       form: {
         email: '',
         password: ''
-      }
+      },
+      error: ''
     }
   },
   computed: {
     ...mapGetters(['IS_ADMIN'])
   },
   methods: {
-    submit() {
+    async submit() {
       const email = this.form.email
       const password = this.form.password
 
       this.$store.dispatch('LOGIN', { email, password }).then(() => {
         if (this.IS_ADMIN) this.$router.push('/admin/panel')
         else this.$router.push('/')
+      }).catch(e => {
+        this.error = e.response.data.message
       })
-    }
+    },
   },
   validations() {
     return {
@@ -78,6 +81,11 @@ export default {
           minLength: helpers.withMessage('Минимальная длина 6 символов ', minLength(6)),
         }
       }
+    }
+  },
+  watch: {
+    'form.email'() {
+      this.error = ''
     }
   }
 }

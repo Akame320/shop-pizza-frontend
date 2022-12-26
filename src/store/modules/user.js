@@ -43,39 +43,35 @@ const mutations = {
 
 const actions = {
     REGISTRATION: async (context, payload) => {
-        try {
-            const { email, password, role } = payload
-            const { data } = await api.registration(email, password, role)
-            const { token, user } = data
-            context.commit('SET_TOKEN', { token })
-            context.commit('SET_USER', { user })
-            await context.dispatch('SAVE_BASKET_SERVER')
-        } catch (e) {
-            console.log(e)
-        }
+        const { email, password, role } = payload
+        const res = await api.registration(email, password, role)
+        const { data } = res
+        const { token, user } = data
+        context.commit('SET_TOKEN', { token })
+        context.commit('SET_USER', { user })
+        await context.dispatch('SAVE_BASKET_SERVER')
+        return res
     },
+
     LOGIN: async (context, payload) => {
-        try {
-            const { email, password } = payload
-            const { data } = await api.login(email, password)
-            const { token, user } = data
-            context.commit('SET_TOKEN', { token })
-            context.commit('SET_USER', { user })
-            await context.dispatch('SAVE_BASKET_SERVER')
-        } catch (e) {
-            console.log(e)
-        }
+        const { email, password } = payload
+        const res = await api.login(email, password)
+        const { data } = res
+        const { token, user } = data
+        context.commit('SET_TOKEN', { token })
+        context.commit('SET_USER', { user })
+        await context.dispatch('SAVE_BASKET_SERVER')
+        return res
     },
 
     CHECK_TOKEN: async (context) => {
         const { data } = await api.check()
-        console.log(data)
         context.commit('SET_USER', { user: data })
     },
 
     LOGOUT: (context) => {
         context.commit('REMOVE_USER')
-    }
+    },
 }
 
 export default {

@@ -704,3 +704,18 @@
 .basket-null-action {
   width: 18rem;
 }
+
+.layout-profile {
+  width: 100%;
+  min-height: 100vh;
+  height: auto;
+
+  background-color: $bg-color;
+  position: relative;
+
+  &__logo {
+    position: absolute;
+    top: 4rem;
+    left: 4rem;
+  }
+}

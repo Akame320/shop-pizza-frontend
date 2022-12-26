@@ -45,8 +45,6 @@ const routes = [
         name: 'admin-panel',
         component: Panel,
         beforeEnter: (to, from, next) => {
-            console.log(store.getters.HAS_AUTH)
-            console.log(store.getters.IS_ADMIN)
             if (store.getters.HAS_AUTH && store.getters.IS_ADMIN) {
                 next()
             } else {
@@ -60,5 +58,7 @@ const routes = [
         component: NotFound,
     },
 ]
+
+
 
 export default routes

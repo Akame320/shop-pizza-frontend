@@ -12,10 +12,5 @@ export default {
   computed: {
     ...mapGetters(['HAS_AUTH'])
   },
-  created() {
-    if (this.HAS_AUTH) {
-      this.$store.dispatch('CHECK_TOKEN')
-    }
-  }
 }
 </script>
