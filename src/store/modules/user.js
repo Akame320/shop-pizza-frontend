@@ -1,5 +1,6 @@
 import api from '../../api/index'
 import { roles } from "../../const/user";
+import Vue from "vue";
 
 const state = {
     token: localStorage.getItem('token') || '',
@@ -31,6 +32,7 @@ const mutations = {
     SET_TOKEN: (state, payload) => {
         const { token } = payload
         localStorage.setItem('token', token)
+        Vue.prototype.$http.defaults.headers.common['Authorization'] = `Bearer ${token}`
         state.token = token
     },
 
@@ -65,6 +67,7 @@ const actions = {
     },
 
     CHECK_TOKEN: async (context) => {
+        console.log('и тут')
         const { data } = await api.check()
         context.commit('SET_USER', { user: data })
     },
