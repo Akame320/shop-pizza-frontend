@@ -110,8 +110,10 @@ const mutations = {
 
 const actions = {
     GET_PRODUCTS: async (context) => {
-        const { data } = await api.getProducts()
+        const res = await api.getProducts()
+        const { data } = res
         context.commit('SET_PRODUCTS', data);
+        return res
     },
 
     GET_SIZES: async (context) => {

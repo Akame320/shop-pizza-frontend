@@ -14,7 +14,7 @@
       <li v-for="opt of optionsList"
           :key="opt.value"
           @click="$emit('input', opt.value)"
-          class="sort-select__option">
+          class="sort-select__option" >
         {{ opt.title }}
       </li>
     </ul>

@@ -51,6 +51,7 @@
             <!-- Logout -->
             <template v-else>
               <button @click="logout" class="button-main --th-outline-grey">Выйти</button>
+              <button v-if="IS_ADMIN" @click="$router.push('/admin/panel')" class="button-main">Админ Панель</button>
             </template>
           </aside>
         </header>
@@ -82,7 +83,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['BASKET_SUM', 'BASKET_COUNT', 'HAS_AUTH']),
+    ...mapGetters(['BASKET_SUM', 'BASKET_COUNT', 'HAS_AUTH', 'IS_ADMIN']),
     basketSum() {
       return this.BASKET_SUM
     },

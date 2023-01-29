@@ -57,11 +57,12 @@
     justify-content: center;
 
     transition: all 0.1s linear;
+    border-radius: 0.5rem;
 
     opacity: 0.5;
     cursor: default;
 
-    &.--has-size:hover {
+    &.--has-item:hover {
       background-color: rgba(255, 255, 255, 0.75);
     }
 
@@ -69,10 +70,15 @@
       background: #FFFFFF;
       box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.04);
       border-radius: 5px;
+      opacity: 1;
     }
 
-    &.--has-size {
+    &.--has-item {
       opacity: 1;
+      cursor: pointer;
+    }
+
+    &.--st-clicked {
       cursor: pointer;
     }
   }

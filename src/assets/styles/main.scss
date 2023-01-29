@@ -1,8 +1,10 @@
+@use 'sass:math';
+
 @import "./global/base";
 @import "./global/variables";
 
 @import "./components/inputs/main";
-@import "./components/products/products-cards";
+@import "./components/products/main";
 
 @import "./pages/products";
 
@@ -717,5 +719,261 @@
     position: absolute;
     top: 4rem;
     left: 4rem;
+  }
+
+  &__inner {
+    padding: 5rem 5rem 5rem 0;
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 20% 80%;
+    grid-gap: 2rem;
+    align-items: stretch;
+  }
+
+  &__content {
+    background-color: white;
+    border-radius: 2.5rem;
+    padding: 4rem;
+  }
+
+  &__aside {
+    padding: 9.5rem 0 4rem 4rem;
+  }
+}
+
+.layout-profile-nav {
+  &__list {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-gap: 1rem;
+  }
+
+  &__item {
+    list-style-type: none;
+  }
+
+  &__link {
+    height: 5.5rem;
+    font-size: 2.5rem;
+    line-height: 2.9rem;
+    font-weight: 700;
+    font-family: $font-base;
+    color: white;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    margin-left: -4rem;
+    padding-left: 4rem;
+    transition: all 0.05s linear;
+
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.7);
+      color: $text-color-dark;
+    }
+  }
+}
+
+.layout-profile {
+  &__title {
+    font-size: 3.1rem;
+    line-height: 3.5rem;
+    font-weight: 700;
+    color: $bg-color;
+    font-family: $font-secondary;
+  }
+
+  &__top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
+
+.avatar-block {
+  font-family: $font-base;
+
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+
+  &__main {
+    margin-right: 2rem;
+
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    flex-direction: column;
+  }
+
+  &__aside {
+    width: 6rem;
+    height: 6rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 2rem;
+    line-height: 2.4rem;
+    font-weight: 700;
+    font-family: $font-secondary;
+    color: white;
+    background-color: #D9D9D9;
+  }
+
+  &__name {
+    font-size: 2rem;
+    line-height: 2.4rem;
+    font-weight: 700;
+    color: $text-color-black;
+    text-align: right;
+  }
+
+  &__role {
+    font-size: 1.6rem;
+    line-height: 2.4rem;
+    font-weight: 400;
+    color: $text-color-black;
+    text-align: right;
+  }
+}
+
+.admin-products {
+  &__settings {
+    margin-top: 2.5rem;
+  }
+
+  &__products-list {
+    margin-top: 4rem;
+
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-gap: 3.5rem;
+  }
+}
+
+.admin-products-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+
+  &__item {
+    list-style-type: none;
+
+    &:not(:last-child) {
+      margin-right: 2rem;
+    }
+  }
+}
+
+.admin-products-btn-add {
+  width: 17.6rem;
+}
+
+.u-text-uppercase {
+  text-transform: uppercase;
+}
+
+.uploader-block {
+  border: 2px dashed $accept-color;
+  border-radius: 1rem;
+  min-height: 15rem;
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  position: relative;
+
+  &__input {
+    opacity: 0;
+    visibility: hidden;
+    position: absolute;
+  }
+
+  &.--not-dragged {
+    border: none;
+  }
+}
+
+.multi-select {
+  position: relative;
+
+  &__title {
+    font-size: 1.4rem;
+    line-height: 1.8rem;
+  }
+
+  &__value {
+    background-color: white;
+    padding: 0.8rem 2rem;
+    border-radius: 1rem;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+
+    &.--st-opened {
+      border-radius: 1rem 1rem 0 0;
+    }
+  }
+
+  &__arrow {
+    width: 1.2rem;
+    height: 1.2rem;
+
+    svg {
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  &__list {
+    padding: 1rem 0;
+    position: absolute;
+    top: auto;
+    bottom: 0;
+    transform: translateY(100%);
+    left: 0;
+    right: 0;
+    z-index: 1;
+
+    background-color: white;
+    box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.06);
+    border-radius: 0 0 1rem 1rem;
+  }
+
+  &__option {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 2rem;
+
+    transition: all 0.05s linear;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+
+    &:hover {
+      background-color: #FFF7F3;
+      color: $accept-color;
+    }
+
+    &.--st-active {
+      background-color: #FFF7F3;
+      color: $accept-color;
+    }
+  }
+
+  &__status {
+    width: 1.6rem;
+    height: 1.6rem;
+    border-radius: 50%;
+
+    svg {
+      stroke: $accept-color
+    }
   }
 }

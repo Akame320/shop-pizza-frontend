@@ -23,6 +23,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  font-family: $font-secondary;
 
   &:hover {
     color: #FE5F1E;
@@ -54,6 +55,20 @@
     &:active {
       color: #FE5F1E;
       border: 2px solid #FE5F1E;
+    }
+  }
+
+  &.--th-black {
+    background-color: black;
+    color: white;
+    border: none;
+
+    &:hover {
+      opacity: 0.75;
+    }
+
+    &:active {
+      opacity: 0.5;
     }
   }
 }
