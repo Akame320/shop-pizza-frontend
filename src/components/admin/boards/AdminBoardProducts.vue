@@ -26,14 +26,24 @@
     </div>
     <ul class="admin-products__products-list">
       <AdminProductCard
+          v-if="hasCreatedPizza"
+          :default-edit="true"
+          :all-sizes="sizesOptions"
+          :all-dough="doughsOptions"
+          :all-categories="categoriesOptions"
+          :product="createdProduct"
+          @update="createPizza"
+      />
+
+      <AdminProductCard
           v-for="product of products"
           :key="product.title"
           :product="product"
-          :allSizes="sizesOptions"
-          :allDough="doughsOptions"
-          :allCategories="categoriesOptions"
+          :all-sizes="sizesOptions"
+          :all-dough="doughsOptions"
+          :all-categories="categoriesOptions"
+          @update="updatePizza"
       />
-      <AdminProductCard v-if="hasCreatedPizza" />
     </ul>
   </div>
 </template>
@@ -81,24 +91,44 @@ export default {
   methods: {
     addNewPizza() {
       this.hasCreatedPizza = true
+    },
+    createPizza(pizza) {
+      const formData = new FormData()
+      formData.append('img', pizza.img)
+      formData.append('name', pizza.name)
+      formData.append('price', pizza.price)
+
+      this.$store.dispatch('CREATE_PIZZA', formData)
+    },
+    updatePizza(pizza) {
+      const formData = new FormData()
+      formData.append('id', pizza.id)
+      formData.append('img', pizza.img)
+      formData.append('name', pizza.name)
+      formData.append('price', pizza.price)
+      formData.append('sizesId', pizza.sizes)
+      formData.append('categoriesId', pizza.categories)
+      formData.append('doughsId', pizza.doughs)
+
+      this.$store.dispatch('UPDATE_PIZZA', formData)
     }
   },
   computed: {
     categoriesOptions() {
       return this.categories.map(item => {
-        return {title: item.name, value: item.name.toUpperCase()}
+        return {title: item.name, value: item.id}
       })
     },
     sizesOptions() {
       return this.sizes.map(item => {
-        return {title: item.name, value: item.name.toUpperCase()}
+        return {title: item.name, value: item.id}
       })
     },
     doughsOptions() {
       return this.doughs.map(item => {
-        return {title: item.name, value: item.name.toUpperCase()}
+        return {title: item.name, value: item.id}
       })
-    }
+    },
   }
 }
 </script>

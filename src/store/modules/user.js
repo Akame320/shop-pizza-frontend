@@ -25,7 +25,6 @@ const getters = {
 const mutations = {
     SET_USER: (state, payload) => {
         const { user } = payload
-        console.log(user)
         state.user = user
     },
 
@@ -67,7 +66,6 @@ const actions = {
     },
 
     CHECK_TOKEN: async (context) => {
-        console.log('и тут')
         const { data } = await api.check()
         context.commit('SET_USER', { user: data })
     },

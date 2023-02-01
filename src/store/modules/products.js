@@ -95,7 +95,6 @@ const mutations = {
     },
 
     CLEAR_BASKET_LOCAL: (state, payload) => {
-        console.log(payload)
         if (payload) {
             const { id } = payload
             const idx = state.basket.findIndex(basketItem => basketItem.id === id)
@@ -161,6 +160,15 @@ const actions = {
             const basketId = context.getters.BASK_ID
             await api.saveBasket(basketId, products)
         }
+    },
+
+    CREATE_PIZZA: async (context, payload) => {
+        await api.createNewPizza(payload)
+    },
+
+    UPDATE_PIZZA: async (context, payload) => {
+        const updatedProducts = await api.updatePizza(payload)
+        context.commit('SET_PRODUCTS', updatedProducts.data)
     }
 }
 

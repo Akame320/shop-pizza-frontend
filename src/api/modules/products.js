@@ -27,4 +27,16 @@ export default {
 
     removeProducts() {
     },
+
+    createNewPizza(formData) {
+        return axios.post('http://localhost:5000/api/pizza', formData, {
+            headers: {'Content-Type': 'multipart/form-data'}
+        })
+    },
+
+    updatePizza(formData) {
+        return axios.put('http://localhost:5000/api/pizza', formData, {
+            headers: {'Content-Type': 'multipart/form-data'}
+        })
+    }
 }

@@ -31,9 +31,10 @@
     <!-- TITLE + IMG -->
     <header class="admin-product-card__header">
       <div class="admin-product-card__img-wrapper">
-        <img class="admin-product-card__img" :class="{'--th-edit': isStateEdit}" :src="img"/>
+        <img v-if="product.img" class="admin-product-card__img" :class="{'--th-edit': isStateEdit}" :src="img"/>
+        <div v-else class="admin-product-card-placeholder-img"/>
         <div v-if="isStateEdit" class="admin-product-card__uploader">
-          <UIUploader :styles="['not-dragged']" v-model="v$.form.img.$model"/>
+          <UIUploader :styles="['not-dragged']" @input="(file) => v$.form.img.$model = file"/>
         </div>
       </div>
       <div class="admin-product-card__title-wrapper">
@@ -46,13 +47,10 @@
 
     <!-- SETTINGS -->
     <main class="product-card__main">
-      <UIInputItems class="product-card__row-type" :value="v$.form.doughs.$model"
-                    @input="(newVal) => v$.form.doughs.$model = newVal" :options="allDough"/>
-      <UIInputItems class="product-card__row-size" :value="v$.form.sizes.$model"
-                    @input="(newVal) => v$.form.sizes.$model = newVal" :options="allSizes"/>
-      <div class="product-card__row-categories">
-        <UIMultiSelect placeholder="Выберите категории" :options="allCategories" v-model="v$.form.categories.$model"/>
-      </div>
+      <UIInputItems class="product-card__row-type" v-model="v$.form.doughs.$model" :options="allDough"/>
+      <UIInputItems class="product-card__row-size" v-model="v$.form.sizes.$model" :options="allSizes"/>
+      <UIMultiSelect class="product-card__row-categories" placeholder="Выберите категории" :options="allCategories"
+                     v-model="v$.form.categories.$model"/>
     </main>
 
     <!-- PRICE -->
@@ -63,7 +61,7 @@
       <div v-else class="admin-product-card__price">
         <span class="admin-product-card-title">от</span>
         <span class="admin-product-card__price-input">
-           <input type="number" :value="v$.form.price.$model" @input="(newVal) => v$.form.price.$model = newVal"
+           <input type="number" v-model="v$.form.price.$model"
                   class="admin-product-card-input">
         </span>
         <span class="admin-product-card-title">₽</span>
@@ -107,28 +105,23 @@ export default {
       type: Array,
       default: () => []
     },
+    defaultEdit: {
+      type: Boolean,
+      default: false
+    }
   },
   validations() {
     return {
       form: {
         name: {
-          required, minLength: minLength(5)
+          required,
+          minLength: minLength(5)
         },
-        categories: {
-          required
-        },
-        doughs: {
-          required
-        },
-        sizes: {
-          required
-        },
-        img: {
-          required
-        },
-        price: {
-          required
-        }
+        categories: { required },
+        doughs: { required },
+        sizes: { required },
+        img: { required },
+        price: { required }
       }
     }
   },
@@ -136,13 +129,19 @@ export default {
     return {
       status: 'PENDING',
       form: {
-        categories: [],
-        doughs: [],
-        sizes: [],
-        price: '',
-        name: '',
-        img: ''
+        id: this.product.id,
+        categories: this.product.categories || [],
+        doughs: this.product.doughs || [],
+        sizes: this.product.sizes || [],
+        price: this.product.price || 0,
+        name: this.product.name || '',
+        img: this.product.img || null
       }
+    }
+  },
+  mounted() {
+    if (this.defaultEdit) {
+      this.status = 'EDIT'
     }
   },
   computed: {
@@ -159,14 +158,23 @@ export default {
   methods: {
     startEdit() {
       this.status = 'EDIT'
-      this.v$.form.categories.$model = [...this.allCategories]
-      this.v$.form.doughs.$model = [...this.allDough]
-      this.v$.form.sizes.$model = [...this.allSizes]
+
+      this.v$.form.categories.$model = this.convertToOptions(this.product.categories || [])
+      this.v$.form.doughs.$model = this.convertToOptions(this.product.doughs || [])
+      this.v$.form.sizes.$model = this.convertToOptions(this.product.sizes || [])
       this.v$.form.price.$model = this.product.price
       this.v$.form.name.$model = this.product.name
+      this.v$.form.img.$model = this.product.img
     },
     saveChanges() {
+      this.v$.$touch()
+      if (this.v$.$invalid) return
+
+      this.$emit('update', this.form)
       this.status = 'PENDING'
+    },
+    convertToOptions(items) {
+      return items.map(item => item.id)
     }
   }
 }

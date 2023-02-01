@@ -1,6 +1,6 @@
 <template>
   <div class="uploader-block" :class="classes">
-    <input ref="input" type="file" class="uploader-block__input" />
+    <input ref="input" type="file" @input="inputHandler" class="uploader-block__input" />
     <div class="uploader-block__action">
       <UIButton @click="addFile">Добавьте фото</UIButton>
     </div>
@@ -25,6 +25,9 @@ export default {
   methods: {
     addFile() {
       this.$refs.input.click()
+    },
+    inputHandler(event) {
+      this.$emit('input', event.target.files[0])
     }
   }
 }
