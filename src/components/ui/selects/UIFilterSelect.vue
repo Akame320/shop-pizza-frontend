@@ -49,7 +49,6 @@ export default {
       this.isListOpen = !this.isListOpen
     },
     hideList() {
-      console.log('sdfsfsdf')
       this.isListOpen = false
     }
   },

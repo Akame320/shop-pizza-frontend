@@ -38,7 +38,7 @@
         </div>
       </div>
       <div class="admin-product-card__title-wrapper">
-        <div v-if="!isStateEdit" class="admin-product-card-title">{{ product.name }}</div>
+        <div v-if="!isStateEdit" class="product-card-title">{{ product.name }}</div>
         <div v-else class="admin-product-card__title-input">
           <input type="text" v-model="v$.form.name.$model" class="admin-product-card-input">
         </div>
@@ -60,15 +60,15 @@
     <!-- PRICE -->
     <footer class="admin-product-card__footer">
       <div v-if="!isStateEdit" class="admin-product-card__price"><span
-          class="admin-product-card-title">от {{ product.price }} ₽</span>
+          class="product-card-title">от {{ product.price }} ₽</span>
       </div>
       <div v-else class="admin-product-card__price">
-        <span class="admin-product-card-title">от</span>
+        <span class="product-card-title">от</span>
         <span class="admin-product-card__price-input">
            <input type="number" v-model="v$.form.price.$model"
                   class="admin-product-card-input">
         </span>
-        <span class="admin-product-card-title">₽</span>
+        <span class="product-card-title">₽</span>
       </div>
     </footer>
   </li>

@@ -85,7 +85,7 @@ export default {
       const role = roles.ADMIN
 
       await this.$store.dispatch('REGISTRATION', {email, password, role}).then(() => {
-        this.$router.push('/admin/panel')
+        this.$router.push('/admin/products')
       })
     }
   }

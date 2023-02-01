@@ -1,60 +1,58 @@
+import ROUTES from "./const"
+import routeMiddleware from "./middleware"
+
 import Home from "@/views/Home";
 import Basket from "@/views/Basket";
 import Login from "@/views/auth/Login";
 import Registration from "@/views/auth/Registration";
-import store from "@/store"
 import AdminRegistration from "../views/auth/AdminRegistration";
 import Panel from "../views/admin/Products";
 import NotFound from "../views/errors/NotFound";
 
 const routes = [
+    // PUBLIC
     {
-        path: '/',
-        name: 'Home',
+        path: ROUTES.PUBLIC.HOME.path,
+        name: ROUTES.PUBLIC.HOME.name,
         component: Home,
     },
     {
-        path: '/basket',
-        name: 'Basket',
+        path: ROUTES.PUBLIC.BASKET.path,
+        name: ROUTES.PUBLIC.BASKET.name,
         component: Basket
     },
+
+    // AUTH
     {
-        path: '/auth/login',
-        name: 'Login',
+        path: ROUTES.AUTH.LOGIN.path,
+        name: ROUTES.AUTH.LOGIN.name,
         component: Login,
+        beforeEnter: routeMiddleware.isNotAuth
     },
     {
-        path: '/auth/registration',
-        name: 'Registration',
+        path: ROUTES.AUTH.REGISTRATION.path,
+        name: ROUTES.AUTH.REGISTRATION.name,
         component: Registration,
-        beforeEnter: (to, from, next) => {
-            if (store.getters.HAS_AUTH) {
-                next({name: 'Home'})
-            } else {
-                next()
-            }
-        },
+        beforeEnter: routeMiddleware.isNotAuth
     },
+
+    // ADMIN
     {
-        path: '/auth/admin/registration',
-        name: 'admin-registration',
+        path: ROUTES.ADMIN.REGISTRATION.path,
+        name: ROUTES.ADMIN.REGISTRATION.name,
         component: AdminRegistration,
     },
     {
-        path: '/admin/products',
-        name: 'admin-products',
+        path: ROUTES.ADMIN.PRODUCTS.path,
+        name: ROUTES.ADMIN.PRODUCTS.name,
         component: Panel,
-        beforeEnter: (to, from, next) => {
-            if (store.getters.HAS_AUTH && store.getters.IS_ADMIN) {
-                next()
-            } else {
-                next({name: 'error-404'})
-            }
-        },
+        beforeEnter: routeMiddleware.isAdmin
     },
+
+    // 404
     {
-        path: '/errors/404',
-        name: 'error-404',
+        path: ROUTES.ERRORS.NOT_FOUND.path,
+        name: ROUTES.ERRORS.NOT_FOUND.name,
         component: NotFound,
     },
 ]

@@ -4,15 +4,7 @@
       <div class="products-page">
         <header class="products-page__header">
           <main class="products-page__logo">
-            <div class="logo">
-              <div class="logo__icon">
-                <img src="/static/img/logos/logo.png" alt="">
-              </div>
-              <div class="logo__text">
-                <span class="logo__title">REACT PIZZA</span>
-                <span class="logo__subtitle">самая вкусная пицца во вселенной</span>
-              </div>
-            </div>
+            <LogoDark />
           </main>
           <aside class="products-page__aside">
             <!-- Basket -->
@@ -44,14 +36,14 @@
 
             <!-- Login, Registration -->
             <template v-if="hasActions">
-              <button @click="$router.push('/auth/login')" class="button-main --th-outline-grey">Войти</button>
-              <button @click="$router.push('/auth/registration')" class="button-main">Регистрация</button>
+              <button @click="pushLogin" class="button-main --th-outline-grey">Войти</button>
+              <button @click="pushRegistration" class="button-main">Регистрация</button>
             </template>
 
             <!-- Logout -->
             <template v-else>
               <button @click="logout" class="button-main --th-outline-grey">Выйти</button>
-              <button v-if="IS_ADMIN" @click="$router.push('/admin/products')" class="button-main">Админ Панель</button>
+              <button v-if="IS_ADMIN" @click="pushAdminPanel" class="button-main">Админ Панель</button>
             </template>
           </aside>
         </header>
@@ -65,15 +57,30 @@
 
 <script>
 import { mapGetters } from "vuex";
+import ROUTES from "../router/const"
+import LogoDark from "../components/ui/logos/LogoDark";
 
 export default {
   name: "LayoutPublic",
+  components: {
+    LogoDark
+  },
   methods: {
     basketHandler() {
-      this.$router.push('/basket')
+      this.$router.push(ROUTES.PUBLIC.BASKET.path)
     },
     logout() {
       this.$store.dispatch('LOGOUT')
+      this.$router.push(ROUTES.AUTH.LOGIN.path)
+    },
+    pushAdminPanel() {
+      this.$router.push(ROUTES.ADMIN.PRODUCTS.path)
+    },
+    pushRegistration() {
+      this.$router.push(ROUTES.AUTH.REGISTRATION.path)
+    },
+    pushLogin() {
+      this.$router.push(ROUTES.AUTH.LOGIN.path)
     }
   },
   props: {
@@ -92,7 +99,8 @@ export default {
     },
     hasActions() {
       return !this.HAS_AUTH
-    }
+    },
+
   },
 }
 </script>

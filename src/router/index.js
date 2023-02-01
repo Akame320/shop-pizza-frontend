@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import routes from './pages'
-import store from "@/store"
+import routerMiddleware from "./middleware"
 
 Vue.use(VueRouter)
 
@@ -11,11 +11,6 @@ const router = new VueRouter({
     routes
 })
 
-router.beforeEach(async (to, from, next) => {
-    if (localStorage.getItem('token')) {
-        await store.dispatch('CHECK_TOKEN')
-    }
-    next()
-})
+router.beforeEach(routerMiddleware.checkToken)
 
 export default router
