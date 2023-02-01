@@ -2,7 +2,7 @@
   <div class="uploader-block" :class="classes">
     <input ref="input" type="file" @input="inputHandler" class="uploader-block__input" />
     <div class="uploader-block__action">
-      <UIButton @click="addFile">Добавьте фото</UIButton>
+      <UIButton @click="addFile">{{ btnText }}</UIButton>
     </div>
   </div>
 </template>
@@ -16,6 +16,12 @@ export default {
   mixins: [mixinStyle],
   components: {
     UIButton,
+  },
+  props: {
+    btnText: {
+      type: String,
+      default: '',
+    }
   },
   data() {
     return {

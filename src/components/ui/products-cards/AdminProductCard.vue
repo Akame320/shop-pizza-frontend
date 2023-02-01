@@ -1,5 +1,5 @@
 <template>
-  <li class="admin-product-card">
+  <li class="admin-product-card" :class="{'--th-edit': isStateEdit}">
     <!-- BUTTONS -->
     <div class="admin-product-card__action-top">
       <button @click="startEdit" v-if="status !== 'EDIT'" class="admin-product-card__btn-top">
@@ -32,9 +32,9 @@
     <header class="admin-product-card__header">
       <div class="admin-product-card__img-wrapper">
         <img v-if="product.img" class="admin-product-card__img" :class="{'--th-edit': isStateEdit}" :src="img"/>
-        <div v-else class="admin-product-card-placeholder-img"/>
+        <div v-else class="admin-product-card-placeholder-img" />
         <div v-if="isStateEdit" class="admin-product-card__uploader">
-          <UIUploader :styles="['not-dragged']" @input="(file) => v$.form.img.$model = file"/>
+          <UIUploader :btn-text="btnText" :styles="['not-dragged']" @input="(file) => v$.form.img.$model = file"/>
         </div>
       </div>
       <div class="admin-product-card__title-wrapper">
@@ -47,10 +47,14 @@
 
     <!-- SETTINGS -->
     <main class="product-card__main">
-      <UIInputItems class="product-card__row-type" v-model="v$.form.doughs.$model" :options="allDough"/>
-      <UIInputItems class="product-card__row-size" v-model="v$.form.sizes.$model" :options="allSizes"/>
-      <UIMultiSelect class="product-card__row-categories" placeholder="Выберите категории" :options="allCategories"
-                     v-model="v$.form.categories.$model"/>
+      <UIInputItems class="product-card__row-type" :clickable="isStateEdit" v-model="v$.form.doughs.$model" :options="allDough" />
+      <UIInputItems class="product-card__row-size" :clickable="isStateEdit" v-model="v$.form.sizes.$model" :options="allSizes" />
+      <UIMultiSelect
+          class="product-card__row-categories"
+          :clickable="isStateEdit"
+          placeholder="Выберите категории"
+          :options="allCategories"
+          v-model="v$.form.categories.$model"/>
     </main>
 
     <!-- PRICE -->
@@ -130,9 +134,9 @@ export default {
       status: 'PENDING',
       form: {
         id: this.product.id,
-        categories: this.product.categories || [],
-        doughs: this.product.doughs || [],
-        sizes: this.product.sizes || [],
+        categories: this.convertToOptions(this.product.categories || []),
+        doughs: this.convertToOptions(this.product.doughs || []),
+        sizes: this.convertToOptions(this.product.sizes || []),
         price: this.product.price || 0,
         name: this.product.name || '',
         img: this.product.img || null
@@ -154,17 +158,13 @@ export default {
     isStateEdit() {
       return this.status === 'EDIT'
     },
+    btnText() {
+      return this.product.img ? 'Обновите фото' : 'Добавьте фото'
+    }
   },
   methods: {
     startEdit() {
       this.status = 'EDIT'
-
-      this.v$.form.categories.$model = this.convertToOptions(this.product.categories || [])
-      this.v$.form.doughs.$model = this.convertToOptions(this.product.doughs || [])
-      this.v$.form.sizes.$model = this.convertToOptions(this.product.sizes || [])
-      this.v$.form.price.$model = this.product.price
-      this.v$.form.name.$model = this.product.name
-      this.v$.form.img.$model = this.product.img
     },
     saveChanges() {
       this.v$.$touch()

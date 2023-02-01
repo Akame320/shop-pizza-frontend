@@ -12,7 +12,10 @@ export default {
             this.styles.forEach(style => {
                 list.push(`--${style}`)
             })
-            return list
+            return list.concat(...this.addingClass)
+        },
+        addingClass() {
+            return []
         }
-    }
+    },
 }

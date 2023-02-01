@@ -31,7 +31,6 @@
           :all-sizes="sizesOptions"
           :all-dough="doughsOptions"
           :all-categories="categoriesOptions"
-          :product="createdProduct"
           @update="createPizza"
       />
 
@@ -61,13 +60,6 @@ export default {
   data() {
     return {
       hasCreatedPizza: false,
-      createdProduct: {
-        img: '',
-        title: '',
-        sizes: [],
-        doughs: [],
-        price: 0
-      }
     }
   },
   props: {

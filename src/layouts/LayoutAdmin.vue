@@ -1,7 +1,7 @@
 <template>
   <div class="layout-profile">
     <div class="layout-profile__logo">
-      <LogoDark />
+      <LogoDark sub-title="Vue pizza :)" />
     </div>
     <div class="layout-profile__inner">
       <aside class="layout-profile__aside"><slot name="aside"/></aside>

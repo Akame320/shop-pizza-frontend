@@ -1,12 +1,11 @@
 <template>
   <div class="multi-select" v-click-outside="hide" :class="classes">
     <div class="multi-select__value"
-         :class="{'--st-opened': opened}"
          @click="opened = !opened"
     >
       <!-- Text -->
       <div v-if="isShowPlaceholder" class="multi-select__title">{{ placeholder }}</div>
-      <div v-else class="multi-select__title">Выбрано: {{ countValues }} категории</div>
+      <div v-else class="multi-select__title">Категории: <strong>{{ countValues }}</strong></div>
 
       <!-- Arow -->
       <div class="multi-select__arrow">
@@ -16,24 +15,27 @@
         </svg>
       </div>
     </div>
-    <ul v-show="opened" class="multi-select__list">
+    <ul class="multi-select__list">
       <li v-for="option of options"
           :key="option.value"
           @click="changeOption(option.value)"
           class="multi-select__option"
+          :class="{'--st-active': hasOptionSelected(option.value)}"
       >
         <div class="multi-select__title"> {{ option.title }}</div>
-        <div class="multi-select__status" v-show="hasOptionSelected(option.value)">
-          <svg fill="none" viewBox="0 0 26 26">
-            <path d="M8.5 14L11.1 16.6" stroke-linecap="round" stroke-miterlimit="10"
-                  stroke-width="2"/>
-            <path d="M18.2 10L11.6 16.6" stroke-linecap="round" stroke-miterlimit="10"
-                  stroke-width="2"/>
-            <path
-                d="M13 25C19.6274 25 25 19.6274 25 13C25 6.37258 19.6274 1 13 1C6.37258 1 1 6.37258 1 13C1 19.6274 6.37258 25 13 25Z"
-                stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/>
-          </svg>
-        </div>
+        <template v-if="hasOptionSelected(option.value)">
+          <div class="multi-select__status">
+            <svg fill="none" viewBox="0 0 26 26">
+              <path d="M8.5 14L11.1 16.6" stroke-linecap="round" stroke-miterlimit="10"
+                    stroke-width="2"/>
+              <path d="M18.2 10L11.6 16.6" stroke-linecap="round" stroke-miterlimit="10"
+                    stroke-width="2"/>
+              <path
+                  d="M13 25C19.6274 25 25 19.6274 25 13C25 6.37258 19.6274 1 13 1C6.37258 1 1 6.37258 1 13C1 19.6274 6.37258 25 13 25Z"
+                  stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/>
+            </svg>
+          </div>
+        </template>
       </li>
     </ul>
   </div>
@@ -61,7 +63,11 @@ export default {
     placeholder: {
       type: String,
       default: ''
-    }
+    },
+    clickable: {
+      type: Boolean,
+      default: true,
+    },
   },
   data() {
     return {
@@ -74,10 +80,20 @@ export default {
     },
     isShowPlaceholder() {
       return this.value.length === 0
+    },
+    addingClass() {
+      const list = []
+
+      if (!this.clickable) list.push('--st-disabled')
+      if (this.opened) list.push('--st-opened')
+
+      return list
     }
   },
   methods: {
     changeOption(value) {
+      if (!this.clickable) return
+
       const array = [...this.value]
       const elemIndex = array.findIndex(option => option === value)
       if (elemIndex !== -1) {
