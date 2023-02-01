@@ -149,6 +149,10 @@
      opacity: 1;
     }
 
+    &.--st-clicked {
+     cursor: pointer;
+    }
+
     &.--st-clicked.--th-selected {
       cursor: pointer;
       background: white;

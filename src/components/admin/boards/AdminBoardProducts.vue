@@ -28,9 +28,9 @@
       <AdminProductCard
           v-if="hasCreatedPizza"
           :default-edit="true"
-          :all-sizes="sizesOptions"
-          :all-dough="doughsOptions"
-          :all-categories="categoriesOptions"
+          :all-sizes="sizes"
+          :all-dough="doughs"
+          :all-categories="categories"
           @update="createPizza"
       />
 
@@ -38,9 +38,9 @@
           v-for="product of products"
           :key="product.title"
           :product="product"
-          :all-sizes="sizesOptions"
-          :all-dough="doughsOptions"
-          :all-categories="categoriesOptions"
+          :all-sizes="sizes"
+          :all-dough="doughs"
+          :all-categories="categories"
           @update="updatePizza"
       />
     </ul>
@@ -105,22 +105,5 @@ export default {
       this.$store.dispatch('UPDATE_PIZZA', formData)
     }
   },
-  computed: {
-    categoriesOptions() {
-      return this.categories.map(item => {
-        return {title: item.name, value: item.id}
-      })
-    },
-    sizesOptions() {
-      return this.sizes.map(item => {
-        return {title: item.name, value: item.id}
-      })
-    },
-    doughsOptions() {
-      return this.doughs.map(item => {
-        return {title: item.name, value: item.id}
-      })
-    },
-  }
 }
 </script>

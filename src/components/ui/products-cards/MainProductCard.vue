@@ -5,25 +5,8 @@
       <div class="product-card__title">{{ product.name }}</div>
     </header>
     <main class="product-card__main">
-      <div class="product-card__row-type">
-        <div v-for="dough of allDough"
-             :key="dough.id"
-             class="product-card__item"
-             @click="changeActiveDough"
-        >
-          {{ dough.title }}
-        </div>
-      </div>
-      <ul class="product-card__row-size">
-        <li v-for="size of allSizes"
-            :key="size.id"
-            class="product-card__item"
-            :class="{'--active': selectSizeId === size.id, '--has-size': searchSize(size.id)}"
-            @click="changeActiveSize(size.id)"
-        >
-          {{ size.name }}
-        </li>
-      </ul>
+      <UIInputItems class="product-card__row-type" :is-multi="false" v-model="selectDoughId" :options="allDough" />
+      <UIInputItems class="product-card__row-size" :is-multi="false" v-model="selectSizeId" :options="allSizes" />
     </main>
     <footer class="product-card__footer">
       <div class="product-card__price">от {{ product.price }} ₽</div>
@@ -40,8 +23,13 @@
 
 <script>
 
+import UIInputItems from "../inputs/UIInputItems";
+
 export default {
   name: "MainProductCard",
+  components: {
+    UIInputItems
+  },
   props: {
     product: {
       type: Object,
@@ -79,18 +67,5 @@ export default {
       return this.counts > 0
     }
   },
-  methods: {
-    changeActiveDough(newId) {
-      if (!this.searchSize(newId)) return this.selectDoughId
-      this.selectDoughId = newId
-    },
-    changeActiveSize(newSizeId) {
-      if (!this.searchSize(newSizeId)) return this.selectSizeId
-      this.selectSizeId = newSizeId
-    },
-    searchSize(sizeId) {
-      return this.pizzaSizes.find(size => size.id === sizeId)
-    }
-  }
 }
 </script>

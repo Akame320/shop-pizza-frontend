@@ -1,9 +1,12 @@
 <template>
   <ul class="product-card-settings">
-    <li v-for="option of options"
+    <li class="product-card-settings__item"
+        v-for="option of options"
         :key="option.value"
-        class="product-card-settings__item"
-        :class="{'--th-selected': isSelectedItem(option.value), '--st-clicked': clickable}"
+        :class="{
+          '--th-selected': isSelectedItem(option.value),
+          '--st-clicked': clickable
+        }"
         @click="toggleOption(option.value)"
     >
       {{ option.title }}
@@ -20,20 +23,31 @@ export default {
       default: () => [],
     },
     value: {
-      type: Array,
+      type: [Array, Number, String],
       default: () => [],
     },
     clickable: {
       type: Boolean,
       default: true,
     },
+    isMulti: {
+      type: Boolean,
+      default: true,
+    }
   },
   methods: {
     isSelectedItem(value) {
+      if (!this.isMulti) {
+        return this.value === value
+      }
       return this.value.find(val => val === value)
     },
     toggleOption(value) {
       if (!this.clickable) return
+
+      if (!this.isMulti) {
+        return this.$emit('input', value)
+      }
 
       const newValue = [...this.value]
       const index = this.value.findIndex(item => item === value)

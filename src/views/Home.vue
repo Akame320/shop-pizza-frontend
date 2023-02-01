@@ -21,11 +21,11 @@
       </h1>
     </div>
 
-
     <ul class="products-cards-list">
       <MainProductCard
           v-for="pizza of PRODUCTS"
           :all-sizes="SIZES"
+          :all-dough="DOUGHS"
           :key="pizza.name"
           :product="pizza"
           :counts="getCounts(pizza.id)"
@@ -59,7 +59,7 @@ export default {
     UIFilterSelect
   },
   computed: {
-    ...mapGetters(['PRODUCTS', 'SIZES', 'CATEGORIES', 'HAS_AUTH', 'BASKET']),
+    ...mapGetters(['PRODUCTS', 'SIZES','DOUGHS', 'CATEGORIES', 'HAS_AUTH', 'BASKET']),
     categories() {
       const list = this.CATEGORIES.slice(0)
       list.unshift({ id: 0, name: 'Все' })
