@@ -7,7 +7,7 @@
       <nav class="layout-profile-nav">
         <ul class="layout-profile-nav__list">
           <li v-for="link of navigation" :key="link.link" class="layout-profile-nav__item">
-            <router-link class="layout-profile-nav__link" :to="link.link">{{ link.title }}</router-link>
+            <router-link class="layout-profile-nav__link" active-class="--st-active" :to="link.link">{{ link.title }}</router-link>
           </li>
         </ul>
       </nav>
@@ -21,7 +21,7 @@ import AdminBoardProducts from "../../components/admin/boards/AdminBoardProducts
 import { mapGetters } from "vuex";
 
 export default {
-  name: "Panel",
+  name: "Products",
   components: {
     LayoutAdmin,
     AdminBoardProducts
@@ -37,7 +37,7 @@ export default {
         {
           title: 'Настройки',
           link: 'settings'
-        }
+        },
       ]
     }
   },

@@ -51,7 +51,7 @@
             <!-- Logout -->
             <template v-else>
               <button @click="logout" class="button-main --th-outline-grey">Выйти</button>
-              <button v-if="IS_ADMIN" @click="$router.push('/admin/panel')" class="button-main">Админ Панель</button>
+              <button v-if="IS_ADMIN" @click="$router.push('/admin/products')" class="button-main">Админ Панель</button>
             </template>
           </aside>
         </header>

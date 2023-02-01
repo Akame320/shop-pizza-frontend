@@ -4,7 +4,7 @@ import Login from "@/views/auth/Login";
 import Registration from "@/views/auth/Registration";
 import store from "@/store"
 import AdminRegistration from "../views/auth/AdminRegistration";
-import Panel from "../views/admin/Panel";
+import Panel from "../views/admin/Products";
 import NotFound from "../views/errors/NotFound";
 
 const routes = [
@@ -41,8 +41,8 @@ const routes = [
         component: AdminRegistration,
     },
     {
-        path: '/admin/panel',
-        name: 'admin-panel',
+        path: '/admin/products',
+        name: 'admin-products',
         component: Panel,
         beforeEnter: (to, from, next) => {
             if (store.getters.HAS_AUTH && store.getters.IS_ADMIN) {
