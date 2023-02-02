@@ -1,8 +1,8 @@
 export default {
     ADMIN: {
         PRODUCTS: {
-            path: '/admin/products',
-            name: 'admin-products'
+            path: '/admin/panel',
+            name: 'admin-panel'
         },
         REGISTRATION: {
             path: '/auth/admin/registration',

@@ -770,14 +770,16 @@
     margin-left: -4rem;
     padding-left: 4rem;
     transition: all 0.05s linear;
+    cursor: pointer;
 
     &.--st-active {
       background-color: #fff;
       color: $text-color-dark;
+      cursor: default;
     }
 
-    &:hover {
-      background-color: rgba(255, 255, 255, 0.7);
+    &:not(.--st-active):hover {
+      background-color: rgba(255, 255, 255, 0.5);
       color: $text-color-dark;
     }
   }
@@ -1021,5 +1023,107 @@
 }
 
 .admin-all-settings {
+  margin-top: 5rem;
 
+  &__grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-gap: 15%;
+    max-width: 80rem;
+    align-items: flex-start;
+  }
+}
+
+.admin-settings-block {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-gap: 2.5rem;
+
+  &.--th-categories & {
+    &__input {
+      width: 100%;
+    }
+  }
+
+  &__error {
+    font-size: 1.2rem;
+    line-height: 1.6rem;
+    font-weight: 400;
+    color: red;
+
+    position: absolute;
+    top: auto;
+    bottom: 0;
+    transform: translateY(100%);
+  }
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+
+    position: relative;
+  }
+
+  &__title {
+    font-size: 2.2rem;
+    line-height: 2.6rem;
+    font-weight: bold;
+    color: $text-color-black;
+  }
+}
+
+.admin-settings-options {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-gap: 2rem;
+}
+
+.admin-settings-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  position: relative;
+
+  &__main {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+  }
+
+  &__input {
+    width: 5.4rem;
+    margin-right: 1.5rem;
+  }
+
+  &__label {
+    font-size: 1.6rem;
+    line-height: 2rem;
+    font-weight: 400;
+    color: $text-color-dark;
+    margin-right: 1.5rem;
+  }
+
+  &__out {
+    font-size: 1.6rem;
+    line-height: 2rem;
+    font-weight: 700;
+    color: $text-color-black;
+  }
+
+  &__error {
+    font-size: 1rem;
+    line-height: 1.4rem;
+    font-weight: 500;
+    color: red;
+    position: absolute;
+    top: -0.2rem;
+    left: 0;
+    transform: translateY(-100%);
+  }
+}
+
+.u-color-red {
+  color: red;
 }
