@@ -25,12 +25,12 @@
       </ul>
     </div>
     <ul class="admin-products__products-list">
-      <AdminProductCard
+      <CreateProductCard
           v-if="hasCreatedPizza"
           :default-edit="true"
-          :all-sizes="sizes"
-          :all-dough="doughs"
-          :all-categories="categories"
+          :sizes="sizes"
+          :dough="doughs"
+          :categories="categories"
           @update="createPizza"
       />
 
@@ -50,12 +50,14 @@
 <script>
 import UIButton from "../../ui/buttons/UIButton";
 import AdminProductCard from "../../ui/products-cards/AdminProductCard";
+import CreateProductCard from "../../ui/products-cards/CreateProductCard";
 
 export default {
   name: "AdminBoardProducts",
   components: {
     UIButton,
-    AdminProductCard
+    AdminProductCard,
+    CreateProductCard
   },
   data() {
     return {

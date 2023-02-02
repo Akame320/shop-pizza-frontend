@@ -7,6 +7,10 @@ export default {
         REGISTRATION: {
             path: '/auth/admin/registration',
             name: 'admin-registration',
+        },
+        SETTINGS: {
+            path: '/admin/settings',
+            name: 'admin-settings',
         }
     },
     PUBLIC: {

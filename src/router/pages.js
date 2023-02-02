@@ -6,7 +6,7 @@ import Basket from "@/views/Basket";
 import Login from "@/views/auth/Login";
 import Registration from "@/views/auth/Registration";
 import AdminRegistration from "../views/auth/AdminRegistration";
-import Panel from "../views/admin/Products";
+import Products from "../views/admin/Products";
 import NotFound from "../views/errors/NotFound";
 
 const routes = [
@@ -45,7 +45,7 @@ const routes = [
     {
         path: ROUTES.ADMIN.PRODUCTS.path,
         name: ROUTES.ADMIN.PRODUCTS.name,
-        component: Panel,
+        component: Products,
         beforeEnter: routeMiddleware.isAdmin
     },
 

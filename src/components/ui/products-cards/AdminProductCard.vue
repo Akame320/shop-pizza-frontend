@@ -94,8 +94,7 @@ export default {
   props: {
     product: {
       type: Object,
-      default: () => {
-      }
+      default: () => {}
     },
     allSizes: {
       type: Array,
@@ -133,7 +132,7 @@ export default {
     return {
       status: 'PENDING',
       form: {
-        id: this.product.id,
+        id: this.product.id || null,
         categories: this.convertToOptions(this.product.categories || []),
         doughs: this.convertToOptions(this.product.doughs || []),
         sizes: this.convertToOptions(this.product.sizes || []),

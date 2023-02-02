@@ -44,13 +44,15 @@ export default {
   computed: {
     ...mapGetters(['PRODUCTS', 'SIZES', 'CATEGORIES', 'DOUGHS']),
   },
+  setup(props) {
+    this.$store.dispatch('GET_DATA')
+
+
+    return {
+    products: this.PRODUCTS
+    }
+  },
   created() {
-    this.$store.dispatch('GET_PRODUCTS').then(({ data }) => {
-      this.products = [...data]
-    })
-    this.$store.dispatch('GET_SIZES')
-    this.$store.dispatch('GET_CATEGORIES')
-    this.$store.dispatch('GET_DOUGHS')
   }
 }
 </script>

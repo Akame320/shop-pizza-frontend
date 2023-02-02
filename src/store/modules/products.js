@@ -169,6 +169,13 @@ const actions = {
     UPDATE_PIZZA: async (context, payload) => {
         const updatedProducts = await api.updatePizza(payload)
         context.commit('SET_PRODUCTS', updatedProducts.data)
+    },
+
+    GET_DATA: async (context) => {
+        await context.dispatch('GET_PRODUCTS')
+        await context.dispatch('GET_SIZES')
+        await context.dispatch('GET_CATEGORIES')
+        await context.dispatch('GET_DOUGHS')
     }
 }
 
