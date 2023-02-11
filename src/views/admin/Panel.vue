@@ -4,9 +4,9 @@
       <component
           :is="currentBoard"
           :products="PRODUCTS"
-          :doughs="DOUGHS"
-          :sizes="SIZES"
-          :categories="CATEGORIES"
+          :doughs="ADDONS.types"
+          :sizes="ADDONS.sizes"
+          :categories="ADDONS.categories"
       />
     </template>
     <template #aside>
@@ -61,7 +61,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['PRODUCTS', 'SIZES', 'CATEGORIES', 'DOUGHS']),
+    ...mapGetters(['PRODUCTS', 'ADDONS']),
     currentBoard() {
       switch (this.activeBoardId) {
         case APP_BOARDS.products.id:

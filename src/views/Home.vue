@@ -8,7 +8,7 @@
             :class="categoriesStyles(cat.id)"
             @click="toggleCategories(cat.id)"
         >
-          {{ cat.name }}
+          {{ cat.value }}
         </li>
       </ul>
 
@@ -59,10 +59,10 @@ export default {
     UIFilterSelect
   },
   computed: {
-    ...mapGetters(['PRODUCTS', 'SIZES','DOUGHS', 'CATEGORIES', 'HAS_AUTH', 'BASKET']),
+    ...mapGetters(['PRODUCTS', 'ADDONS', 'HAS_AUTH', 'BASKET']),
     categories() {
-      const list = this.CATEGORIES.slice(0)
-      list.unshift({ id: 0, name: 'Все' })
+      const list = [...this.ADDONS.categories || []]
+      list.unshift({ id: 0, value: 'Все' })
       return list
     },
     hasAllSelectedCategories() {
@@ -110,9 +110,7 @@ export default {
   },
   mounted() {
     this.$store.dispatch('GET_PRODUCTS');
-    this.$store.dispatch('GET_SIZES');
-    this.$store.dispatch('GET_DOUGHS');
-    this.$store.dispatch('GET_CATEGORIES');
+    this.$store.dispatch('GET_ADDONS');
   }
 }
 </script>

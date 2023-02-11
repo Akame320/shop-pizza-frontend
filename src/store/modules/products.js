@@ -2,10 +2,8 @@ import api from '../../api/index'
 
 const state = {
     products: [],
-    sizes: [],
-    doughs: [],
-    categories: [],
-    basket: []
+    basket: [],
+    addons: [],
 }
 
 const getters = {
@@ -13,17 +11,9 @@ const getters = {
         return state.products
     },
 
-    SIZES: state => {
-        return state.sizes
-    },
-
-    CATEGORIES: state => {
-        return state.categories
-    },
-
-    DOUGHS: state => {
-        return state.doughs
-    },
+   ADDONS: state => {
+        return state.addons
+   },
 
     BASKET: state => {
         return state.basket
@@ -104,6 +94,10 @@ const mutations = {
 
         const length = state.basket.length
         state.basket.splice(0, length)
+    },
+
+    SAVE_ADDONS: (state, payload) => {
+        state.addons = Object.assign(payload)
     }
 }
 
@@ -113,21 +107,6 @@ const actions = {
         const { data } = res
         context.commit('SET_PRODUCTS', data);
         return res
-    },
-
-    GET_SIZES: async (context) => {
-        const { data } = await api.getSizes()
-        context.commit('INITIAL_SIZES', data)
-    },
-
-    GET_CATEGORIES: async (context) => {
-        const { data } = await api.getCategories()
-        context.commit('INITIAL_CATEGORIES', data)
-    },
-
-    GET_DOUGHS: async (context) => {
-        const { data } = await api.getDoughs()
-        context.commit('INITIAL_DOUGHS', data)
     },
 
     INCREMENT_BASKET: async (context, payload) => {
@@ -173,14 +152,17 @@ const actions = {
 
     GET_DATA: async (context) => {
         await context.dispatch('GET_PRODUCTS')
-        await context.dispatch('GET_SIZES')
-        await context.dispatch('GET_CATEGORIES')
-        await context.dispatch('GET_DOUGHS')
+        await context.dispatch('GET_ADDONS')
     },
 
     UPDATE_ADDONS: async (context, payload) => {
         const res = await api.updateAddons(payload)
-        console.log(res)
+        context.commit('SAVE_ADDONS', res.data)
+    },
+
+    GET_ADDONS: async (context) => {
+        const res  = await api.getAddons()
+        context.commit('SAVE_ADDONS', res.data)
     }
 }
 
