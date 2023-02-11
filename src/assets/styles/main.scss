@@ -737,6 +737,11 @@
     background-color: white;
     border-radius: 2.5rem;
     padding: 4rem;
+
+    display: flex;
+    align-items: stretch;
+    justify-content: flex-start;
+    flex-direction: column;
   }
 
   &__aside {
@@ -1025,6 +1030,13 @@
 .admin-all-settings {
   margin-top: 5rem;
 
+  display: flex;
+  align-items: stretch;
+  justify-content: space-between;
+  flex-direction: column;
+  height: 100%;
+  flex: 1 1 auto;
+
   &__grid {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
@@ -1085,6 +1097,17 @@
   justify-content: space-between;
 
   position: relative;
+
+  &.--th-types & {
+    &__main {
+      width: 100%;
+    }
+
+    &__input {
+      width: 100%;
+      margin-right: 0;
+    }
+  }
 
   &__main {
     display: flex;

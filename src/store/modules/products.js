@@ -176,6 +176,11 @@ const actions = {
         await context.dispatch('GET_SIZES')
         await context.dispatch('GET_CATEGORIES')
         await context.dispatch('GET_DOUGHS')
+    },
+
+    UPDATE_ADDONS: async (context, payload) => {
+        const res = await api.updateAddons(payload)
+        console.log(res)
     }
 }
 

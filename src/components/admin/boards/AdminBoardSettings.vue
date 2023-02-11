@@ -1,54 +1,101 @@
 <template>
   <div class="admin-all-settings">
     <ul class="admin-all-settings__grid">
-      <AdminSizesBlock
-          v-model="v$.form.sizes.$model"
-          :errors="v$.form.sizes.$silentErrors[0]?.$message"/>
-
-      <AdminBlockBase title="Типы">
-        <ul class="admin-settings-block__options">
-          <li class="admin-settings-block__row">
-            <main class="admin-settings-block__row-main">
-              <div class="admin-settings-block__input">
+      <AdminBlockBase title="Размеры">
+        <ul class="admin-settings-options">
+          <li class="admin-settings-row"
+              v-for="(item, index) in form.sizes"
+              :key="index"
+          >
+            <main class="admin-settings-row__main">
+              <div class="admin-settings-row__input">
                 <input type="number"
-                       class="admin-product-card-input --th-small">
+                       v-model="item.value"
+                       class="admin-product-card-input --th-small"
+                       :class="{'--th-error': v$.form.size?.$each.$response.$errors[index].value.length > 0}"
+                >
               </div>
-              <div class="admin-settings-block__label">см.</div>
+              <div class="admin-settings-row__label">см.</div>
             </main>
-            <aside class="admin-settings-block__row-aside">
-              <div class="admin-settings-block__out">30 см</div>
+            <aside class="admin-settings-row__aside">
+              <div class="admin-settings-row__out">{{ item.value }} см</div>
             </aside>
           </li>
         </ul>
       </AdminBlockBase>
 
-      <AdminBlockBase :button="{title: 'Добавить'}" theme="th-categories" title="Категории">
-        <ul class="admin-settings-block__options">
-          <li class="admin-settings-block__row">
-            <main class="admin-settings-block__row-main">
-              <div class="admin-settings-block__input">
+      <AdminBlockBase title="Тип края">
+        <ul class="admin-settings-options">
+          <li class="admin-settings-row --th-types"
+              v-for="(input, index) in form.doughs"
+              :key="index"
+          >
+            <main class="admin-settings-row__main">
+              <div class="admin-settings-row__input">
                 <input type="text"
-                       class="admin-product-card-input --th-small">
+                       v-model="input.value"
+                       class="admin-product-card-input --th-small"
+                       :class="{'--th-error': v$.form.doughs?.$each.$response.$errors[index].value.length > 0}"
+                >
+              </div>
+            </main>
+          </li>
+        </ul>
+      </AdminBlockBase>
+
+      <AdminBlockBase
+          @click="addNewCategory"
+          :button="{title: 'Добавить'}"
+          theme="th-categories"
+          title="Категории"
+      >
+        <ul class="admin-settings-options">
+          <li class="admin-settings-row --th-types"
+              v-for="(input, index) in form.categories"
+              :key="index"
+          >
+            <main class="admin-settings-row__main">
+              <div class="admin-settings-row__input">
+                <input type="text"
+                       v-model="input.value"
+                       class="admin-product-card-input --th-small"
+                       :class="{'--th-error': v$.form.categories?.$each.$response.$errors[index].value.length > 0}"
+                >
               </div>
             </main>
           </li>
         </ul>
       </AdminBlockBase>
     </ul>
+    <footer class="admin-all-settings__footer">
+      <ul class="admin-all-settings__actions">
+        <li class="admin-all-settings__action">
+          <UIButton @click="save" :styles="['sz-base', 'th-orange']">Сохранить</UIButton>
+        </li>
+      </ul>
+    </footer>
   </div>
 </template>
 
 <script>
-import AdminBlockBase from "../blocks/AdminBlockBase";
 import useVuelidate from "@vuelidate/core";
-import { helpers, minValue, not, sameAs } from "@vuelidate/validators";
-import AdminSizesBlock from "../blocks/AdminSizesBlock";
+import { helpers, maxLength, minLength, minValue } from "@vuelidate/validators";
+import AdminBlockBase from "../blocks/AdminBlockBase";
+import UIButton from "../../ui/buttons/UIButton";
+
+const validateUnique = (param) => {
+  return helpers.withParams({ value: param }, () => {
+        const set = new Set(Object.values(param))
+        return set.size === Object.keys(param).length
+      }
+  )
+}
 
 export default {
   name: "AdminBoardSettings",
   components: {
     AdminBlockBase,
-    AdminSizesBlock
+    UIButton
   },
   props: {
     sizes: {
@@ -64,17 +111,41 @@ export default {
       default: () => []
     }
   },
+  methods: {
+    addNewCategory() {
+      this.form.categories.push({ value: 'Категория' })
+    },
+    save() {
+      this.$store.dispatch('UPDATE_ADDONS', this.form)
+    },
+  },
+  computed: {
+    convertSizes() {
+      const newArray = [...this.sizes]
+      for (let i = 0; i < 3; i++) {
+        if (!newArray[i]) newArray[i] = {value: i + 1}
+      }
+      return newArray
+    },
+    convertTypes() {
+      const newArray = [...this.doughs]
+      for (let i = 0; i < 2; i++) {
+        if (!newArray[i]) newArray[i] = {value: `Размер: ${i + 1}`}
+      }
+      return newArray
+    }
+  },
+  mounted() {
+    this.form.sizes = [...this.convertSizes]
+    this.form.doughs = [...this.convertTypes]
+  },
   data() {
     return {
       form: {
-        sizes: {
-          small: this.sizes[0] || 0,
-          medium: this.sizes[1] || 0,
-          big: this.sizes[2] || 0,
-        },
-        categories: this.sizes,
-        doughs: this.sizes,
-      }
+        sizes: [],
+        categories: [],
+        doughs: [],
+      },
     }
   },
   setup() {
@@ -84,20 +155,32 @@ export default {
     return {
       form: {
         sizes: {
-          small: {
-            minValue: helpers.withMessage('Размер меньше 2 см.', minValue(2)),
-            sameAs: helpers.withMessage('Размеры совпадают', not(sameAs('big'))),
-          },
-          medium: {
-            minValue: helpers.withMessage('Размер меньше 2 см.', minValue(2)),
-            sameAs: helpers.withMessage('Размеры совпадают', not(sameAs(this.form.sizes.big))),
-          },
-          big: {
-            minValue: helpers.withMessage('Размер меньше 2 см.', minValue(2)),
-            sameAs: helpers.withMessage('Размеры совпадают', not(sameAs(this.form.sizes.small))),
-          },
+          $each: helpers.forEach({
+            value: {
+              minValue: helpers.withMessage('Размер меньше 2 см.', minValue(0)),
+              sameAs: helpers.withMessage('Размеры совпадают', validateUnique(this.form.sizes)),
+            }
+          })
         },
-      }
+        doughs: {
+          $each: helpers.forEach({
+            value: {
+              minValue: helpers.withMessage('Не меньше 2 символов', minLength(2)),
+              maxValue: helpers.withMessage('Не больше 15 символов', maxLength(15)),
+              sameAs: helpers.withMessage('Типы совпадают', validateUnique(this.form.doughs)),
+            }
+          })
+        },
+        categories: {
+          $each: helpers.forEach({
+            value: {
+              minLength: helpers.withMessage('Не меньше 2 символов', minLength(2)),
+              maxLength: helpers.withMessage('Не больше 10 символов', maxLength(10)),
+              sameAs: helpers.withMessage('Значения совпадают', validateUnique(this.form.categories))
+            }
+          })
+        }
+      },
     }
   },
 }

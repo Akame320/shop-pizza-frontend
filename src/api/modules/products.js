@@ -38,5 +38,9 @@ export default {
         return axios.put('http://localhost:5000/api/pizza', formData, {
             headers: {'Content-Type': 'multipart/form-data'}
         })
+    },
+
+    updateAddons(data) {
+        return axios.post('http://localhost:5000/api/addon/update', data)
     }
 }
