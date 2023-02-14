@@ -9,7 +9,7 @@
         }"
         @click="toggleOption(option.value)"
     >
-      {{ option.title }}
+      {{ option.value }}
     </li>
   </ul>
 </template>

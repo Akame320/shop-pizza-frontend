@@ -4,9 +4,7 @@
       <component
           :is="currentBoard"
           :products="PRODUCTS"
-          :doughs="ADDONS.types"
-          :sizes="ADDONS.sizes"
-          :categories="ADDONS.categories"
+          :addons="ADDONS"
       />
     </template>
     <template #aside>

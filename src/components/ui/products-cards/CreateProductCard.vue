@@ -30,12 +30,12 @@
 
     <!-- SETTINGS -->
     <main class="product-card__main">
-      <UIInputItems class="product-card__row-type" v-model="v$.form.doughs.$model" :options="doughs" />
-      <UIInputItems class="product-card__row-size" v-model="v$.form.sizes.$model" :options="sizes" />
+      <UIInputItems class="product-card__row-type" v-model="v$.form.types.$model" :options="addons.types" />
+      <UIInputItems class="product-card__row-size" v-model="v$.form.sizes.$model" :options="addons.sizes" />
       <UIMultiSelect
           class="product-card__row-categories"
           placeholder="Выберите категории"
-          :options="categories"
+          :options="addons.categories"
           v-model="v$.form.categories.$model"/>
     </main>
 
@@ -71,18 +71,10 @@ export default {
     return { v$: useVuelidate() }
   },
   props: {
-    sizes: {
-      type: Array,
-      default: () => []
-    },
-    doughs: {
-      type: Array,
-      default: () => []
-    },
-    categories: {
-      type: Array,
-      default: () => []
-    },
+    addons: {
+      type: Object,
+      default: () => {}
+    }
   },
   validations() {
     return {
@@ -92,7 +84,7 @@ export default {
           minLength: minLength(5)
         },
         categories: { required },
-        doughs: { required },
+        types: { required },
         sizes: { required },
         img: { required },
         price: { required }
@@ -103,7 +95,7 @@ export default {
     return {
       form: {
         categories: [],
-        doughs: [],
+        types: [],
         sizes: [],
         price: 0,
         name: '',

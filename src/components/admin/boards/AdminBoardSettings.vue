@@ -27,7 +27,7 @@
       <AdminBlockBase title="Тип края">
         <ul class="admin-settings-options">
           <li class="admin-settings-row --th-types"
-              v-for="(input, index) in form.doughs"
+              v-for="(input, index) in form.types"
               :key="index"
           >
             <main class="admin-settings-row__main">
@@ -35,7 +35,7 @@
                 <input type="text"
                        v-model="input.value"
                        class="admin-product-card-input --th-small"
-                       :class="{'--th-error': v$.form.doughs?.$each.$response.$errors[index].value.length > 0}"
+                       :class="{'--th-error': v$.form.types?.$each.$response.$errors[index].value.length > 0}"
                 >
               </div>
             </main>
@@ -98,17 +98,9 @@ export default {
     UIButton
   },
   props: {
-    sizes: {
-      type: Array,
-      default: () => []
-    },
-    categories: {
-      type: Array,
-      default: () => []
-    },
-    doughs: {
-      type: Array,
-      default: () => []
+    addons: {
+      type: Object,
+      default: () => {}
     }
   },
   methods: {
@@ -121,30 +113,31 @@ export default {
   },
   computed: {
     convertSizes() {
-      const newArray = [...this.sizes]
+      const newArray = [...this.addons.sizes]
       for (let i = 0; i < 3; i++) {
         if (!newArray[i]) newArray[i] = {value: i + 1}
       }
       return newArray
     },
     convertTypes() {
-      const newArray = [...this.doughs]
+      const newArray = [...this.addons.types]
       for (let i = 0; i < 2; i++) {
-        if (!newArray[i]) newArray[i] = {value: `Размер: ${i + 1}`}
+        if (!newArray[i]) newArray[i] = {value: `Тип: ${i + 1}`}
       }
       return newArray
     }
   },
   mounted() {
     this.form.sizes = [...this.convertSizes]
-    this.form.doughs = [...this.convertTypes]
+    this.form.types = [...this.convertTypes]
+    this.form.categories = this.addons.categories
   },
   data() {
     return {
       form: {
         sizes: [],
         categories: [],
-        doughs: [],
+        types: [],
       },
     }
   },
@@ -162,12 +155,12 @@ export default {
             }
           })
         },
-        doughs: {
+        types: {
           $each: helpers.forEach({
             value: {
               minValue: helpers.withMessage('Не меньше 2 символов', minLength(2)),
               maxValue: helpers.withMessage('Не больше 15 символов', maxLength(15)),
-              sameAs: helpers.withMessage('Типы совпадают', validateUnique(this.form.doughs)),
+              sameAs: helpers.withMessage('Типы совпадают', validateUnique(this.form.types)),
             }
           })
         },

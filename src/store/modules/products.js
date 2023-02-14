@@ -3,7 +3,7 @@ import api from '../../api/index'
 const state = {
     products: [],
     basket: [],
-    addons: [],
+    addons: {},
 }
 
 const getters = {
@@ -11,9 +11,9 @@ const getters = {
         return state.products
     },
 
-   ADDONS: state => {
+    ADDONS: state => {
         return state.addons
-   },
+    },
 
     BASKET: state => {
         return state.basket
@@ -161,8 +161,9 @@ const actions = {
     },
 
     GET_ADDONS: async (context) => {
-        const res  = await api.getAddons()
-        context.commit('SAVE_ADDONS', res.data)
+        const { data } = await api.getAddons()
+        console.log(data)
+        context.commit('SAVE_ADDONS', data)
     }
 }
 

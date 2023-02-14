@@ -28,9 +28,7 @@
       <CreateProductCard
           v-if="hasCreatedPizza"
           :default-edit="true"
-          :sizes="sizes"
-          :dough="doughs"
-          :categories="categories"
+          :addons="addons"
           @update="createPizza"
       />
 
@@ -38,9 +36,7 @@
           v-for="product of products"
           :key="product.title"
           :product="product"
-          :all-sizes="sizes"
-          :all-dough="doughs"
-          :all-categories="categories"
+          :addons="addons"
           @update="updatePizza"
       />
     </ul>
@@ -69,17 +65,9 @@ export default {
       type: Array,
       default: () => []
     },
-    sizes: {
-      type: Array,
-      default: () => []
-    },
-    categories: {
-      type: Array,
-      default: () => []
-    },
-    doughs: {
-      type: Array,
-      default: () => []
+    addons: {
+      type: Object,
+      default: () => {}
     }
   },
   methods: {

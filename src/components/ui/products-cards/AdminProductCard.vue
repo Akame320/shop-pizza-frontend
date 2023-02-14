@@ -47,13 +47,13 @@
 
     <!-- SETTINGS -->
     <main class="product-card__main">
-      <UIInputItems class="product-card__row-type" :clickable="isStateEdit" v-model="v$.form.doughs.$model" :options="allDough" />
-      <UIInputItems class="product-card__row-size" :clickable="isStateEdit" v-model="v$.form.sizes.$model" :options="allSizes" />
+      <UIInputItems class="product-card__row-type" :clickable="isStateEdit" v-model="v$.form.doughs.$model" :options="addons.types" />
+      <UIInputItems class="product-card__row-size" :clickable="isStateEdit" v-model="v$.form.sizes.$model" :options="addons.sizes" />
       <UIMultiSelect
           class="product-card__row-categories"
           :clickable="isStateEdit"
           placeholder="Выберите категории"
-          :options="allCategories"
+          :options="addons.categories"
           v-model="v$.form.categories.$model"/>
     </main>
 
@@ -96,17 +96,9 @@ export default {
       type: Object,
       default: () => {}
     },
-    allSizes: {
-      type: Array,
-      default: () => []
-    },
-    allDough: {
-      type: Array,
-      default: () => []
-    },
-    allCategories: {
-      type: Array,
-      default: () => []
+    addons: {
+      type: Object,
+      default: () => {}
     },
     defaultEdit: {
       type: Boolean,
