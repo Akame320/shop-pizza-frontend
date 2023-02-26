@@ -81,7 +81,7 @@ export default {
       convertPizza.types = this.convertAddonToServer(pizza.types)
 
       const formData = new FormData()
-      for ( let key in pizza ) formData.append(key, pizza[key])
+      for ( let key in convertPizza ) formData.append(key, convertPizza[key])
 
       this.$store.dispatch('CREATE_PIZZA', formData)
     },
