@@ -162,8 +162,12 @@ const actions = {
 
     GET_ADDONS: async (context) => {
         const { data } = await api.getAddons()
-        console.log(data)
         context.commit('SAVE_ADDONS', data)
+    },
+
+    DELETE_PRODUCT: async (context, payload) => {
+        const { data } = await api.deleteProduct(payload)
+        context.commit('SET_PRODUCTS', data)
     }
 }
 

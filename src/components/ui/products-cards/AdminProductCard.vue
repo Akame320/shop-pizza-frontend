@@ -2,7 +2,7 @@
   <li class="admin-product-card" :class="{'--th-edit': isStateEdit}">
     <!-- BUTTONS -->
     <div class="admin-product-card__action-top">
-      <button @click="startEdit" v-if="status !== 'EDIT'" class="admin-product-card__btn-top">
+      <button @click="deleteProduct" class="admin-product-card__btn-top">
         <svg xmlns="http://www.w3.org/2000/svg"
              width="64px" height="64px" viewBox="0 0 64 64">
           <g id="circle_copy_3_1_">
@@ -13,16 +13,6 @@
 					S49.673,0,32,0z M43.729,25.062l-6.801,12.465L36.439,38.4l-0.98,1.746c-0.318,0.567-0.68,1.34-1.326,1.668l-7.307,4.975
 					c-0.262,0.134-0.543,0.191-0.826,0.197V47c-1.576,0-1.988-2-1.988-2l0.527-8.885c-0.046-0.741,0.416-1.451,0.735-2.021
 					l0.979-1.745l7.291-13.339c0.541-0.965,1.739-1.295,2.677-0.738l6.791,4.033C43.949,22.863,44.271,24.097,43.729,25.062z"/>
-          </g>
-        </svg>
-      </button>
-
-      <button @click="saveChanges" v-else class="admin-product-card__btn-top">
-        <svg xmlns="http://www.w3.org/2000/svg"
-             width="64px" height="64px" viewBox="0 0 64 64">
-          <g id="circle_copy_4_3_">
-            <path d="M32,0C14.327,0,0,14.327,0,32c0,17.674,14.327,32,32,32s32-14.326,32-32C64,14.327,49.673,0,32,0z M28.222,41.191
-					L28,40.971l-0.222,0.223l-8.971-8.971l1.414-1.415L28,38.586l15.777-15.778l1.414,1.414L28.222,41.191z"/>
           </g>
         </svg>
       </button>
@@ -166,6 +156,9 @@ export default {
     },
     convertToOptions(items) {
       return items.map(item => item.id)
+    },
+    deleteProduct() {
+      this.$emit('delete', this.product.id)
     }
   }
 }

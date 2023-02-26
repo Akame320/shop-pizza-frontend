@@ -1,71 +1,102 @@
 <template>
-  <li class="admin-product-card --th-edit">
-    <!-- BUTTONS -->
-    <div class="admin-product-card__action-top">
-      <button @click="saveChanges" class="admin-product-card__btn-top">
-        <svg xmlns="http://www.w3.org/2000/svg"
-             width="64px" height="64px" viewBox="0 0 64 64">
-          <g id="circle_copy_4_3_">
-            <path d="M32,0C14.327,0,0,14.327,0,32c0,17.674,14.327,32,32,32s32-14.326,32-32C64,14.327,49.673,0,32,0z M28.222,41.191
-					L28,40.971l-0.222,0.223l-8.971-8.971l1.414-1.415L28,38.586l15.777-15.778l1.414,1.414L28.222,41.191z"/>
-          </g>
-        </svg>
-      </button>
-    </div>
+  <li class="create-pizza-card" :class="{'--st-error': errorVisible}">
+    <!-- Errors -->
+      <div class="create-pizza-card__errors">
+        <ul  class="create-pizza-card__errors-list">
+          <li class="create-pizza-card__errors-item" :key="error.$uid" v-for="error of v$.$errors">
+            {{ error.$message }}
+          </li>
+        </ul>
+      </div>
 
-    <!-- TITLE + IMG -->
-    <header class="admin-product-card__header">
-      <div class="admin-product-card__img-wrapper">
-        <div class="admin-product-card-placeholder-img" />
-        <div class="admin-product-card__uploader">
-          <UIUploader :btn-text="btnText" :styles="['not-dragged']" @input="(file) => v$.form.img.$model = file"/>
+    <!-- Main Data -->
+    <transition name="card-change-anim">
+      <div v-if="isStepMain" class="create-pizza-card-step">
+        <div class="create-pizza-card-top">
+          <div class="create-pizza-card-top__img">
+            <img :src="img"/>
+            <div class="create-pizza-card-top__upload">
+              <UIUploader :btn-styles="['sz-small']" id="uploader-img" @input="(file) => form.img = file" :simple="true">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16">
+                  <path fill-rule="evenodd"
+                        d="M7 9H5l3-3 3 3H9v5H7V9zm5-4c0-.44-.91-3-4.5-3C5.08 2 3 3.92 3 6 1.02 6 0 7.52 0 9c0 1.53 1 3 3 3h3v-1.3H3c-1.62 0-1.7-1.42-1.7-1.7 0-.17.05-1.7 1.7-1.7h1.3V6c0-1.39 1.56-2.7 3.2-2.7 2.55 0 3.13 1.55 3.2 1.8v1.2H12c.81 0 2.7.22 2.7 2.2 0 2.09-2.25 2.2-2.7 2.2h-2V12h2c2.08 0 4-1.16 4-3.5C16 6.06 14.08 5 12 5z"/>
+                </svg>
+              </UIUploader>
+            </div>
+          </div>
+          <div class="create-pizza-card-top__title">
+            <UIInputText placeholder="Название" v-model="form.name" :styles="['th-small']"/>
+          </div>
+          <div class="create-pizza-card-top__select">
+            <UIMultiSelect placeholder="Категории" :options="convertOptions(addons.categories)" v-model="form.categories"/>
+          </div>
         </div>
       </div>
-      <div class="admin-product-card__title-wrapper">
-        <div class="admin-product-card__title-input">
-          <input type="text" v-model="v$.form.name.$model" class="admin-product-card-input">
+    </transition>
+
+
+    <!-- Prices -->
+    <transition name="card-change-anim">
+      <div v-if="isStepPrice" class="create-pizza-card-step">
+        <div class="create-pizza-price">
+          <h2 class="create-pizza-price__title">
+            Размеры
+          </h2>
+          <div class="create-pizza-price__elem">
+            <UIAdminCardPriceInput
+                v-for="item of form.sizes"
+                :key="item.id"
+                :value="item"
+                @input="(value) => updateItem(item, value)"
+            />
+          </div>
+        </div>
+        <div class="create-pizza-price">
+          <h2 class="create-pizza-price__title">
+            Типы
+          </h2>
+          <div class="create-pizza-price__elem">
+            <UIAdminCardPriceInput
+                v-for="item of form.types"
+                :key="item.id"
+                :value="item"
+                @input="(value) => updateItem(item, value)"
+            />
+          </div>
         </div>
       </div>
-    </header>
+    </transition>
 
-    <!-- SETTINGS -->
-    <main class="product-card__main">
-      <UIInputItems class="product-card__row-type" v-model="v$.form.types.$model" :options="addons.types" />
-      <UIInputItems class="product-card__row-size" v-model="v$.form.sizes.$model" :options="addons.sizes" />
-      <UIMultiSelect
-          class="product-card__row-categories"
-          placeholder="Выберите категории"
-          :options="addons.categories"
-          v-model="v$.form.categories.$model"/>
-    </main>
 
-    <!-- PRICE -->
-    <footer class="admin-product-card__footer">
-      <div class="admin-product-card__price">
-        <span class="product-card-title">от</span>
-        <span class="admin-product-card__price-input">
-           <input type="number" v-model="v$.form.price.$model"
-                  class="admin-product-card-input">
-        </span>
-        <span class="product-card-title">₽</span>
-      </div>
+    <footer class="create-pizza-card-action">
+      <UIButton :styles="['sz-small', 'th-outline-grey']" @click="toggleStep">НАЗАД</UIButton>
+      <UIButton :styles="['sz-small']" @click="save">СОХРАНИТЬ</UIButton>
     </footer>
   </li>
 </template>
 
 <script>
+import { helpers, minLength, required } from "@vuelidate/validators";
+import useVuelidate from "@vuelidate/core";
+import UIAdminCardPriceInput from "../UIAdminCardPriceInput";
+import UIButton from "../buttons/UIButton";
+import UIInputText from "../inputs/UIInputText";
 import UIUploader from "../uploaders/UIUploader";
 import UIMultiSelect from "../selects/UIMultiSelect";
-import UIInputItems from "../inputs/UIInputItems";
-import { minLength, required } from "@vuelidate/validators";
-import useVuelidate from "@vuelidate/core";
+
+const STEPS = {
+  main: 'MAIN',
+  price: 'PRICE',
+}
 
 export default {
   name: "CreateProductCard",
   components: {
+    UIAdminCardPriceInput,
+    UIButton,
+    UIInputText,
     UIUploader,
-    UIMultiSelect,
-    UIInputItems
+    UIMultiSelect
   },
   setup() {
     return { v$: useVuelidate() }
@@ -73,31 +104,37 @@ export default {
   props: {
     addons: {
       type: Object,
-      default: () => {}
+      default: () => {
+      }
     }
   },
   validations() {
     return {
       form: {
         name: {
-          required,
-          minLength: minLength(5)
+          required: helpers.withMessage('Название обязательно', required),
+          minLength: helpers.withMessage('Длина названия < 5', minLength(5))
         },
-        categories: { required },
-        types: { required },
-        sizes: { required },
-        img: { required },
-        price: { required }
+        categories: { required: helpers.withMessage('Категории не выбраны', required) },
+        types: { required: helpers.withMessage('Типы пиццы не выбраны', required) },
+        sizes: { required: helpers.withMessage('Размеры пиццы не выбраны', required) },
+        img: { required: helpers.withMessage('Картинка обязательна', required) },
       }
     }
   },
+  created() {
+    this.form.sizes = this.convertAddon(this.addons.sizes)
+    this.form.types = this.convertAddon(this.addons.types)
+  },
   data() {
     return {
+      step: STEPS.main,
+      localImg: null,
+      errorVisible: false,
       form: {
         categories: [],
         types: [],
         sizes: [],
-        price: 0,
         name: '',
         img: null
       }
@@ -109,22 +146,55 @@ export default {
     }
   },
   computed: {
-    pizzaSizes() {
-      return this.product.sizes
+    isStepPrice() {
+      return this.step === STEPS.price
     },
-    btnText() {
-      return this.img ? 'Обновите фото' : 'Добавьте фото'
-    }
+    isStepMain() {
+      return this.step === STEPS.main
+    },
+    img() {
+      return this.localImg || '/static/img/product-mocks/pizza.jpg'
+    },
   },
   methods: {
-    saveChanges() {
-      this.v$.$touch()
-      if (this.v$.$invalid) return
-
-      this.$emit('update', this.form)
+    convertAddon(addon) {
+      return addon.map(item => ({ ...item, isActive: false, price: 0 }))
     },
-    convertToOptions(items) {
-      return items.map(item => item.id)
+    convertOptions(addon) {
+      return addon.map(item => {
+        return {
+          value: item.id,
+          title: item.value
+        }
+      })
+    },
+    updateItem(item, newItem) {
+      item.price = newItem.price
+      item.isActive = newItem.isActive
+    },
+    updatedImg(file) {
+      this.form.img = file
+    },
+    toggleStep() {
+      if (this.step === STEPS.main) {
+        this.step = STEPS.price
+      } else {
+        this.step = STEPS.main
+      }
+    },
+    save() {
+      this.v$.$touch()
+      if (this.v$.$invalid){
+        this.showError()
+      }
+
+      this.$emit('create', this.form)
+    },
+    showError() {
+      this.errorVisible = true
+      setTimeout(() => {
+        this.errorVisible = false
+      }, 3000)
     }
   }
 }

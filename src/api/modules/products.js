@@ -28,5 +28,9 @@ export default {
 
     updateAddons(data) {
         return axios.post('http://localhost:5000/api/addon/update', data)
+    },
+
+    deleteProduct(id) {
+        return axios.delete(`http://localhost:5000/api/pizza/${id}`)
     }
 }

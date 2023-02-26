@@ -29,7 +29,7 @@
           v-if="hasCreatedPizza"
           :default-edit="true"
           :addons="addons"
-          @update="createPizza"
+          @create="createPizza"
       />
 
       <AdminProductCard
@@ -38,6 +38,7 @@
           :product="product"
           :addons="addons"
           @update="updatePizza"
+          @delete="deleteProduct"
       />
     </ul>
   </div>
@@ -75,25 +76,36 @@ export default {
       this.hasCreatedPizza = true
     },
     createPizza(pizza) {
+      const convertPizza = {...pizza}
+      convertPizza.sizes = this.convertAddonToServer(pizza.sizes)
+      convertPizza.types = this.convertAddonToServer(pizza.types)
+
       const formData = new FormData()
-      formData.append('img', pizza.img)
-      formData.append('name', pizza.name)
-      formData.append('price', pizza.price)
+      for ( let key in pizza ) formData.append(key, pizza[key])
 
       this.$store.dispatch('CREATE_PIZZA', formData)
     },
     updatePizza(pizza) {
       const formData = new FormData()
-      formData.append('id', pizza.id)
-      formData.append('img', pizza.img)
-      formData.append('name', pizza.name)
-      formData.append('price', pizza.price)
-      formData.append('sizesId', pizza.sizes)
-      formData.append('categoriesId', pizza.categories)
-      formData.append('doughsId', pizza.doughs)
+      for ( let key in pizza ) formData.append(key, pizza[key])
 
       this.$store.dispatch('UPDATE_PIZZA', formData)
-    }
+    },
+    deleteProduct(id) {
+      this.$store.dispatch('DELETE_PRODUCT', id)
+    },
+    convertAddonToServer(addon) {
+      const filterAddons = addon.filter((item) => {
+        return item.isActive
+      })
+      const deleteUnusedProps = filterAddons.map(item => {
+        return {
+          id: item.id,
+          price: item.price
+        }
+      })
+      return JSON.stringify(deleteUnusedProps)
+    },
   },
 }
 </script>

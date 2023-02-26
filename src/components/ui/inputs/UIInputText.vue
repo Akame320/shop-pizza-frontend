@@ -1,6 +1,6 @@
 <template>
   <div class="main-input">
-    <input :name="name" type="text" :value="value" @input="onInput" class="main-input__elem" :placeholder="placeholder">
+    <input :disabled="disabled" :type="type" :name="name" :value="value" @input="onInput" class="main-input__elem" :placeholder="placeholder">
     <div v-if="error" class="main-input__error">
       {{ error }}
     </div>
@@ -12,7 +12,7 @@ export default {
   name: "UIInputText",
   props: {
     value: {
-      type: String,
+      type: [String, Number],
       default: ''
     },
     name: {
@@ -27,6 +27,14 @@ export default {
       type: String,
       default: ''
     },
+    disabled: {
+      type: Boolean,
+      default: false
+    },
+    type: {
+      type: String,
+      default: 'text'
+    }
   },
   methods: {
     onInput(event) {

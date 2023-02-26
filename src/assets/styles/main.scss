@@ -892,25 +892,10 @@
 }
 
 .uploader-block {
-  border: 2px dashed $accept-color;
-  border-radius: 1rem;
-  min-height: 15rem;
-  width: 100%;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  position: relative;
-
   &__input {
     opacity: 0;
     visibility: hidden;
     position: absolute;
-  }
-
-  &.--not-dragged {
-    border: none;
   }
 }
 
@@ -956,8 +941,8 @@
 
   &__value {
     background-color: white;
-    padding: 0.8rem 2rem;
-    border-radius: 1rem;
+    padding: 1.1rem 2rem;
+    border-radius: 0.5rem;
 
     display: flex;
     align-items: center;
@@ -987,7 +972,7 @@
 
     background-color: white;
     box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.06);
-    border-radius: 0 0 1rem 1rem;
+    border-radius: 0 0 0.5rem 0.5rem;
 
     transition: all 0.089s linear;
     transform: translateY(90%);
@@ -999,7 +984,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 1rem 2rem;
+    padding: 1.1rem 2rem;
 
     transition: all 0.05s linear;
     cursor: pointer;
@@ -1149,4 +1134,183 @@
 
 .u-color-red {
   color: red;
+}
+
+.admin-product-card-price {
+  &__row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    &:not(:last-child) {
+      margin-bottom: 2rem;
+    }
+
+    &.--th-disabled {
+      opacity: 0.5;
+    }
+  }
+
+  &__left {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex: 1 1 auto;
+  }
+
+  &__state {
+    width: 2rem;
+    margin-right: 2rem;
+  }
+
+  &__input {
+    margin-right: 2rem;
+    max-width: 10rem;
+    width: 100%;
+  }
+
+  &__out {
+    font-size: 1.4rem;
+    line-height: 1.8rem;
+    font-weight: 700;
+    color: $text-color-dark;
+    min-width: max-content;
+  }
+}
+
+
+.create-pizza-card {
+  position: relative;
+  box-shadow: 0 0 20px 2px rgb(0 0 0 / 25%);
+  border-radius: 2rem;
+  min-height: 50rem;
+
+  &__errors {
+    width: 13rem;
+    height: auto;
+    padding: 1rem;
+    border: 1.5px solid #dbdbdb;
+    border-radius: 1rem;
+    background-color: #ffffff;
+    position: absolute;
+    top: 1rem;
+    left: auto;
+    right: 1rem;
+    z-index: 100;
+    box-shadow: 0 0 7px 0 rgb(0 0 0 / 25%);
+    transition: all 0.2s linear;
+    transform: translateY(1rem);
+    opacity: 0;
+    visibility: hidden;
+  }
+
+  &.--st-error & {
+    &__errors {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+  }
+
+  &__errors-list {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-gap: 1rem;
+  }
+
+  &__errors-item {
+    font-size: 1rem;
+    line-height: 1.4rem;
+    color: #ff4646;
+  }
+}
+
+.create-pizza-card-action {
+  position: absolute;
+  top: auto;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 1rem;
+
+  padding: 2rem;
+}
+
+.create-pizza-card-step {
+  background-color: #F3F3F3;
+  border-radius: 2rem;
+  padding: 2rem;
+  height: 100%;
+
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+}
+
+.create-pizza-price {
+  &__title {
+    font-size: 2rem;
+    line-height: 2.4rem;
+    color: $text-color-dark;
+  }
+
+  &__elem {
+    margin-top: 2rem;
+  }
+
+  &:not(:last-child) {
+    margin-bottom: 3rem;
+  }
+}
+
+.card-change-anim-enter-active {
+  transition: all 0.15s ease 0.15s;
+}
+.card-change-anim-leave-active {
+  transition: all 0.15s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+}
+.card-change-anim-enter, .card-change-anim-leave-to{
+  transform: translateX(-1rem);
+  opacity: 0;
+  visibility: hidden;
+}
+
+.create-pizza-card-top {
+  margin: -2rem -2rem 0 -2rem;
+
+  &__title {
+    padding: 2rem;
+  }
+
+  &__img {
+    height: max-content;
+    width: 100%;
+    position: relative;
+    border-radius: 2rem 2rem 0 0;
+    overflow: hidden;
+
+    img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+  }
+
+  &__upload {
+    position: absolute;
+    top: auto;
+    left: auto;
+    bottom: 1rem;
+    right: 1rem;
+    z-index: 10;
+  }
+
+  &__select {
+    padding: 0 2rem;
+  }
 }
