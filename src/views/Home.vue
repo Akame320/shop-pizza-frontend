@@ -24,8 +24,7 @@
     <ul class="products-cards-list">
       <MainProductCard
           v-for="pizza of PRODUCTS"
-          :all-sizes="SIZES"
-          :all-dough="DOUGHS"
+          :addons="ADDONS"
           :key="pizza.name"
           :product="pizza"
           :counts="getCounts(pizza.id)"
