@@ -5,7 +5,7 @@
         :key="option.value"
         :class="{
           '--th-selected': isSelectedItem(option.value),
-          '--st-clicked': clickable
+          '--st-clicked': hasClicked(option.value)
         }"
         @click="toggleOption(option.value)"
     >
@@ -19,6 +19,10 @@ export default {
   name: "UIInputItems",
   props: {
     options: {
+      type: Array,
+      default: () => [],
+    },
+    productValue: {
       type: Array,
       default: () => [],
     },
@@ -59,6 +63,9 @@ export default {
       }
 
       this.$emit('input', newValue)
+    },
+    hasClicked(value) {
+      return this.productValue.find(item => item.value === value)
     }
   }
 }

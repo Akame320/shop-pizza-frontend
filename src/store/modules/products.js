@@ -3,7 +3,11 @@ import api from '../../api/index'
 const state = {
     products: [],
     basket: [],
-    addons: {},
+    addons: {
+        categories: [],
+        types: [],
+        sizes: []
+    },
 }
 
 const getters = {
@@ -146,8 +150,8 @@ const actions = {
     },
 
     UPDATE_PIZZA: async (context, payload) => {
-        const updatedProducts = await api.updatePizza(payload)
-        context.commit('SET_PRODUCTS', updatedProducts.data)
+        const { data } = await api.updatePizza(payload)
+        context.commit('SET_PRODUCTS', data)
     },
 
     GET_DATA: async (context) => {

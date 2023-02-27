@@ -1136,6 +1136,16 @@
   color: red;
 }
 
+.admin-product-card {
+  min-height: 50rem;
+
+  &.--th-edit {
+    position: relative;
+    box-shadow: 0 0 20px 2px rgb(0 0 0 / 25%);
+    border-radius: 2rem;
+  }
+}
+
 .admin-product-card-price {
   &__row {
     display: flex;
@@ -1178,38 +1188,28 @@
   }
 }
 
+.admin-pizza-card-error {
+  width: 13rem;
+  height: auto;
+  padding: 1rem;
+  border: 1.5px solid #dbdbdb;
+  border-radius: 1rem;
+  background-color: #ffffff;
+  position: absolute;
+  top: 1rem;
+  left: auto;
+  right: 1rem;
+  z-index: 100;
+  box-shadow: 0 0 7px 0 rgb(0 0 0 / 25%);
+  transition: all 0.2s linear;
+  transform: translateY(1rem);
+  opacity: 0;
+  visibility: hidden;
 
-.create-pizza-card {
-  position: relative;
-  box-shadow: 0 0 20px 2px rgb(0 0 0 / 25%);
-  border-radius: 2rem;
-  min-height: 50rem;
-
-  &__errors {
-    width: 13rem;
-    height: auto;
-    padding: 1rem;
-    border: 1.5px solid #dbdbdb;
-    border-radius: 1rem;
-    background-color: #ffffff;
-    position: absolute;
-    top: 1rem;
-    left: auto;
-    right: 1rem;
-    z-index: 100;
-    box-shadow: 0 0 7px 0 rgb(0 0 0 / 25%);
-    transition: all 0.2s linear;
-    transform: translateY(1rem);
-    opacity: 0;
-    visibility: hidden;
-  }
-
-  &.--st-error & {
-    &__errors {
+  &.--st-error {
       opacity: 1;
       visibility: visible;
       transform: translateY(0);
-    }
   }
 
   &__errors-list {
@@ -1223,6 +1223,13 @@
     line-height: 1.4rem;
     color: #ff4646;
   }
+}
+
+.create-pizza-card {
+  position: relative;
+  box-shadow: 0 0 20px 2px rgb(0 0 0 / 25%);
+  border-radius: 2rem;
+  min-height: 50rem;
 }
 
 .create-pizza-card-action {
@@ -1271,10 +1278,12 @@
 .card-change-anim-enter-active {
   transition: all 0.15s ease 0.15s;
 }
+
 .card-change-anim-leave-active {
   transition: all 0.15s cubic-bezier(1.0, 0.5, 0.8, 1.0);
 }
-.card-change-anim-enter, .card-change-anim-leave-to{
+
+.card-change-anim-enter, .card-change-anim-leave-to {
   transform: translateX(-1rem);
   opacity: 0;
   visibility: hidden;

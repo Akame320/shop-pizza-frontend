@@ -5,18 +5,24 @@
       <div class="product-card__title">{{ product.name }}</div>
     </header>
     <main class="product-card__main">
-      <UIInputItems class="product-card__row-type" :is-multi="false" v-model="selectTypeValue" :options="addons.types"/>
-      <UIInputItems class="product-card__row-size" :is-multi="false" v-model="selectSizeValue" :options="addons.sizes"/>
+      <UIInputItems class="product-card__row-type" :product-value="product.types" :is-multi="false" @input="(val) => selectTypeValue = val" :value="activeType" :options="addons.types"/>
+      <UIInputItems class="product-card__row-size" :product-value="product.sizes" :is-multi="false" @input="(val) => selectSizeValue = val" :value="activeSize" :options="addons.sizes"/>
+      <template v-if="isAdmin">
+        <UIMultiSelect :options="addons.categories" placeholder="Категории" :value="product.categories"
+                       :clickable="false" />
+      </template>
     </main>
     <footer class="product-card__footer">
       <div class="product-card__price">от {{ counts > 0 ? sumPrice : typePrice + sizePrice }} ₽</div>
-      <div class="product-card__button">
-        <button @click="$emit('add', { size: selectSizeValue, dough: selectTypeValue })" class="button-main"
-                :class="{'--st-active': hasProductInBask}">
-          <span>Добавить</span>
-          <span v-show="hasProductInBask" class="product-card-count">{{ counts }}</span>
-        </button>
-      </div>
+      <template v-if="!isAdmin">
+        <div class="product-card__button">
+          <button @click="$emit('add', { size: selectSizeValue, dough: selectTypeValue })" class="button-main"
+                  :class="{'--st-active': hasProductInBask}">
+            <span>Добавить</span>
+            <span v-show="hasProductInBask" class="product-card-count">{{ counts }}</span>
+          </button>
+        </div>
+      </template>
     </footer>
   </li>
 </template>
@@ -24,6 +30,7 @@
 <script>
 
 import UIInputItems from "../inputs/UIInputItems";
+import UIMultiSelect from "../selects/UIMultiSelect";
 
 /**
  * Обычная
@@ -40,7 +47,8 @@ import UIInputItems from "../inputs/UIInputItems";
 export default {
   name: "MainProductCard",
   components: {
-    UIInputItems
+    UIInputItems,
+    UIMultiSelect
   },
   props: {
     product: {
@@ -56,11 +64,11 @@ export default {
     counts: {
       type: Number,
       default: 0
-    }
-  },
-  created() {
-    this.selectSizeValue = this.searchSmallPriceValue(this.product.sizes)
-    this.selectTypeValue = this.searchSmallPriceValue(this.product.types)
+    },
+    isAdmin: {
+      type: Boolean,
+      default: false
+    },
   },
   data() {
     return {
@@ -80,13 +88,19 @@ export default {
       return this.counts > 0
     },
     sizePrice() {
-      return this.product.sizes.find(item => item.value === this.selectSizeValue)?.price
+      return this.product.sizes.find(item => item.value === this.activeSize)?.price
     },
     typePrice() {
-      return this.product.types.find(item => item.value === this.selectTypeValue)?.price
+      return this.product.types.find(item => item.value === this.activeType)?.price
     },
     sumPrice() {
       return this.counts * (this.typePrice + this.sizePrice)
+    },
+    activeSize() {
+      return this.selectSizeValue ? this.selectSizeValue : this.searchSmallPriceValue(this.product.sizes)
+    },
+    activeType() {
+      return this.selectTypeValue ? this.selectTypeValue : this.searchSmallPriceValue(this.product.types)
     }
   },
   methods: {
@@ -96,6 +110,6 @@ export default {
       })
       return bySort[0].value
     }
-  }
+  },
 }
 </script>

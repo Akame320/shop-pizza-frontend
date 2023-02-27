@@ -1,5 +1,6 @@
 <template>
   <div class="admin-products">
+    <!-- BANNER -->
     <div class="admin-products-banner">
       <div class="banner">
         <p class="banner__text">Привет! Первый раз тут ? Давай я проведу твоё обучение :) </p>
@@ -18,15 +19,18 @@
           </g>
         </svg>
         </span>
-        и у тебя откроется режим редактирования. Там ты можешь изменить название, картинку, категории, и цены.
+          и у тебя откроется режим редактирования. Там ты можешь изменить название, картинку, категории, и цены.
         </p>
-        <p class="banner__text --th-mt-20">Обрати внимание на цены. Они работают по следующей форме: <strong>Цена за размер</strong><span>&nbsp;+&nbsp;</span><strong>Цена за тип края</strong>
+        <p class="banner__text --th-mt-20">Обрати внимание на цены. Они работают по следующей форме: <strong>Цена за
+          размер</strong><span>&nbsp;+&nbsp;</span><strong>Цена за тип края</strong>
         </p>
         <div class="banner__action">
           <UIButton :styles="['th-black', 'sz-small']">НЕ ПОКАЗЫВАТЬ</UIButton>
         </div>
       </div>
     </div>
+
+    <!-- ACTIONS -->
     <div class="admin-products__settings">
       <ul class="admin-products-actions">
         <!-- Action -:- Import -->
@@ -51,11 +55,12 @@
         </li>
       </ul>
     </div>
+
+    <!-- CARDS -->
     <ul class="admin-products__products-list">
       <CreateProductCard
           v-if="hasCreatedPizza"
-          :default-edit="true"
-          :addons="addons"
+          :addons="formatAddons"
           @create="createPizza"
       />
 
@@ -63,7 +68,7 @@
           v-for="product of products"
           :key="product.title"
           :product="product"
-          :addons="addons"
+          :addons="formatAddons"
           @update="updatePizza"
           @delete="deleteProduct"
       />
@@ -95,7 +100,14 @@ export default {
     },
     addons: {
       type: Object,
-      default: () => {}
+      default: () => {
+      }
+    }
+  },
+  computed: {
+    formatAddons() {
+      const categories = this.addons?.categories?.map(item => ({ title: item.value, value: item.id }))
+      return { categories, sizes: this.addons.sizes, types: this.addons.types }
     }
   },
   methods: {
@@ -103,18 +115,22 @@ export default {
       this.hasCreatedPizza = true
     },
     createPizza(pizza) {
-      const convertPizza = {...pizza}
+      const convertPizza = { ...pizza }
       convertPizza.sizes = this.convertAddonToServer(pizza.sizes)
       convertPizza.types = this.convertAddonToServer(pizza.types)
 
       const formData = new FormData()
-      for ( let key in convertPizza ) formData.append(key, convertPizza[key])
+      for (let key in convertPizza) formData.append(key, convertPizza[key])
 
       this.$store.dispatch('CREATE_PIZZA', formData)
     },
     updatePizza(pizza) {
+      const convertPizza = { ...pizza }
+      convertPizza.sizes = this.convertAddonToServer(pizza.sizes)
+      convertPizza.types = this.convertAddonToServer(pizza.types)
+
       const formData = new FormData()
-      for ( let key in pizza ) formData.append(key, pizza[key])
+      for (let key in convertPizza) formData.append(key, convertPizza[key])
 
       this.$store.dispatch('UPDATE_PIZZA', formData)
     },

@@ -1,8 +1,11 @@
 <template>
   <li class="admin-product-card" :class="{'--th-edit': isStateEdit}">
+    <!-- Placeholder Card -->
+    <MainProductCard v-if="!isStateEdit" :is-admin="true" :product="product" :addons="addons" />
+
     <!-- BUTTONS -->
     <div class="admin-product-card__action-top">
-      <button @click="deleteProduct" class="admin-product-card__btn-top">
+      <button @click="startEdit" class="admin-product-card__btn-top">
         <svg xmlns="http://www.w3.org/2000/svg"
              width="64px" height="64px" viewBox="0 0 64 64">
           <g id="circle_copy_3_1_">
@@ -18,68 +21,20 @@
       </button>
     </div>
 
-    <!-- TITLE + IMG -->
-    <header class="admin-product-card__header">
-      <div class="admin-product-card__img-wrapper">
-        <img v-if="product.img" class="admin-product-card__img" :class="{'--th-edit': isStateEdit}" :src="img"/>
-        <div v-else class="admin-product-card-placeholder-img" />
-        <div v-if="isStateEdit" class="admin-product-card__uploader">
-          <UIUploader :btn-text="btnText" :styles="['not-dragged']" @input="(file) => v$.form.img.$model = file"/>
-        </div>
-      </div>
-      <div class="admin-product-card__title-wrapper">
-        <div v-if="!isStateEdit" class="product-card-title">{{ product.name }}</div>
-        <div v-else class="admin-product-card__title-input">
-          <input type="text" v-model="v$.form.name.$model" class="admin-product-card-input">
-        </div>
-      </div>
-    </header>
-
-    <!-- SETTINGS -->
-    <main class="product-card__main">
-      <UIInputItems class="product-card__row-type" :clickable="isStateEdit" v-model="v$.form.doughs.$model" :options="addons.types" />
-      <UIInputItems class="product-card__row-size" :clickable="isStateEdit" v-model="v$.form.sizes.$model" :options="addons.sizes" />
-      <UIMultiSelect
-          class="product-card__row-categories"
-          :clickable="isStateEdit"
-          placeholder="Выберите категории"
-          :options="addons.categories"
-          v-model="v$.form.categories.$model"/>
-    </main>
-
-    <!-- PRICE -->
-    <footer class="admin-product-card__footer">
-      <div v-if="!isStateEdit" class="admin-product-card__price"><span
-          class="product-card-title">от {{ product.price }} ₽</span>
-      </div>
-      <div v-else class="admin-product-card__price">
-        <span class="product-card-title">от</span>
-        <span class="admin-product-card__price-input">
-           <input type="number" v-model="v$.form.price.$model"
-                  class="admin-product-card-input">
-        </span>
-        <span class="product-card-title">₽</span>
-      </div>
-    </footer>
+    <ProductCardEditBoards v-if="isStateEdit" :addons="addons" save-btn-text="ОБНОВИТЬ" :product="productFormat" @save="updateHandler" />
   </li>
 </template>
 
 <script>
-import UIUploader from "../uploaders/UIUploader";
-import UIMultiSelect from "../selects/UIMultiSelect";
-import useVuelidate from "@vuelidate/core";
-import { minLength, required } from "@vuelidate/validators";
-import UIInputItems from "../inputs/UIInputItems";
+import MainProductCard from "./MainProductCard";
+import ProductCardEditBoards from "./ProductCardEditBoards";
+import { convertAddonToForm } from "./utilites";
 
 export default {
   name: "AdminProductCard",
-  setup() {
-    return { v$: useVuelidate() }
-  },
   components: {
-    UIUploader,
-    UIMultiSelect,
-    UIInputItems
+    MainProductCard,
+    ProductCardEditBoards
   },
   props: {
     product: {
@@ -90,75 +45,27 @@ export default {
       type: Object,
       default: () => {}
     },
-    defaultEdit: {
-      type: Boolean,
-      default: false
-    }
-  },
-  validations() {
-    return {
-      form: {
-        name: {
-          required,
-          minLength: minLength(5)
-        },
-        categories: { required },
-        doughs: { required },
-        sizes: { required },
-        img: { required },
-        price: { required }
-      }
-    }
   },
   data() {
     return {
-      status: 'PENDING',
-      form: {
-        id: this.product.id || null,
-        categories: this.convertToOptions(this.product.categories || []),
-        doughs: this.convertToOptions(this.product.doughs || []),
-        sizes: this.convertToOptions(this.product.sizes || []),
-        price: this.product.price || 0,
-        name: this.product.name || '',
-        img: this.product.img || null
-      }
-    }
-  },
-  mounted() {
-    if (this.defaultEdit) {
-      this.status = 'EDIT'
+      isStateEdit: false,
     }
   },
   computed: {
-    img() {
-      return 'http://localhost:5000/' + this.product.img
-    },
-    pizzaSizes() {
-      return this.product.sizes
-    },
-    isStateEdit() {
-      return this.status === 'EDIT'
-    },
-    btnText() {
-      return this.product.img ? 'Обновите фото' : 'Добавьте фото'
+    productFormat() {
+      const newForm = {...this.product}
+      newForm.sizes = convertAddonToForm(this.addons.sizes, this.product.sizes)
+      newForm.types = convertAddonToForm(this.addons.types, this.product.types)
+
+      return newForm
     }
   },
   methods: {
     startEdit() {
-      this.status = 'EDIT'
+      this.isStateEdit = true
     },
-    saveChanges() {
-      this.v$.$touch()
-      if (this.v$.$invalid) return
-
-      this.$emit('update', this.form)
-      this.status = 'PENDING'
-    },
-    convertToOptions(items) {
-      return items.map(item => item.id)
-    },
-    deleteProduct() {
-      this.$emit('delete', this.product.id)
+    updateHandler(product) {
+      this.$emit('update', product)
     }
   }
 }
