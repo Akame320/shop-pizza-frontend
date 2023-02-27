@@ -1366,3 +1366,115 @@
     justify-content: flex-end;
   }
 }
+
+
+.top-change-anim-enter-active {
+  transition: all 0.15s ease 0.15s;
+}
+
+.top-change-anim-leave-active {
+  transition: all 0.15s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+}
+
+.top-change-anim-enter, .card-change-anim-leave-to {
+  transform: translateY(-1rem);
+  opacity: 0;
+  visibility: hidden;
+}
+
+.admin-product-card-actions {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-gap: 1rem;
+
+  position: absolute;
+  top: 1rem;
+  left: auto;
+  right: 1rem;
+  z-index: 10;
+}
+
+.loading-popup {
+  background-color: rgba(00, 00, 00, 0.4);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1000000000000000000;
+}
+
+.card-admin-skeleton {
+  position: relative;
+
+  &__btn {
+    position: absolute;
+    top: 1rem;
+    left: auto;
+    right: 1rem;
+    z-index: 1;
+  }
+
+  &__img {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: 0.5rem;
+  }
+
+  &__title {
+    margin-top: 2.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &__settings {
+    margin-top: 2.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &__price {
+    margin-top: 1.7rem;
+  }
+}
+
+.card-admin-banner {
+  margin-top: 3rem;
+  margin-bottom: 2rem;
+  overflow: hidden;
+  border-radius: 2rem;
+}
+
+.admin-actions-skeleton {
+  margin-bottom: 2rem;
+
+  display: grid;
+  grid-template-columns: max-content max-content;
+  grid-gap: 2rem;
+
+  &__item {
+    overflow: hidden;
+    border-radius: 20rem;
+  }
+}
+
+.global-error {
+  width: 20rem;
+
+  background-color: white;
+  position: fixed;
+  top: 2rem;
+  left: auto;
+  right: 2rem;
+  border-radius: 2rem;
+  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.09);
+  z-index: 10000000;
+
+  padding: 2rem;
+  font-size: 1.6rem;
+  line-height: 2rem;
+  font-weight: 700;
+}

@@ -4,7 +4,7 @@
     <MainProductCard v-if="!isStateEdit" :is-admin="true" :product="product" :addons="addons" />
 
     <!-- BUTTONS -->
-    <div class="admin-product-card__action-top">
+    <div class="admin-product-card-actions">
       <button @click="startEdit" class="admin-product-card__btn-top">
         <svg xmlns="http://www.w3.org/2000/svg"
              width="64px" height="64px" viewBox="0 0 64 64">
@@ -17,6 +17,12 @@
 					c-0.262,0.134-0.543,0.191-0.826,0.197V47c-1.576,0-1.988-2-1.988-2l0.527-8.885c-0.046-0.741,0.416-1.451,0.735-2.021
 					l0.979-1.745l7.291-13.339c0.541-0.965,1.739-1.295,2.677-0.738l6.791,4.033C43.949,22.863,44.271,24.097,43.729,25.062z"/>
           </g>
+        </svg>
+      </button>
+
+      <button @click="deleteProduct" class="admin-product-card__btn-top">
+        <svg  viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+          <path fill="red" d="M50,11A39,39,0,1,0,89,50,39.05,39.05,0,0,0,50,11ZM61.12,56.88a3,3,0,0,1,0,4.24,3,3,0,0,1-4.24,0L50,54.24l-6.88,6.88a3,3,0,0,1-4.24,0,3,3,0,0,1,0-4.24L45.76,50l-6.88-6.88a3,3,0,0,1,4.24-4.24L50,45.76l6.88-6.88a3,3,0,0,1,4.24,4.24L54.24,50Z"/>
         </svg>
       </button>
     </div>
@@ -66,6 +72,9 @@ export default {
     },
     updateHandler(product) {
       this.$emit('update', product)
+    },
+    deleteProduct() {
+      this.$emit('delete', this.product.id)
     }
   }
 }

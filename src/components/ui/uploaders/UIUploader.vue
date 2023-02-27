@@ -1,6 +1,6 @@
 <template>
   <div class="uploader-block" :class="classes">
-    <input ref="input" type="file" :id="id" @input="inputHandler" class="uploader-block__input" />
+    <input ref="input" type="file" @input="inputHandler" class="uploader-block__input" />
     <div class="uploader-block__action">
       <UIButton :styles="btnStyles" @click="addFile">
         <slot />

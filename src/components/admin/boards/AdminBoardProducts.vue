@@ -57,22 +57,25 @@
     </div>
 
     <!-- CARDS -->
-    <ul class="admin-products__products-list">
-      <CreateProductCard
-          v-if="hasCreatedPizza"
-          :addons="formatAddons"
-          @create="createPizza"
-      />
+    <template>
+      <transition name="top-change-anim">
+        <ul class="admin-products__products-list">
+          <CreateProductCard
+              :addons="addons"
+              @create="createPizza"
+          />
+          <AdminProductCard
+              v-for="product of products"
+              :key="product.title"
+              :product="product"
+              :addons="addons"
+              @update="updatePizza"
+              @delete="deleteProduct"
+          />
+        </ul>
 
-      <AdminProductCard
-          v-for="product of products"
-          :key="product.title"
-          :product="product"
-          :addons="formatAddons"
-          @update="updatePizza"
-          @delete="deleteProduct"
-      />
-    </ul>
+      </transition>
+    </template>
   </div>
 </template>
 
@@ -100,54 +103,21 @@ export default {
     },
     addons: {
       type: Object,
-      default: () => {
-      }
-    }
-  },
-  computed: {
-    formatAddons() {
-      const categories = this.addons?.categories?.map(item => ({ title: item.value, value: item.id }))
-      return { categories, sizes: this.addons.sizes, types: this.addons.types }
+      default: () => {}
     }
   },
   methods: {
     addNewPizza() {
       this.hasCreatedPizza = true
     },
-    createPizza(pizza) {
-      const convertPizza = { ...pizza }
-      convertPizza.sizes = this.convertAddonToServer(pizza.sizes)
-      convertPizza.types = this.convertAddonToServer(pizza.types)
-
-      const formData = new FormData()
-      for (let key in convertPizza) formData.append(key, convertPizza[key])
-
-      this.$store.dispatch('CREATE_PIZZA', formData)
+    createPizza(product) {
+     this.$emit('productCreate', product)
     },
-    updatePizza(pizza) {
-      const convertPizza = { ...pizza }
-      convertPizza.sizes = this.convertAddonToServer(pizza.sizes)
-      convertPizza.types = this.convertAddonToServer(pizza.types)
-
-      const formData = new FormData()
-      for (let key in convertPizza) formData.append(key, convertPizza[key])
-
-      this.$store.dispatch('UPDATE_PIZZA', formData)
+    updatePizza(product) {
+      this.$emit('productUpdate', product)
     },
     deleteProduct(id) {
-      this.$store.dispatch('DELETE_PRODUCT', id)
-    },
-    convertAddonToServer(addon) {
-      const filterAddons = addon.filter((item) => {
-        return item.isActive
-      })
-      const deleteUnusedProps = filterAddons.map(item => {
-        return {
-          id: item.id,
-          price: item.price
-        }
-      })
-      return JSON.stringify(deleteUnusedProps)
+      this.$emit('productDelete', id)
     },
   },
 }

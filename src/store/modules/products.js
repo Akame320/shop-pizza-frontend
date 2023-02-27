@@ -101,7 +101,7 @@ const mutations = {
     },
 
     SAVE_ADDONS: (state, payload) => {
-        state.addons = Object.assign(payload)
+        state.addons = Object.assign({}, payload)
     }
 }
 
@@ -146,7 +146,9 @@ const actions = {
     },
 
     CREATE_PIZZA: async (context, payload) => {
-        await api.createNewPizza(payload)
+        const promise = await api.createNewPizza(payload)
+        context.commit('SET_PRODUCTS', promise.data)
+        return promise
     },
 
     UPDATE_PIZZA: async (context, payload) => {
@@ -170,8 +172,10 @@ const actions = {
     },
 
     DELETE_PRODUCT: async (context, payload) => {
-        const { data } = await api.deleteProduct(payload)
-        context.commit('SET_PRODUCTS', data)
+        const promise = await api.deleteProduct(payload)
+        context.commit('SET_PRODUCTS', promise.data)
+
+        return promise
     }
 }
 

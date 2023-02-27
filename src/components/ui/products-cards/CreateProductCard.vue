@@ -2,7 +2,7 @@
   <li class="create-pizza-card" >
     <ProductCardEditBoards
       :addons="addons"
-      :product="formFormat"
+      :product="form"
       save-btn-text="СОЗДАТЬ"
       @save="saveHandler"
     />
@@ -30,20 +30,11 @@ export default {
       errors: false,
       form: {
         img: null,
-        sizes: [],
-        types: [],
+        sizes: convertAddonToForm(this.addons.sizes),
+        types: convertAddonToForm(this.addons.types),
         categories: [],
         name: ''
       }
-    }
-  },
-  computed: {
-    formFormat() {
-      const newForm = {...this.product}
-      newForm.sizes = convertAddonToForm(this.addons.sizes)
-      newForm.types = convertAddonToForm(this.addons.types)
-
-      return newForm
     }
   },
   methods: {
