@@ -90,7 +90,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['BASKET_SUM', 'BASKET_COUNT', 'HAS_AUTH', 'IS_ADMIN']),
+    ...mapGetters(['HAS_AUTH', 'IS_ADMIN', 'BASKET_SUM', 'BASKET_COUNT']),
     basketSum() {
       return this.BASKET_SUM
     },
@@ -100,7 +100,6 @@ export default {
     hasActions() {
       return !this.HAS_AUTH
     },
-
   },
 }
 </script>

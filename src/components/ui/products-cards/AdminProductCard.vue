@@ -5,7 +5,7 @@
 
     <!-- BUTTONS -->
     <div class="admin-product-card-actions">
-      <button @click="startEdit" class="admin-product-card__btn-top">
+      <button @click="changeStateEdit" class="admin-product-card__btn-top">
         <svg xmlns="http://www.w3.org/2000/svg"
              width="64px" height="64px" viewBox="0 0 64 64">
           <g id="circle_copy_3_1_">
@@ -51,6 +51,10 @@ export default {
       type: Object,
       default: () => {}
     },
+    isEditChange: {
+      type: Boolean,
+      default: true
+    }
   },
   data() {
     return {
@@ -67,8 +71,11 @@ export default {
     }
   },
   methods: {
-    startEdit() {
-      this.isStateEdit = true
+    changeStateEdit() {
+      if(this.isEditChange) {
+        this.isStateEdit = true
+        this.$emit('editStart', )
+      }
     },
     updateHandler(product) {
       this.$emit('update', product)

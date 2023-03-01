@@ -1,18 +1,8 @@
 <template>
   <LayoutPublic>
     <div class="products-page-settings">
-      <ul class="categories-tabs">
-        <li v-for="cat of categories"
-            :key="cat.id"
-            class="categories-tabs-item"
-            :class="categoriesStyles(cat.id)"
-            @click="toggleCategories(cat.id)"
-        >
-          {{ cat.value }}
-        </li>
-      </ul>
-
-      <UIFilterSelect @input="sortHandler" :options="sortOptions" :value="sort"/>
+      <UITabsButton v-model="filterCategorise" :categories="categories"/>
+      <UIFilterSelect :options="sortOptions" v-model="sorting"/>
     </div>
 
     <div class="products-page__title-wrapper">
@@ -21,95 +11,114 @@
       </h1>
     </div>
 
-    <ul class="products-cards-list">
-      <MainProductCard
-          v-for="pizza of PRODUCTS"
-          :addons="ADDONS"
-          :key="pizza.name"
-          :product="pizza"
-          :counts="getCounts(pizza.id)"
-          @add="updateBasket"
-      />
-    </ul>
+    <AppProductBoard :products="products" :addons="ADDONS" @addCount="addCount" @updateBask="updateBasket"/>
   </LayoutPublic>
 </template>
 
 <script>
-import MainProductCard from '../components/ui/products-cards/MainProductCard.vue'
 import { mapGetters } from "vuex";
+
 import LayoutPublic from "../layouts/LayoutPublic";
 import UIFilterSelect from "../components/ui/selects/UIFilterSelect";
+import UITabsButton from "../components/ui/tabs/UITabsButton";
+import AppProductBoard from "../components/home/AppProductBoard";
 
-const SORTING_OPTIONS = [
-  {
-    title: 'по цене',
-    value: 'price',
-  }, {
-    title: 'по алфавиту',
-    value: 'alphabet',
-  }
-]
+const SORT_PRICE = {
+  title: 'по Цене',
+  value: 'PRICE',
+}
+
+const SORT_ALPHABET = {
+  title: 'по Названию',
+  value: 'NAME',
+}
+
+const SORTING_OPTIONS = [SORT_ALPHABET, SORT_PRICE]
+
+const INITIAL_SORTING = SORTING_OPTIONS[0].value
+
+const FILTER_ALL_OPTION = {
+  value: 0,
+  title: 'Все'
+}
 
 export default {
   name: "Home",
   components: {
-    MainProductCard,
     LayoutPublic,
-    UIFilterSelect
+    UIFilterSelect,
+    UITabsButton,
+    AppProductBoard
   },
-  computed: {
-    ...mapGetters(['PRODUCTS', 'ADDONS', 'HAS_AUTH', 'BASKET']),
-    categories() {
-      const list = [...this.ADDONS.categories || []]
-      list.unshift({ id: 0, value: 'Все' })
-      return list
-    },
-    hasAllSelectedCategories() {
-      return this.categories.length === this.filterCategorise.length
-    },
-    sortOptions() {
-      return SORTING_OPTIONS.slice(0)
-    }
+  created() {
+    this.$store.dispatch('GET_PRODUCTS');
+    this.$store.dispatch('GET_ADDONS');
   },
   data() {
     return {
-      pizzas: [],
-      filterCategorise: [],
-      sort: 'price'
+      filterCategorise: [FILTER_ALL_OPTION.value],
+      sorting: INITIAL_SORTING
+    }
+  },
+  computed: {
+    ...mapGetters(['PRODUCTS', 'ADDONS', 'HAS_AUTH', 'GET_BASKET']),
+    categories() {
+      const list = [...this.ADDONS.categories || []]
+      list.unshift(FILTER_ALL_OPTION)
+
+      return list
+    },
+    sortOptions() {
+      return [...SORTING_OPTIONS]
+    },
+    filterProducts() {
+      if (this.filterCategorise.includes(FILTER_ALL_OPTION.value)) {
+        return this.PRODUCTS
+      }
+
+      return this.PRODUCTS.filter(product => {
+        for (const category of product.categories) {
+          return this.filterCategorise.includes(category)
+        }
+      })
+    },
+    sortByName() {
+      const sortProducts = [...this.filterProducts]
+      return sortProducts.sort()
+    },
+    sortByPrice() {
+      const sortProducts = [...this.filterProducts]
+      return sortProducts.sort((a, b) => {
+        const minPriceA = a.sizes[0].price + a.types[0].price
+        const minPriceB = b.sizes[0].price + b.types[0].price
+
+        return minPriceA - minPriceB
+      })
+    },
+    products() {
+      switch (this.sorting) {
+        case SORT_ALPHABET.value :
+          return this.sortByName
+        case SORT_PRICE.value :
+          return this.sortByPrice
+        default :
+          return this.filterProducts
+      }
     }
   },
   methods: {
-    toggleCategories(catId) {
-      if (catId === 0) {
-        this.filterCategorise = this.categories.map(cat => cat.id)
-      } else {
-        const indexCat = this.filterCategorise.findIndex(cat => cat === catId)
-        if (indexCat === -1) this.filterCategorise.push(catId)
-        else this.filterCategorise.splice(indexCat, 1)
-      }
+    addCount(data) {
+      const hasProductInBasket = this.GET_BASKET.find(item => item.id === data.id)
 
-      if (!this.hasAllSelectedCategories) {
-        const indexCat = this.filterCategorise.findIndex(cat => cat === 0)
-        if (indexCat !== -1) this.filterCategorise.splice(indexCat, 1)
+      if (hasProductInBasket) {
+        this.$store.commit('BASK_PRODUCT_INCREMENT', data)
+      } else {
+        this.$store.commit('BASK_ADD_PRODUCT', data)
       }
     },
-    categoriesStyles(catId) {
-      return { '--st-selected': this.filterCategorise.includes(catId) }
-    },
-    sortHandler(value) {
-      this.sort = value
-    },
-    updateBasket(id) {
-      this.$store.dispatch('INCREMENT_BASKET', { id });
-    },
-    getCounts(id) {
-      const { count } = this.BASKET.find(product => product.id === id) || 0
-      return count
+    updateBasket(data) {
+      this.$store.commit('BASK_PRODUCT_UPDATE', data)
     }
-  },
-  mounted() {
-    this.$store.dispatch('GET_PRODUCTS');
-    this.$store.dispatch('GET_ADDONS');
   }
 }
 </script>

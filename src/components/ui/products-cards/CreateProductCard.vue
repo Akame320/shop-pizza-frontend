@@ -29,7 +29,7 @@ export default {
     return {
       errors: false,
       form: {
-        img: null,
+        imgFile: null,
         sizes: convertAddonToForm(this.addons.sizes),
         types: convertAddonToForm(this.addons.types),
         categories: [],

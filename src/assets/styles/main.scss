@@ -892,10 +892,30 @@
 }
 
 .uploader-block {
+  position: relative;
+
   &__input {
     opacity: 0;
     visibility: hidden;
     position: absolute;
+  }
+
+  &__img {
+    width: 100%;
+    height: auto;
+    display: block;
+
+    &.th-gray {
+      filter: grayscale(100%);
+    }
+  }
+
+  &__action {
+    position: absolute;
+    top: auto;
+    right: 1rem;
+    bottom: 1rem;
+    left: auto;
   }
 }
 
@@ -1294,20 +1314,6 @@
 
   &__title {
     padding: 2rem;
-  }
-
-  &__img {
-    height: max-content;
-    width: 100%;
-    position: relative;
-    border-radius: 2rem 2rem 0 0;
-    overflow: hidden;
-
-    img {
-      width: 100%;
-      height: auto;
-      display: block;
-    }
   }
 
   &__upload {

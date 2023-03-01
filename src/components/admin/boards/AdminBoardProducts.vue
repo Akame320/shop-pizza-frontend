@@ -69,8 +69,10 @@
               :key="product.title"
               :product="product"
               :addons="addons"
+              :is-edit-change="hasCardEdit"
               @update="updatePizza"
               @delete="deleteProduct"
+              @changeStateEdit="validateStateEdits"
           />
         </ul>
 
@@ -93,7 +95,7 @@ export default {
   },
   data() {
     return {
-      hasCreatedPizza: false,
+      hasCardEdit: true,
     }
   },
   props: {
@@ -119,6 +121,9 @@ export default {
     deleteProduct(id) {
       this.$emit('productDelete', id)
     },
+    validateStateEdits() {
+      this.hasCardEdit = false
+    }
   },
 }
 </script>

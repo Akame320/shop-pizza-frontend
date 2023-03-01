@@ -15,19 +15,17 @@
       <div v-if="isStepMain" class="create-pizza-card-step">
         <div class="create-pizza-card-top">
           <div class="create-pizza-card-top__img">
-            <img :src="img"/>
-            <div class="create-pizza-card-top__upload">
-              <UIUploader
-                  :btn-styles="['sz-small']"
-                  @input="(file) => {v$.form.img.$model = file}"
-                  :simple="true"
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16">
-                  <path fill-rule="evenodd"
-                        d="M7 9H5l3-3 3 3H9v5H7V9zm5-4c0-.44-.91-3-4.5-3C5.08 2 3 3.92 3 6 1.02 6 0 7.52 0 9c0 1.53 1 3 3 3h3v-1.3H3c-1.62 0-1.7-1.42-1.7-1.7 0-.17.05-1.7 1.7-1.7h1.3V6c0-1.39 1.56-2.7 3.2-2.7 2.55 0 3.13 1.55 3.2 1.8v1.2H12c.81 0 2.7.22 2.7 2.2 0 2.09-2.25 2.2-2.7 2.2h-2V12h2c2.08 0 4-1.16 4-3.5C16 6.06 14.08 5 12 5z"/>
-                </svg>
-              </UIUploader>
-            </div>
+            <UIUploader
+                :btn-styles="['sz-small']"
+                @input="uploaderHandler"
+                :simple="true"
+                :img-src="form.img"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16">
+                <path fill-rule="evenodd"
+                      d="M7 9H5l3-3 3 3H9v5H7V9zm5-4c0-.44-.91-3-4.5-3C5.08 2 3 3.92 3 6 1.02 6 0 7.52 0 9c0 1.53 1 3 3 3h3v-1.3H3c-1.62 0-1.7-1.42-1.7-1.7 0-.17.05-1.7 1.7-1.7h1.3V6c0-1.39 1.56-2.7 3.2-2.7 2.55 0 3.13 1.55 3.2 1.8v1.2H12c.81 0 2.7.22 2.7 2.2 0 2.09-2.25 2.2-2.7 2.2h-2V12h2c2.08 0 4-1.16 4-3.5C16 6.06 14.08 5 12 5z"/>
+              </svg>
+            </UIUploader>
           </div>
           <div class="create-pizza-card-top__title">
             <UIInputText placeholder="Название" v-model="form.name" :styles="['th-small']"/>
@@ -89,7 +87,7 @@ import UIInputText from "../inputs/UIInputText";
 import UIUploader from "../uploaders/UIUploader";
 import UIMultiSelect from "../selects/UIMultiSelect";
 import useVuelidate from "@vuelidate/core";
-import { helpers, minLength, required } from "@vuelidate/validators";
+import { helpers, minLength, required, requiredUnless } from "@vuelidate/validators";
 
 const STEPS = {
   main: 'MAIN',
@@ -144,7 +142,7 @@ export default {
         categories: { required: helpers.withMessage('Категории не выбраны', required) },
         types: { required: helpers.withMessage('Типы пиццы не выбраны', validateRequiredPrice) },
         sizes: { required: helpers.withMessage('Размеры пиццы не выбраны', validateRequiredPrice) },
-        img: { required: helpers.withMessage('Картинка обязательна', required) },
+        imgFile: { required: helpers.withMessage('Картинка обязательна', requiredUnless(this.form.img)) },
       }
     }
   },
@@ -152,7 +150,7 @@ export default {
     return {
       showErrors: false,
       step: STEPS.main,
-      form: {...this.product}
+      form: { ...this.product, imgFile: null }
     }
   },
   computed: {
@@ -161,9 +159,6 @@ export default {
     },
     isStepMain() {
       return this.step === STEPS.main
-    },
-    img() {
-      return '/static/img/product-mocks/pizza.jpg'
     },
     toggleBtnTitle() {
       return this.isStepMain ? 'ЦЕНЫ' : 'НАЗАД'
@@ -215,6 +210,9 @@ export default {
       })
       return JSON.stringify(deleteUnusedProps)
     },
+    uploaderHandler(file) {
+      this.form.imgFile = file
+    }
   }
 }
 </script>

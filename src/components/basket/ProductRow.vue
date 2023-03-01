@@ -6,7 +6,7 @@
       </div>
       <div class="basket-item-row__settings-wrapper">
         <div class="basket-item-row__title">{{ product.name }}</div>
-        <div class="basket-item-row__setting">тонкое тесто, 26 см.</div>
+        <div class="basket-item-row__setting">{{ product.type.value }} тесто, {{ product.size.value }} см.</div>
       </div>
     </main>
     <aside class="basket-item-row__aside">
@@ -33,7 +33,7 @@
           </div>
         </div>
       </div>
-      <div class="basket-item-row__sum">{{ sum }} ₽ </div>
+      <div class="basket-item-row__sum">{{ product.price }} ₽ </div>
       <div class="basket-item-row__remove">
         <button @click="$emit('remove', product.id)" class="circle-button --th-grey">
           <svg width="10" height="9" viewBox="0 0 10 9" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -48,6 +48,8 @@
 </template>
 
 <script>
+import { getImgPath } from "../../utils/servers";
+
 export default {
   name: "ProductRow",
   props: {
@@ -59,11 +61,8 @@ export default {
   },
   computed: {
     img() {
-      return 'http://localhost:5000/' + this.product.img
+      return getImgPath(this.product.img)
     },
-    sum() {
-      return this.product.count * this.product.price
-    }
   }
 }
 </script>

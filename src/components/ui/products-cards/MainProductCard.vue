@@ -5,21 +5,43 @@
       <div class="product-card__title">{{ product.name }}</div>
     </header>
     <main class="product-card__main">
-      <UIInputItems class="product-card__row-type" :product-value="product.types" :is-multi="false" @input="(val) => selectTypeValue = val" :value="activeType" :options="addons.types"/>
-      <UIInputItems class="product-card__row-size" :product-value="product.sizes" :is-multi="false" @input="(val) => selectSizeValue = val" :value="activeSize" :options="addons.sizes"/>
+      <UIInputItems
+          class="product-card__row-type"
+          :product-value="product.types"
+          :is-multi="false"
+          v-model="settings.selectTypeValue"
+          :options="addons.types"
+      />
+      <UIInputItems
+          class="product-card__row-size"
+          :product-value="product.sizes"
+          :is-multi="false"
+          v-model="settings.selectSizeValue"
+          :options="addons.sizes"
+      />
       <template v-if="isAdmin">
-        <UIMultiSelect :options="addons.categories" placeholder="Категории" :value="product.categories"
-                       :clickable="false" />
+        <UIMultiSelect
+            placeholder="Категории" :value="product.categories"
+            :options="addons.categories"
+            :clickable="false"
+        />
       </template>
     </main>
     <footer class="product-card__footer">
-      <div class="product-card__price">от {{ counts > 0 ? sumPrice : typePrice + sizePrice }} ₽</div>
+      <div class="product-card__price">
+        <span>от </span>
+        <span>{{ hasProductInBask ? basket.price : sumPrice }} </span>
+        <span>₽ </span>
+        <span v-show="hasProductInBask" class="product-card__price-small">
+          {{ sumPrice }} ₽
+        </span>
+      </div>
       <template v-if="!isAdmin">
         <div class="product-card__button">
-          <button @click="$emit('add', { size: selectSizeValue, dough: selectTypeValue })" class="button-main"
+          <button @click="addToBasket" class="button-main"
                   :class="{'--st-active': hasProductInBask}">
             <span>Добавить</span>
-            <span v-show="hasProductInBask" class="product-card-count">{{ counts }}</span>
+            <span v-show="hasProductInBask" class="product-card-count">{{ basket?.count }}</span>
           </button>
         </div>
       </template>
@@ -28,21 +50,10 @@
 </template>
 
 <script>
+import { getImgPath } from '../../../utils/servers';
 
 import UIInputItems from "../inputs/UIInputItems";
 import UIMultiSelect from "../selects/UIMultiSelect";
-
-/**
- * Обычная
- * 400
- * 450
- * 500
- *
- * Сырный
- * 500
- * 550
- * 600
- */
 
 export default {
   name: "MainProductCard",
@@ -61,47 +72,45 @@ export default {
       default: () => {
       }
     },
-    counts: {
-      type: Number,
-      default: 0
+    basket: {
+      type: Object,
+      default: () => {
+      }
     },
     isAdmin: {
       type: Boolean,
       default: false
     },
   },
+  created() {
+    this.settings.selectSizeValue = this.searchSmallPriceValue(this.product.sizes)
+    this.settings.selectTypeValue = this.searchSmallPriceValue(this.product.types)
+  },
   data() {
     return {
       localValue: '',
-      selectSizeValue: null,
-      selectTypeValue: null
+      settings: {
+        selectSizeValue: null,
+        selectTypeValue: null
+      }
     }
   },
   computed: {
     img() {
-      return 'http://localhost:5000/' + this.product.img
-    },
-    pizzaSizes() {
-      return this.product.sizes
+      return getImgPath(this.product.img)
     },
     hasProductInBask() {
-      return this.counts > 0
+      return this.basket
     },
-    sizePrice() {
-      return this.product.sizes.find(item => item.value === this.activeSize)?.price
+    activeSizeElem() {
+      return this.product.sizes.find(item => item.value === this.settings.selectSizeValue)
     },
-    typePrice() {
-      return this.product.types.find(item => item.value === this.activeType)?.price
+    activeTypeElem() {
+      return this.product.types.find(item => item.value === this.settings.selectTypeValue)
     },
     sumPrice() {
-      return this.counts * (this.typePrice + this.sizePrice)
+      return this.activeSizeElem.price + this.activeTypeElem.price
     },
-    activeSize() {
-      return this.selectSizeValue ? this.selectSizeValue : this.searchSmallPriceValue(this.product.sizes)
-    },
-    activeType() {
-      return this.selectTypeValue ? this.selectTypeValue : this.searchSmallPriceValue(this.product.types)
-    }
   },
   methods: {
     searchSmallPriceValue(array) {
@@ -109,7 +118,44 @@ export default {
         return a.price - b.price
       })
       return bySort[0].value
+    },
+    addToBasket() {
+      this.$emit('add', {
+        size: this.activeSizeElem,
+        type: this.activeTypeElem,
+        id: this.product.id,
+        img: this.product.img,
+        name: this.product.name
+      })
     }
   },
+  watch: {
+    settings: {
+      handler() {
+        if (!this.hasProductInBask) return
+
+        this.$emit('updateBask', {
+          id: this.product.id,
+          type: this.activeTypeElem,
+          size: this.activeSizeElem
+        })
+      },
+      deep: true
+    }
+  }
 }
+
+
+/**
+ * Задача
+ * Есть карточка пиццы. Есть корзина.
+ * Нужно добавлять данные с карточки пиццы в корзину.
+ * В корзине должен быть
+ *  - Размер
+ *  - Тип
+ *  - id
+ *  - Актуальная цена
+ *
+ *  При изменения актуального типа или размера цена и корзина должны обновляться. Если пицца есть в ней.
+ */
 </script>

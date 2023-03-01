@@ -67,7 +67,7 @@
                 <div class="page-basket-footer__top">
                   <h3 class="page-basket-footer__title">Сумма заказа: <strong class="u-color-accept"> {{ BASKET_SUM }} ₽</strong></h3>
                 </div>
-                <button @click="paymentHandler" class="button-main --sz-big basket-big-btn">Оплатить сейчас</button>
+                <button class="button-main --sz-big basket-big-btn">Оплатить сейчас</button>
               </div>
             </div>
           </footer>
@@ -99,7 +99,6 @@
 </template>
 
 <script>
-import { YooCheckout } from '@a2seven/yoo-checkout';
 import LayoutPublic from "../layouts/LayoutPublic";
 import { mapGetters } from "vuex";
 import ProductRow from "../components/basket/ProductRow";
@@ -113,54 +112,27 @@ export default {
     ModalWarningNotAuth
   },
   computed: {
-    ...mapGetters(['BASKET', 'PRODUCTS', 'BASKET_COUNT', 'BASKET_SUM', 'HAS_AUTH']),
+    ...mapGetters(['GET_BASKET', 'BASKET_COUNT', 'BASKET_SUM', 'HAS_AUTH']),
     productsInBasket() {
-      return this.BASKET
+      return this.GET_BASKET
     },
     hasBasketNotNull() {
-      return this.basket > 0
+      return this.BASKET_COUNT > 0
     }
   },
   methods: {
     increment(id) {
-      this.$store.dispatch('INCREMENT_BASKET', { id });
+      this.$store.commit('BASK_PRODUCT_INCREMENT', {id});
     },
     decrement(id) {
-      this.$store.dispatch('DECREMENT_BASKET', { id })
+      this.$store.commit('BASK_PRODUCT_DECREMENT', {id})
     },
     remove(id) {
-      this.$store.dispatch('REMOVE_BASKET', { id })
+      this.$store.commit('BASKET_PRODUCT_CLEAR', {id})
     },
     clearAllProducts() {
-      this.$store.dispatch('REMOVE_BASKET')
+      this.$store.commit('BASKET_CLEAR')
     },
-    async paymentHandler() {
-      if (!this.HAS_AUTH) {
-        this.$vfm.show('no-auth')
-      } else {
-        const checkout = new YooCheckout({ shopId: 969608, secretKey: 'test_uqf64O9ezzGQCH2SSdmH3-C2k9YG9GojDS51H8_Ek-g' });
-        const idempotenceKey = '02347fc4-a1f0-49db-807e-f0d67c2ed5a5';
-        const createPayload = {
-          amount: {
-            value: '2.00',
-            currency: 'RUB'
-          },
-          payment_method_data: {
-            type: 'bank_card'
-          },
-          confirmation: {
-            type: 'redirect',
-            return_url: 'test'
-          }
-        };
-        try {
-          const payment = await checkout.createPayment(createPayload, idempotenceKey);
-          console.log(payment)
-        } catch (error) {
-          console.error(error);
-        }
-      }
-    }
   }
 }
 </script>

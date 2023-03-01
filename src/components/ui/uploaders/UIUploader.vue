@@ -1,9 +1,10 @@
 <template>
   <div class="uploader-block" :class="classes">
-    <input ref="input" type="file" @input="inputHandler" class="uploader-block__input" />
+    <input ref="input" type="file" @input="inputHandler" class="uploader-block__input"/>
+    <img class="uploader-block__img" :class="{'th-gray': !localImg}" :src="imgPreview"/>
     <div class="uploader-block__action">
       <UIButton :styles="btnStyles" @click="addFile">
-        <slot />
+        <slot/>
       </UIButton>
     </div>
   </div>
@@ -35,30 +36,38 @@ export default {
     btnStyles: {
       type: Array,
       default: () => []
+    },
+    imgSrc: {
+      type: String,
+      default: ''
     }
   },
   data() {
     return {
-      img: null
+      localImg: null
     }
   },
   computed: {
-    addingClass() {
-      if (this.simple) {
-        return ['--not-dragged', '--hidden']
-      }
-
-      return []
-    }
+    imgPreview() {
+      return this.localImg ? this.localImg : this.imgSrc ? 'http://localhost:5000/' + this.imgSrc : '/static/img/product-mocks/pizza.jpg'
+    },
   },
   methods: {
     addFile() {
       this.$refs.input.click()
     },
     inputHandler(event) {
-      this.$emit('input', event.target.files[0])
+      const file = event.target.files[0]
+      this.$emit('input', file)
+      this.updatePhoto(file)
     },
-
+    updatePhoto(file) {
+      let reader = new FileReader();
+      reader.onload = (event) => {
+        this.localImg = event.target.result
+      }
+      reader.readAsDataURL(file);
+    }
   }
 }
 </script>

@@ -5,6 +5,11 @@ const convertToFormData = (form) => {
     return formData
 }
 
+const getImgPath = (imgName) => {
+    return `http://localhost:5000/${imgName}`
+}
+
 export {
-    convertToFormData
+    convertToFormData,
+    getImgPath
 }
