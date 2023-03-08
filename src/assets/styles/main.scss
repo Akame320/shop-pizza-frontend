@@ -904,6 +904,8 @@
     width: 100%;
     height: auto;
     display: block;
+    border-top-right-radius: 2rem;
+    border-top-left-radius: 2rem;
 
     &.th-gray {
       filter: grayscale(100%);
