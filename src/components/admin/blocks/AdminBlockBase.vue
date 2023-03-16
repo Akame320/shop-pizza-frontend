@@ -18,17 +18,17 @@
 </template>
 
 <script>
-import UIButton from "../../ui/buttons/UIButton";
+import UIButton from '../../ui/buttons/UIButton'
 
 export default {
-  name: "AdminBlockBase",
+  name: 'AdminBlockBase',
   components: {
     UIButton,
   },
   props: {
     theme: {
       type: String,
-      default: "",
+      default: '',
     },
     button: {
       type: Object,
@@ -36,12 +36,12 @@ export default {
     },
     title: {
       type: String,
-      default: "",
+      default: '',
     },
     error: {
       type: String,
-      default: "",
+      default: '',
     },
   },
-};
+}
 </script>

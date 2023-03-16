@@ -93,7 +93,8 @@
               <div class="page-basket-footer__col">
                 <div class="page-basket-footer__top">
                   <h3 class="page-basket-footer__title">
-                    Всего пицц: <strong>{{ BASKET_COUNT }} шт.</strong>
+                    Всего пицц:
+                    <strong>{{ BASKET_COUNT }} шт.</strong>
                   </h3>
                 </div>
                 <button
@@ -112,7 +113,8 @@
                   </h3>
                 </div>
                 <button class="button-main --sz-big basket-big-btn">
-                  Оплатить <span class="u-mobile-hidden"> сейчас</span>
+                  Оплатить
+                  <span class="u-mobile-hidden"> сейчас</span>
                 </button>
               </div>
             </div>
@@ -156,40 +158,40 @@
 </template>
 
 <script>
-import LayoutPublic from "../layouts/LayoutPublic";
-import { mapGetters } from "vuex";
-import ProductRow from "../components/basket/ProductRow";
-import ModalWarningNotAuth from "../components/modals/ModalWarningNotAuth";
+import LayoutPublic from '../layouts/LayoutPublic'
+import { mapGetters } from 'vuex'
+import ProductRow from '../components/basket/ProductRow'
+import ModalWarningNotAuth from '../components/modals/ModalWarningNotAuth'
 
 export default {
-  name: "Basket",
+  name: 'Basket',
   components: {
     LayoutPublic,
     ProductRow,
     ModalWarningNotAuth,
   },
   computed: {
-    ...mapGetters(["GET_BASKET", "BASKET_COUNT", "BASKET_SUM", "HAS_AUTH"]),
+    ...mapGetters(['GET_BASKET', 'BASKET_COUNT', 'BASKET_SUM', 'HAS_AUTH']),
     productsInBasket() {
-      return this.GET_BASKET;
+      return this.GET_BASKET
     },
     hasBasketNotNull() {
-      return this.BASKET_COUNT > 0;
+      return this.BASKET_COUNT > 0
     },
   },
   methods: {
     increment(id) {
-      this.$store.commit("BASK_PRODUCT_INCREMENT", { id });
+      this.$store.commit('BASK_PRODUCT_INCREMENT', { id })
     },
     decrement(id) {
-      this.$store.commit("BASK_PRODUCT_DECREMENT", { id });
+      this.$store.commit('BASK_PRODUCT_DECREMENT', { id })
     },
     remove(id) {
-      this.$store.commit("BASKET_PRODUCT_CLEAR", { id });
+      this.$store.commit('BASKET_PRODUCT_CLEAR', { id })
     },
     clearAllProducts() {
-      this.$store.commit("BASKET_CLEAR");
+      this.$store.commit('BASKET_CLEAR')
     },
   },
-};
+}
 </script>

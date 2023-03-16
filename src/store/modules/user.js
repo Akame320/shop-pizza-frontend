@@ -1,89 +1,89 @@
-import api from "../../api/index";
-import { roles } from "../../const/user";
-import Vue from "vue";
+import api from '../../api/index'
+import { roles } from '../../const/user'
+import Vue from 'vue'
 
 const state = {
-  token: localStorage.getItem("token") || "",
-  status: "",
+  token: localStorage.getItem('token') || '',
+  status: '',
   user: {},
-};
+}
 
 const getters = {
   HAS_AUTH: (state) => {
-    return !!state.token;
+    return !!state.token
   },
 
   BASK_ID: (state) => {
-    return state.user.basketId;
+    return state.user.basketId
   },
 
   IS_ADMIN: (state) => {
-    return state.user.role === roles.ADMIN;
+    return state.user.role === roles.ADMIN
   },
-};
+}
 
 const mutations = {
   SET_USER: (state, payload) => {
-    const { user } = payload;
-    state.user = user;
+    const { user } = payload
+    state.user = user
   },
 
   SET_TOKEN: (state, payload) => {
-    const { token } = payload;
-    localStorage.setItem("token", token);
+    const { token } = payload
+    localStorage.setItem('token', token)
     Vue.prototype.$http.defaults.headers.common[
-      "Authorization"
-    ] = `Bearer ${token}`;
-    state.token = token;
+      'Authorization'
+    ] = `Bearer ${token}`
+    state.token = token
   },
 
   REMOVE_USER: (state) => {
-    localStorage.removeItem("token");
-    state.user = {};
-    state.token = null;
+    localStorage.removeItem('token')
+    state.user = {}
+    state.token = null
   },
-};
+}
 
 const actions = {
   REGISTRATION: async (context, payload) => {
-    const { email, password, role } = payload;
-    const res = await api.registration(email, password, role);
-    const { data } = res;
-    const { token, user } = data;
-    context.commit("SET_TOKEN", { token });
-    context.commit("SET_USER", { user });
-    await context.dispatch("SAVE_BASKET_SERVER");
-    return res;
+    const { email, password, role } = payload
+    const res = await api.registration(email, password, role)
+    const { data } = res
+    const { token, user } = data
+    context.commit('SET_TOKEN', { token })
+    context.commit('SET_USER', { user })
+    await context.dispatch('SAVE_BASKET_SERVER')
+    return res
   },
 
   LOGIN: async (context, payload) => {
-    const { email, password } = payload;
-    const res = await api.login(email, password);
-    const { data } = res;
-    const { token, user } = data;
-    context.commit("SET_TOKEN", { token });
-    context.commit("SET_USER", { user });
-    await context.dispatch("SAVE_BASKET_SERVER");
-    return res;
+    const { email, password } = payload
+    const res = await api.login(email, password)
+    const { data } = res
+    const { token, user } = data
+    context.commit('SET_TOKEN', { token })
+    context.commit('SET_USER', { user })
+    await context.dispatch('SAVE_BASKET_SERVER')
+    return res
   },
 
   CHECK_TOKEN: async (context) => {
-    const { data } = await api.check();
+    const { data } = await api.check()
     if (data) {
-      context.commit("SET_USER", { user: data });
+      context.commit('SET_USER', { user: data })
     } else {
-      localStorage.removeItem("token");
+      localStorage.removeItem('token')
     }
   },
 
   LOGOUT: (context) => {
-    context.commit("REMOVE_USER");
+    context.commit('REMOVE_USER')
   },
-};
+}
 
 export default {
   state,
   getters,
   mutations,
   actions,
-};
+}

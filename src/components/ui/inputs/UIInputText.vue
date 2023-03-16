@@ -17,23 +17,23 @@
 
 <script>
 export default {
-  name: "UIInputText",
+  name: 'UIInputText',
   props: {
     value: {
       type: [String, Number],
-      default: "",
+      default: '',
     },
     name: {
       type: String,
-      default: "",
+      default: '',
     },
     placeholder: {
       type: String,
-      default: "",
+      default: '',
     },
     error: {
       type: String,
-      default: "",
+      default: '',
     },
     disabled: {
       type: Boolean,
@@ -41,14 +41,14 @@ export default {
     },
     type: {
       type: String,
-      default: "text",
+      default: 'text',
     },
   },
   methods: {
     onInput(event) {
-      let { value } = event.target;
-      this.$emit("input", value);
+      let { value } = event.target
+      this.$emit('input', value)
     },
   },
-};
+}
 </script>

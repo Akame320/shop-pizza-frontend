@@ -24,32 +24,32 @@
 </template>
 
 <script>
-import useVuelidate from "@vuelidate/core";
-import { requiredIf } from "@vuelidate/validators";
-import UIInputText from "./inputs/UIInputText";
-import UICheckbox from "./checkbox/UICheckbox";
-import { helpers } from "@vuelidate/validators/dist/raw.esm";
+import useVuelidate from '@vuelidate/core'
+import { requiredIf } from '@vuelidate/validators'
+import UIInputText from './inputs/UIInputText'
+import UICheckbox from './checkbox/UICheckbox'
+import { helpers } from '@vuelidate/validators/dist/raw.esm'
 
 export default {
-  name: "CustomComponent",
+  name: 'CustomComponent',
   components: {
     UIInputText,
     UICheckbox,
   },
   setup() {
-    return { v$: useVuelidate() };
+    return { v$: useVuelidate() }
   },
   validations() {
     return {
       value: {
         price: {
           minLength: helpers.withMessage(
-            "Поле цены не должно быть пустым",
+            'Поле цены не должно быть пустым',
             requiredIf(this.value.isActive)
           ),
         },
       },
-    };
+    }
   },
   props: {
     value: {
@@ -59,10 +59,10 @@ export default {
   },
   methods: {
     update(key, value) {
-      const newValue = { ...this.value };
-      newValue[key] = value;
-      this.$emit("input", newValue);
+      const newValue = { ...this.value }
+      newValue[key] = value
+      this.$emit('input', newValue)
     },
   },
-};
+}
 </script>

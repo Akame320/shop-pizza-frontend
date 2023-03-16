@@ -3,7 +3,7 @@
 
   @include respond(mobile) {
     &:after {
-      content: "";
+      content: '';
       display: block;
       background: linear-gradient(
         90deg,

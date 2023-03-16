@@ -1,19 +1,19 @@
-@use "sass:math";
+@use 'sass:math';
 
-@import "./global/base";
-@import "./global/variables";
-@import "./global/response";
+@import './global/base';
+@import './global/variables';
+@import './global/response';
 
-@import "./components/inputs/main";
-@import "./components/products/main";
+@import './components/inputs/main';
+@import './components/products/main';
 
-@import "./components/ui/main";
+@import './components/ui/main';
 
-@import "./pages/products";
+@import './pages/products';
 
-@import "./layouts/main";
+@import './layouts/main';
 
-@import "./global/utilites";
+@import './global/utilites';
 
 .products-page-settings {
   margin: 4rem 0 0 0;

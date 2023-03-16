@@ -87,12 +87,12 @@
 </template>
 
 <script>
-import UIButton from "../../ui/buttons/UIButton";
-import AdminProductCard from "../../ui/products-cards/AdminProductCard";
-import CreateProductCard from "../../ui/products-cards/CreateProductCard";
+import UIButton from '../../ui/buttons/UIButton'
+import AdminProductCard from '../../ui/products-cards/AdminProductCard'
+import CreateProductCard from '../../ui/products-cards/CreateProductCard'
 
 export default {
-  name: "AdminBoardProducts",
+  name: 'AdminBoardProducts',
   components: {
     UIButton,
     AdminProductCard,
@@ -101,7 +101,7 @@ export default {
   data() {
     return {
       hasCardEdit: true,
-    };
+    }
   },
   props: {
     products: {
@@ -115,20 +115,20 @@ export default {
   },
   methods: {
     addNewPizza() {
-      this.hasCreatedPizza = true;
+      this.hasCreatedPizza = true
     },
     createPizza(product) {
-      this.$emit("productCreate", product);
+      this.$emit('productCreate', product)
     },
     updatePizza(product) {
-      this.$emit("productUpdate", product);
+      this.$emit('productUpdate', product)
     },
     deleteProduct(id) {
-      this.$emit("productDelete", id);
+      this.$emit('productDelete', id)
     },
     validateStateEdits() {
-      this.hasCardEdit = false;
+      this.hasCardEdit = false
     },
   },
-};
+}
 </script>

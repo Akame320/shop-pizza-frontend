@@ -1,9 +1,9 @@
-version: "3.1"
+version: '3.1'
 
 services:
   site:
-    image: "node:16"
-    user: "node"
+    image: 'node:16'
+    user: 'node'
     working_dir: /home/node/app
     environment:
       - NODE_ENV=development
@@ -13,4 +13,4 @@ services:
       - 5080
     ports:
       - 5080:8080
-    command: "npm run serve"
+    command: 'npm run serve'

@@ -1,5 +1,5 @@
 export default {
-  name: "UIComponent",
+  name: 'UIComponent',
   props: {
     styles: {
       type: Array,
@@ -8,14 +8,14 @@ export default {
   },
   computed: {
     classes() {
-      const list = [];
+      const list = []
       this.styles.forEach((style) => {
-        list.push(`--${style}`);
-      });
-      return list.concat(...this.addingClass);
+        list.push(`--${style}`)
+      })
+      return list.concat(...this.addingClass)
     },
     addingClass() {
-      return [];
+      return []
     },
   },
-};
+}

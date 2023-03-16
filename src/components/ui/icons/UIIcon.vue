@@ -3,18 +3,18 @@
 </template>
 
 <script>
-import mixinStyle from "@/mixins/UIComponent";
-import BasketSVG from "./components/BasketSVG";
+import mixinStyle from '@/mixins/UIComponent'
+import BasketSVG from './components/BasketSVG'
 
 const icons = [
   {
-    name: "basket",
+    name: 'basket',
     elem: BasketSVG,
   },
-];
+]
 
 export default {
-  name: "UIIcon",
+  name: 'UIIcon',
   mixins: [mixinStyle],
   props: {
     name: {
@@ -24,9 +24,9 @@ export default {
   },
   computed: {
     isIcon() {
-      const searchIcon = icons.find((icon) => icon.name === this.name);
-      return searchIcon.elem;
+      const searchIcon = icons.find((icon) => icon.name === this.name)
+      return searchIcon.elem
     },
   },
-};
+}
 </script>

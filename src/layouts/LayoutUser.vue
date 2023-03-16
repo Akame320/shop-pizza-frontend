@@ -8,6 +8,6 @@
 
 <script>
 export default {
-  name: "LayoutUser",
-};
+  name: 'LayoutUser',
+}
 </script>

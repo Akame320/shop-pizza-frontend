@@ -12,12 +12,12 @@
 
 <script>
 export default {
-  name: "UICheckbox",
+  name: 'UICheckbox',
   props: {
     value: {
       type: Boolean,
       default: false,
     },
   },
-};
+}
 </script>

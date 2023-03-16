@@ -5,9 +5,9 @@
 </template>
 
 <script>
-import mixinStyle from "../../../mixins/UIComponent";
+import mixinStyle from '../../../mixins/UIComponent'
 export default {
-  name: "UIButton",
+  name: 'UIButton',
   mixins: [mixinStyle],
-};
+}
 </script>

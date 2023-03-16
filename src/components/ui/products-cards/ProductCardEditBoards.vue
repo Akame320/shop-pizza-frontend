@@ -96,36 +96,36 @@
 </template>
 
 <script>
-import UIAdminCardPriceInput from "../UIAdminCardPriceInput";
-import UIButton from "../buttons/UIButton";
-import UIInputText from "../inputs/UIInputText";
-import UIUploader from "../uploaders/UIUploader";
-import UIMultiSelect from "../selects/UIMultiSelect";
-import useVuelidate from "@vuelidate/core";
+import UIAdminCardPriceInput from '../UIAdminCardPriceInput'
+import UIButton from '../buttons/UIButton'
+import UIInputText from '../inputs/UIInputText'
+import UIUploader from '../uploaders/UIUploader'
+import UIMultiSelect from '../selects/UIMultiSelect'
+import useVuelidate from '@vuelidate/core'
 import {
   helpers,
   minLength,
   required,
   requiredUnless,
-} from "@vuelidate/validators";
+} from '@vuelidate/validators'
 
 const STEPS = {
-  main: "MAIN",
-  price: "PRICE",
-};
+  main: 'MAIN',
+  price: 'PRICE',
+}
 
-const ERRORS_VISIBLE_TIME = 3000;
+const ERRORS_VISIBLE_TIME = 3000
 
 const validateRequiredPrice = (value) => {
-  let price = 0;
+  let price = 0
   value.forEach((item) => {
-    price += item.price;
-  });
-  return price > 0;
-};
+    price += item.price
+  })
+  return price > 0
+}
 
 export default {
-  name: "ProductCardEditBoards",
+  name: 'ProductCardEditBoards',
   components: {
     UIAdminCardPriceInput,
     UIButton,
@@ -134,7 +134,7 @@ export default {
     UIMultiSelect,
   },
   setup() {
-    return { v$: useVuelidate() };
+    return { v$: useVuelidate() }
   },
   props: {
     addons: {
@@ -147,107 +147,107 @@ export default {
     },
     saveBtnText: {
       type: String,
-      default: "",
+      default: '',
     },
   },
   validations() {
     return {
       form: {
         name: {
-          required: helpers.withMessage("Название обязательно", required),
-          minLength: helpers.withMessage("Длина названия < 5", minLength(5)),
+          required: helpers.withMessage('Название обязательно', required),
+          minLength: helpers.withMessage('Длина названия < 5', minLength(5)),
         },
         categories: {
-          required: helpers.withMessage("Категории не выбраны", required),
+          required: helpers.withMessage('Категории не выбраны', required),
         },
         types: {
           required: helpers.withMessage(
-            "Типы пиццы не выбраны",
+            'Типы пиццы не выбраны',
             validateRequiredPrice
           ),
         },
         sizes: {
           required: helpers.withMessage(
-            "Размеры пиццы не выбраны",
+            'Размеры пиццы не выбраны',
             validateRequiredPrice
           ),
         },
         imgFile: {
           required: helpers.withMessage(
-            "Картинка обязательна",
+            'Картинка обязательна',
             requiredUnless(this.form.img)
           ),
         },
       },
-    };
+    }
   },
   data() {
     return {
       showErrors: false,
       step: STEPS.main,
       form: { ...this.product, imgFile: null },
-    };
+    }
   },
   computed: {
     isStepPrice() {
-      return this.step === STEPS.price;
+      return this.step === STEPS.price
     },
     isStepMain() {
-      return this.step === STEPS.main;
+      return this.step === STEPS.main
     },
     toggleBtnTitle() {
-      return this.isStepMain ? "ЦЕНЫ" : "НАЗАД";
+      return this.isStepMain ? 'ЦЕНЫ' : 'НАЗАД'
     },
   },
   methods: {
     updateItem(item, newItem) {
-      item.price = newItem.price;
-      item.isActive = newItem.isActive;
+      item.price = newItem.price
+      item.isActive = newItem.isActive
     },
     toggleStep() {
       if (this.step === STEPS.main) {
-        this.step = STEPS.price;
+        this.step = STEPS.price
       } else {
-        this.step = STEPS.main;
+        this.step = STEPS.main
       }
     },
     async save() {
-      this.v$.$touch();
-      const isValid = await this.v$.$validate();
+      this.v$.$touch()
+      const isValid = await this.v$.$validate()
       if (!isValid) {
-        return this.openErrors();
+        return this.openErrors()
       }
 
-      this.$emit("save", this.convertProductToServer());
+      this.$emit('save', this.convertProductToServer())
     },
     openErrors() {
-      this.showErrors = true;
+      this.showErrors = true
       setTimeout(() => {
-        this.showErrors = false;
-      }, ERRORS_VISIBLE_TIME);
+        this.showErrors = false
+      }, ERRORS_VISIBLE_TIME)
     },
     convertProductToServer() {
-      const convertProduct = { ...this.form };
-      convertProduct.sizes = this.convertAddonToServer(this.form.sizes);
-      convertProduct.types = this.convertAddonToServer(this.form.types);
+      const convertProduct = { ...this.form }
+      convertProduct.sizes = this.convertAddonToServer(this.form.sizes)
+      convertProduct.types = this.convertAddonToServer(this.form.types)
 
-      return convertProduct;
+      return convertProduct
     },
     convertAddonToServer(addon) {
       const filterAddons = addon.filter((item) => {
-        return item.isActive;
-      });
+        return item.isActive
+      })
       const deleteUnusedProps = filterAddons.map((item) => {
         return {
           id: item.id,
           price: item.price,
-        };
-      });
-      return JSON.stringify(deleteUnusedProps);
+        }
+      })
+      return JSON.stringify(deleteUnusedProps)
     },
     uploaderHandler(file) {
-      this.form.imgFile = file;
+      this.form.imgFile = file
     },
   },
-};
+}
 </script>

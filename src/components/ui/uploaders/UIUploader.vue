@@ -20,11 +20,11 @@
 </template>
 
 <script>
-import UIButton from "../buttons/UIButton";
-import mixinStyle from "../../../mixins/UIComponent";
+import UIButton from '../buttons/UIButton'
+import mixinStyle from '../../../mixins/UIComponent'
 
 export default {
-  name: "UIUploader",
+  name: 'UIUploader',
   mixins: [mixinStyle],
   components: {
     UIButton,
@@ -32,11 +32,11 @@ export default {
   props: {
     btnText: {
       type: String,
-      default: "",
+      default: '',
     },
     id: {
       type: String,
-      default: "",
+      default: '',
     },
     simple: {
       type: Boolean,
@@ -48,39 +48,39 @@ export default {
     },
     imgSrc: {
       type: String,
-      default: "",
+      default: '',
     },
   },
   data() {
     return {
       localImg: null,
-    };
+    }
   },
   computed: {
     imgPreview() {
       return this.localImg
         ? this.localImg
         : this.imgSrc
-        ? "http://localhost:5000/" + this.imgSrc
-        : "/static/img/product-mocks/pizza.jpg";
+        ? 'http://localhost:5000/' + this.imgSrc
+        : '/static/img/product-mocks/pizza.jpg'
     },
   },
   methods: {
     addFile() {
-      this.$refs.input.click();
+      this.$refs.input.click()
     },
     inputHandler(event) {
-      const file = event.target.files[0];
-      this.$emit("input", file);
-      this.updatePhoto(file);
+      const file = event.target.files[0]
+      this.$emit('input', file)
+      this.updatePhoto(file)
     },
     updatePhoto(file) {
-      let reader = new FileReader();
+      let reader = new FileReader()
       reader.onload = (event) => {
-        this.localImg = event.target.result;
-      };
-      reader.readAsDataURL(file);
+        this.localImg = event.target.result
+      }
+      reader.readAsDataURL(file)
     },
   },
-};
+}
 </script>

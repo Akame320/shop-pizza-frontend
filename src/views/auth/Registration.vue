@@ -42,69 +42,69 @@
 </template>
 
 <script>
-import LayoutUser from "../../layouts/LayoutUser";
-import UIInputText from "../../components/ui/inputs/UIInputText";
-import useVuelidate from "@vuelidate/core";
+import LayoutUser from '../../layouts/LayoutUser'
+import UIInputText from '../../components/ui/inputs/UIInputText'
+import useVuelidate from '@vuelidate/core'
 import {
   email,
   helpers,
   minLength,
   required,
   sameAs,
-} from "@vuelidate/validators";
+} from '@vuelidate/validators'
 
 export default {
-  name: "registration",
+  name: 'registration',
   components: {
     LayoutUser,
     UIInputText,
   },
   setup() {
-    return { v$: useVuelidate() };
+    return { v$: useVuelidate() }
   },
   data() {
     return {
       form: {
-        email: "",
-        password: "",
-        confirmPassword: "",
+        email: '',
+        password: '',
+        confirmPassword: '',
       },
-    };
+    }
   },
   computed: {},
   methods: {
     async submit() {
-      const email = this.form.email;
-      const password = this.form.password;
+      const email = this.form.email
+      const password = this.form.password
       await this.$store
-        .dispatch("REGISTRATION", { email, password })
+        .dispatch('REGISTRATION', { email, password })
         .then(() => {
-          this.$router.push("/");
-        });
+          this.$router.push('/')
+        })
     },
   },
   validations() {
     return {
       form: {
         email: {
-          required: helpers.withMessage("Обязательное поле", required),
-          email: helpers.withMessage("Введите email", email),
+          required: helpers.withMessage('Обязательное поле', required),
+          email: helpers.withMessage('Введите email', email),
         },
         password: {
-          required: helpers.withMessage("Обязательное поле", required),
+          required: helpers.withMessage('Обязательное поле', required),
           minLength: helpers.withMessage(
-            "Минимальная длина 6 символов",
+            'Минимальная длина 6 символов',
             minLength(6)
           ),
         },
         confirmPassword: {
           password: helpers.withMessage(
-            "Пароли не совпадают",
+            'Пароли не совпадают',
             sameAs(this.form.password)
           ),
         },
       },
-    };
+    }
   },
-};
+}
 </script>

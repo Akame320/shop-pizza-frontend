@@ -69,11 +69,7 @@ export default {
   },
   created() {
     window.addEventListener("scroll", () => {
-      if (window.scrollY > HEADER_FIXED) {
-        this.headerFixed = true;
-      } else {
-        this.headerFixed = false;
-      }
+      this.headerFixed = window.scrollY > HEADER_FIXED;
     });
   },
   destroyed() {

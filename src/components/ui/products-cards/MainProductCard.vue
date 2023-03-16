@@ -83,13 +83,13 @@
 </template>
 
 <script>
-import { getImgPath } from "../../../utils/servers";
+import { getImgPath } from '../../../utils/servers'
 
-import UIInputItems from "../inputs/UIInputItems";
-import UIMultiSelect from "../selects/UIMultiSelect";
+import UIInputItems from '../inputs/UIInputItems'
+import UIMultiSelect from '../selects/UIMultiSelect'
 
 export default {
-  name: "MainProductCard",
+  name: 'MainProductCard',
   components: {
     UIInputItems,
     UIMultiSelect,
@@ -115,71 +115,71 @@ export default {
   created() {
     this.settings.selectSizeValue = this.searchSmallPriceValue(
       this.product.sizes
-    );
+    )
     this.settings.selectTypeValue = this.searchSmallPriceValue(
       this.product.types
-    );
+    )
   },
   data() {
     return {
-      localValue: "",
+      localValue: '',
       settings: {
         selectSizeValue: null,
         selectTypeValue: null,
       },
-    };
+    }
   },
   computed: {
     img() {
-      return getImgPath(this.product.img);
+      return getImgPath(this.product.img)
     },
     hasProductInBask() {
-      return this.basket;
+      return this.basket
     },
     activeSizeElem() {
       return this.product.sizes.find(
         (item) => item.value === this.settings.selectSizeValue
-      );
+      )
     },
     activeTypeElem() {
       return this.product.types.find(
         (item) => item.value === this.settings.selectTypeValue
-      );
+      )
     },
     sumPrice() {
-      return this.activeSizeElem.price + this.activeTypeElem.price;
+      return this.activeSizeElem.price + this.activeTypeElem.price
     },
   },
   methods: {
     searchSmallPriceValue(array) {
       const bySort = array.sort((a, b) => {
-        return a.price - b.price;
-      });
-      return bySort[0].value;
+        return a.price - b.price
+      })
+      return bySort[0].value
     },
     addToBasket() {
-      this.$emit("add", {
+      this.$emit('add', {
         size: this.activeSizeElem,
         type: this.activeTypeElem,
         id: this.product.id,
         img: this.product.img,
         name: this.product.name,
-      });
+      })
     },
   },
   watch: {
     settings: {
       handler() {
-        if (!this.hasProductInBask) return;
+        if (!this.hasProductInBask) return
 
-        this.$emit("updateBask", {
+        this.$emit('updateBask', {
           id: this.product.id,
           type: this.activeTypeElem,
           size: this.activeSizeElem,
-        });
+        })
       },
       deep: true,
     },
   },
-};
+}
 </script>

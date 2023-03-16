@@ -1,13 +1,13 @@
-import ROUTES from "./const";
-import routeMiddleware from "./middleware";
+import ROUTES from './const'
+import routeMiddleware from './middleware'
 
-import Home from "@/views/Home";
-import Basket from "@/views/Basket";
-import Login from "@/views/auth/Login";
-import Registration from "@/views/auth/Registration";
-import AdminRegistration from "../views/auth/AdminRegistration";
-import Panel from "../views/admin/Panel";
-import NotFound from "../views/errors/NotFound";
+import Home from '@/views/Home'
+import Basket from '@/views/Basket'
+import Login from '@/views/auth/Login'
+import Registration from '@/views/auth/Registration'
+import AdminRegistration from '../views/auth/AdminRegistration'
+import Panel from '../views/admin/Panel'
+import NotFound from '../views/errors/NotFound'
 
 const routes = [
   // PUBLIC
@@ -55,6 +55,6 @@ const routes = [
     name: ROUTES.ERRORS.NOT_FOUND.name,
     component: NotFound,
   },
-];
+]
 
-export default routes;
+export default routes

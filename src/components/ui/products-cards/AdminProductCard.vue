@@ -81,12 +81,12 @@
 </template>
 
 <script>
-import MainProductCard from "./MainProductCard";
-import ProductCardEditBoards from "./ProductCardEditBoards";
-import { convertAddonToForm } from "./utilites";
+import MainProductCard from './MainProductCard'
+import ProductCardEditBoards from './ProductCardEditBoards'
+import { convertAddonToForm } from './utilites'
 
 export default {
-  name: "AdminProductCard",
+  name: 'AdminProductCard',
   components: {
     MainProductCard,
     ProductCardEditBoards,
@@ -108,33 +108,33 @@ export default {
   data() {
     return {
       isStateEdit: false,
-    };
+    }
   },
   computed: {
     productFormat() {
-      const newForm = { ...this.product };
-      newForm.sizes = convertAddonToForm(this.addons.sizes, this.product.sizes);
-      newForm.types = convertAddonToForm(this.addons.types, this.product.types);
+      const newForm = { ...this.product }
+      newForm.sizes = convertAddonToForm(this.addons.sizes, this.product.sizes)
+      newForm.types = convertAddonToForm(this.addons.types, this.product.types)
 
-      return newForm;
+      return newForm
     },
   },
   methods: {
     changeStateEdit() {
       if (this.isEditChange) {
-        this.isStateEdit = true;
-        this.$emit("editStart");
+        this.isStateEdit = true
+        this.$emit('editStart')
       }
     },
     updateHandler(product) {
-      this.$emit("update", product);
+      this.$emit('update', product)
     },
     deleteProduct() {
-      this.$emit("delete", this.product.id);
+      this.$emit('delete', this.product.id)
     },
     closeEdit() {
-      this.isStateEdit = false;
+      this.isStateEdit = false
     },
   },
-};
+}
 </script>

@@ -42,20 +42,20 @@
 </template>
 
 <script>
-import LayoutUser from "../../layouts/LayoutUser";
-import UIInputText from "../../components/ui/inputs/UIInputText";
+import LayoutUser from '../../layouts/LayoutUser'
+import UIInputText from '../../components/ui/inputs/UIInputText'
 import {
   email,
   helpers,
   minLength,
   required,
   sameAs,
-} from "@vuelidate/validators";
-import useVuelidate from "@vuelidate/core";
-import { roles } from "../../const/user";
+} from '@vuelidate/validators'
+import useVuelidate from '@vuelidate/core'
+import { roles } from '../../const/user'
 
 export default {
-  name: "AdminRegistration",
+  name: 'AdminRegistration',
   components: {
     LayoutUser,
     UIInputText,
@@ -63,50 +63,50 @@ export default {
   data() {
     return {
       form: {
-        email: "",
-        password: "",
-        confirmPassword: "",
+        email: '',
+        password: '',
+        confirmPassword: '',
       },
-    };
+    }
   },
   setup() {
-    return { v$: useVuelidate() };
+    return { v$: useVuelidate() }
   },
   validations() {
     return {
       form: {
         email: {
-          required: helpers.withMessage("Обязательное поле", required),
-          email: helpers.withMessage("Введите валидную почту", email),
+          required: helpers.withMessage('Обязательное поле', required),
+          email: helpers.withMessage('Введите валидную почту', email),
         },
         password: {
-          required: helpers.withMessage("Обязательное поле", required),
+          required: helpers.withMessage('Обязательное поле', required),
           minLength: helpers.withMessage(
-            "Минимальная длина 6 символов",
+            'Минимальная длина 6 символов',
             minLength(6)
           ),
         },
         confirmPassword: {
           password: helpers.withMessage(
-            "Пароли не совпадают",
+            'Пароли не совпадают',
             sameAs(this.form.password)
           ),
         },
       },
-    };
+    }
   },
   methods: {
     async submit() {
-      const email = this.form.email;
-      const password = this.form.password;
-      const role = roles.ADMIN;
+      const email = this.form.email
+      const password = this.form.password
+      const role = roles.ADMIN
 
       await this.$store
-        .dispatch("REGISTRATION", { email, password, role })
+        .dispatch('REGISTRATION', { email, password, role })
         .then(() => {
-          this.$router.push("/admin/products");
-        });
+          this.$router.push('/admin/products')
+        })
     },
   },
-};
+}
 </script>

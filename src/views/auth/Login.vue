@@ -34,70 +34,70 @@
 </template>
 
 <script>
-import LayoutUser from "../../layouts/LayoutUser";
-import { email, helpers, minLength, required } from "@vuelidate/validators";
-import useVuelidate from "@vuelidate/core";
-import UIInputText from "../../components/ui/inputs/UIInputText";
-import { mapGetters } from "vuex";
+import LayoutUser from '../../layouts/LayoutUser'
+import { email, helpers, minLength, required } from '@vuelidate/validators'
+import useVuelidate from '@vuelidate/core'
+import UIInputText from '../../components/ui/inputs/UIInputText'
+import { mapGetters } from 'vuex'
 
 export default {
-  name: "Login",
+  name: 'Login',
   components: {
     LayoutUser,
     UIInputText,
   },
   setup() {
-    return { v$: useVuelidate() };
+    return { v$: useVuelidate() }
   },
   data() {
     return {
       form: {
-        email: "",
-        password: "",
+        email: '',
+        password: '',
       },
-      error: "",
-    };
+      error: '',
+    }
   },
   computed: {
-    ...mapGetters(["IS_ADMIN"]),
+    ...mapGetters(['IS_ADMIN']),
   },
   methods: {
     async submit() {
-      const email = this.form.email;
-      const password = this.form.password;
+      const email = this.form.email
+      const password = this.form.password
 
       this.$store
-        .dispatch("LOGIN", { email, password })
+        .dispatch('LOGIN', { email, password })
         .then(() => {
-          if (this.IS_ADMIN) this.$router.push("/admin/panel");
-          else this.$router.push("/");
+          if (this.IS_ADMIN) this.$router.push('/admin/panel')
+          else this.$router.push('/')
         })
         .catch((e) => {
-          this.error = e.response.data.message;
-        });
+          this.error = e.response.data.message
+        })
     },
   },
   validations() {
     return {
       form: {
         email: {
-          required: helpers.withMessage("Обязательное поле", required),
-          email: helpers.withMessage("Введите email", email),
+          required: helpers.withMessage('Обязательное поле', required),
+          email: helpers.withMessage('Введите email', email),
         },
         password: {
-          required: helpers.withMessage("Обязательное поле", required),
+          required: helpers.withMessage('Обязательное поле', required),
           minLength: helpers.withMessage(
-            "Минимальная длина 6 символов ",
+            'Минимальная длина 6 символов ',
             minLength(6)
           ),
         },
       },
-    };
+    }
   },
   watch: {
-    "form.email"() {
-      this.error = "";
+    'form.email'() {
+      this.error = ''
     },
   },
-};
+}
 </script>

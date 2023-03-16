@@ -80,10 +80,10 @@
 </template>
 
 <script>
-import { getImgPath } from "../../utils/servers";
+import { getImgPath } from '../../utils/servers'
 
 export default {
-  name: "ProductRow",
+  name: 'ProductRow',
   props: {
     product: {
       type: Object,
@@ -92,8 +92,8 @@ export default {
   },
   computed: {
     img() {
-      return getImgPath(this.product.img);
+      return getImgPath(this.product.img)
     },
   },
-};
+}
 </script>

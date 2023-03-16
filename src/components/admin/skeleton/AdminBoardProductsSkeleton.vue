@@ -38,17 +38,17 @@
 </template>
 
 <script>
-import { Skeleton } from "vue-loading-skeleton";
+import { Skeleton } from 'vue-loading-skeleton'
 
 export default {
-  name: "AdminBoardProductsSkeleton",
+  name: 'AdminBoardProductsSkeleton',
   components: {
     Skeleton,
   },
   data() {
     return {
       skeletonCards: 10,
-    };
+    }
   },
-};
+}
 </script>

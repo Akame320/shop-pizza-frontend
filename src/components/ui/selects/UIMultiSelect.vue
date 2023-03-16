@@ -57,11 +57,11 @@
 </template>
 
 <script>
-import { directive } from "v-click-outside";
-import mixinStyle from "../../../mixins/UIComponent";
+import { directive } from 'v-click-outside'
+import mixinStyle from '../../../mixins/UIComponent'
 
 export default {
-  name: "UIMultiSelect",
+  name: 'UIMultiSelect',
   directives: {
     clickOutside: directive,
   },
@@ -77,7 +77,7 @@ export default {
     },
     placeholder: {
       type: String,
-      default: "",
+      default: '',
     },
     clickable: {
       type: Boolean,
@@ -87,44 +87,44 @@ export default {
   data() {
     return {
       opened: false,
-    };
+    }
   },
   computed: {
     countValues() {
-      return this.value.length;
+      return this.value.length
     },
     isShowPlaceholder() {
-      return this.value.length === 0;
+      return this.value.length === 0
     },
     addingClass() {
-      const list = [];
+      const list = []
 
-      if (!this.clickable) list.push("--st-disabled");
-      if (this.opened) list.push("--st-opened");
+      if (!this.clickable) list.push('--st-disabled')
+      if (this.opened) list.push('--st-opened')
 
-      return list;
+      return list
     },
   },
   methods: {
     changeOption(value) {
-      if (!this.clickable) return;
+      if (!this.clickable) return
 
-      const array = [...this.value];
-      const elemIndex = array.findIndex((option) => option === value);
+      const array = [...this.value]
+      const elemIndex = array.findIndex((option) => option === value)
       if (elemIndex !== -1) {
-        array.splice(elemIndex, 1);
+        array.splice(elemIndex, 1)
       } else {
-        array.push(value);
+        array.push(value)
       }
 
-      this.$emit("input", array);
+      this.$emit('input', array)
     },
     hasOptionSelected(value) {
-      return this.value.find((val) => val === value);
+      return this.value.find((val) => val === value)
     },
     hide() {
-      this.opened = false;
+      this.opened = false
     },
   },
-};
+}
 </script>

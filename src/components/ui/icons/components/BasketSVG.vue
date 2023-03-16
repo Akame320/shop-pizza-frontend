@@ -26,6 +26,6 @@
 
 <script>
 export default {
-  name: "BasketSVG",
-};
+  name: 'BasketSVG',
+}
 </script>

@@ -29,10 +29,10 @@
 </template>
 
 <script>
-import { directive } from "v-click-outside";
+import { directive } from 'v-click-outside'
 
 export default {
-  name: "UIFilterSelect",
+  name: 'UIFilterSelect',
   directives: {
     clickOutside: directive,
   },
@@ -48,24 +48,24 @@ export default {
   },
   methods: {
     toggleStateList() {
-      this.isListOpen = !this.isListOpen;
+      this.isListOpen = !this.isListOpen
     },
     hideList() {
-      this.isListOpen = false;
+      this.isListOpen = false
     },
   },
   data() {
     return {
       isListOpen: false,
-    };
+    }
   },
   computed: {
     valueElem() {
-      return this.options.find((opt) => opt.value === this.value);
+      return this.options.find((opt) => opt.value === this.value)
     },
     optionsList() {
-      return this.options.filter((opt) => opt.value !== this.value);
+      return this.options.filter((opt) => opt.value !== this.value)
     },
   },
-};
+}
 </script>

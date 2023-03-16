@@ -2,8 +2,8 @@
 
 <script>
 export default {
-  name: "AppBasketBoard",
-};
+  name: 'AppBasketBoard',
+}
 </script>
 
 <style scoped></style>

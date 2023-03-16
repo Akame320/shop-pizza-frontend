@@ -1,26 +1,26 @@
 const state = {
   errors: {
-    message: "",
+    message: '',
   },
-};
+}
 
 const getters = {
   GET_ERROR: (state) => {
-    return state.errors;
+    return state.errors
   },
-};
+}
 
 const mutations = {
   SET_ERROR: (state, payload) => {
-    state.errors = { ...payload };
+    state.errors = { ...payload }
     setTimeout(() => {
-      state.errors = {};
-    }, 3000);
+      state.errors = {}
+    }, 3000)
   },
-};
+}
 
 export default {
   state,
   getters,
   mutations,
-};
+}

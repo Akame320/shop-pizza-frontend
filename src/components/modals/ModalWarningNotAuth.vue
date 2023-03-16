@@ -34,9 +34,9 @@
 
 <script>
 export default {
-  name: "ModalWarningNotAuth",
+  name: 'ModalWarningNotAuth',
   data: () => ({
     showModal: false,
   }),
-};
+}
 </script>

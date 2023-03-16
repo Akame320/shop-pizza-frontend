@@ -23,14 +23,14 @@
 </template>
 
 <script>
-import LogoDark from "../components/ui/logos/LogoDark";
-import UIProfile from "../components/ui/profile/UIProfile";
+import LogoDark from '../components/ui/logos/LogoDark'
+import UIProfile from '../components/ui/profile/UIProfile'
 
 export default {
-  name: "LayoutAdmin",
+  name: 'LayoutAdmin',
   components: {
     LogoDark,
     UIProfile,
   },
-};
+}
 </script>

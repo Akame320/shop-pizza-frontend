@@ -98,20 +98,20 @@
 </template>
 
 <script>
-import useVuelidate from "@vuelidate/core";
-import { helpers, maxLength, minLength, minValue } from "@vuelidate/validators";
-import AdminBlockBase from "../blocks/AdminBlockBase";
-import UIButton from "../../ui/buttons/UIButton";
+import useVuelidate from '@vuelidate/core'
+import { helpers, maxLength, minLength, minValue } from '@vuelidate/validators'
+import AdminBlockBase from '../blocks/AdminBlockBase'
+import UIButton from '../../ui/buttons/UIButton'
 
 const validateUnique = (param) => {
   return helpers.withParams({ value: param }, () => {
-    const set = new Set(Object.values(param));
-    return set.size === Object.keys(param).length;
-  });
-};
+    const set = new Set(Object.values(param))
+    return set.size === Object.keys(param).length
+  })
+}
 
 export default {
-  name: "AdminBoardSettings",
+  name: 'AdminBoardSettings',
   components: {
     AdminBlockBase,
     UIButton,
@@ -124,32 +124,32 @@ export default {
   },
   methods: {
     addNewCategory() {
-      this.form.categories.push({ value: "Категория" });
+      this.form.categories.push({ value: 'Категория' })
     },
     save() {
-      this.$store.dispatch("UPDATE_ADDONS", this.form);
+      this.$store.dispatch('UPDATE_ADDONS', this.form)
     },
   },
   computed: {
     convertSizes() {
-      const newArray = [...this.addons.sizes];
+      const newArray = [...this.addons.sizes]
       for (let i = 0; i < 3; i++) {
-        if (!newArray[i]) newArray[i] = { value: i + 1 };
+        if (!newArray[i]) newArray[i] = { value: i + 1 }
       }
-      return newArray;
+      return newArray
     },
     convertTypes() {
-      const newArray = [...this.addons.types];
+      const newArray = [...this.addons.types]
       for (let i = 0; i < 2; i++) {
-        if (!newArray[i]) newArray[i] = { value: `Тип: ${i + 1}` };
+        if (!newArray[i]) newArray[i] = { value: `Тип: ${i + 1}` }
       }
-      return newArray;
+      return newArray
     },
   },
   mounted() {
-    this.form.sizes = [...this.convertSizes];
-    this.form.types = [...this.convertTypes];
-    this.form.categories = this.addons.categories;
+    this.form.sizes = [...this.convertSizes]
+    this.form.types = [...this.convertTypes]
+    this.form.categories = this.addons.categories
   },
   data() {
     return {
@@ -158,10 +158,10 @@ export default {
         categories: [],
         types: [],
       },
-    };
+    }
   },
   setup() {
-    return { v$: useVuelidate() };
+    return { v$: useVuelidate() }
   },
   validations() {
     return {
@@ -169,9 +169,9 @@ export default {
         sizes: {
           $each: helpers.forEach({
             value: {
-              minValue: helpers.withMessage("Размер меньше 2 см.", minValue(0)),
+              minValue: helpers.withMessage('Размер меньше 2 см.', minValue(0)),
               sameAs: helpers.withMessage(
-                "Размеры совпадают",
+                'Размеры совпадают',
                 validateUnique(this.form.sizes)
               ),
             },
@@ -181,15 +181,15 @@ export default {
           $each: helpers.forEach({
             value: {
               minValue: helpers.withMessage(
-                "Не меньше 2 символов",
+                'Не меньше 2 символов',
                 minLength(2)
               ),
               maxValue: helpers.withMessage(
-                "Не больше 15 символов",
+                'Не больше 15 символов',
                 maxLength(15)
               ),
               sameAs: helpers.withMessage(
-                "Типы совпадают",
+                'Типы совпадают',
                 validateUnique(this.form.types)
               ),
             },
@@ -199,22 +199,22 @@ export default {
           $each: helpers.forEach({
             value: {
               minLength: helpers.withMessage(
-                "Не меньше 2 символов",
+                'Не меньше 2 символов',
                 minLength(2)
               ),
               maxLength: helpers.withMessage(
-                "Не больше 10 символов",
+                'Не больше 10 символов',
                 maxLength(10)
               ),
               sameAs: helpers.withMessage(
-                "Значения совпадают",
+                'Значения совпадают',
                 validateUnique(this.form.categories)
               ),
             },
           }),
         },
       },
-    };
+    }
   },
-};
+}
 </script>

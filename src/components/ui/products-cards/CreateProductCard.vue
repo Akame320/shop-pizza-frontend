@@ -10,11 +10,11 @@
 </template>
 
 <script>
-import ProductCardEditBoards from "./ProductCardEditBoards";
-import { convertAddonToForm } from "./utilites";
+import ProductCardEditBoards from './ProductCardEditBoards'
+import { convertAddonToForm } from './utilites'
 
 export default {
-  name: "CreateProductCard",
+  name: 'CreateProductCard',
   components: {
     ProductCardEditBoards,
   },
@@ -32,14 +32,14 @@ export default {
         sizes: convertAddonToForm(this.addons.sizes),
         types: convertAddonToForm(this.addons.types),
         categories: [],
-        name: "",
+        name: '',
       },
-    };
+    }
   },
   methods: {
     saveHandler(product) {
-      this.$emit("create", product);
+      this.$emit('create', product)
     },
   },
-};
+}
 </script>

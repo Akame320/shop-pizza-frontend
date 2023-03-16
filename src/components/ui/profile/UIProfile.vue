@@ -36,10 +36,10 @@
 </template>
 
 <script>
-import { directive } from "v-click-outside";
+import { directive } from 'v-click-outside'
 
 export default {
-  name: "UIProfile",
+  name: 'UIProfile',
   directives: {
     clickOutside: directive,
   },
@@ -52,15 +52,15 @@ export default {
   data() {
     return {
       opened: false,
-    };
+    }
   },
   methods: {
     toggle() {
-      this.opened = !this.opened;
+      this.opened = !this.opened
     },
     hideList() {
-      this.opened = false;
+      this.opened = false
     },
   },
-};
+}
 </script>

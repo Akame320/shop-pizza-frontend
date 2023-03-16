@@ -14,7 +14,7 @@
 
 <script>
 export default {
-  name: "UITabsButton",
+  name: 'UITabsButton',
   props: {
     categories: {
       type: Array,
@@ -27,42 +27,42 @@ export default {
   },
   methods: {
     toggleCategories(catId) {
-      const newVal = [...this.value];
-      const hasSelectedIndex = newVal.indexOf(catId);
-      const hasLastChild = newVal.length === 1;
-      const isAll = catId === 0;
-      const allSelected = newVal.indexOf(0);
+      const newVal = [...this.value]
+      const hasSelectedIndex = newVal.indexOf(catId)
+      const hasLastChild = newVal.length === 1
+      const isAll = catId === 0
+      const allSelected = newVal.indexOf(0)
 
       if (isAll && allSelected === -1) {
-        newVal.splice(0, newVal.length);
-        newVal.push(catId);
-        return this.$emit("input", newVal);
+        newVal.splice(0, newVal.length)
+        newVal.push(catId)
+        return this.$emit('input', newVal)
       }
 
       if (hasSelectedIndex >= 0 && hasLastChild) {
-        newVal.splice(hasSelectedIndex, 1);
-        newVal.push(0);
-        return this.$emit("input", newVal);
+        newVal.splice(hasSelectedIndex, 1)
+        newVal.push(0)
+        return this.$emit('input', newVal)
       }
 
       if (hasSelectedIndex >= 0 && !hasLastChild) {
-        newVal.splice(hasSelectedIndex, 1);
-        return this.$emit("input", newVal);
+        newVal.splice(hasSelectedIndex, 1)
+        return this.$emit('input', newVal)
       }
 
       if (hasSelectedIndex === -1) {
         if (allSelected >= 0) {
-          newVal.splice(allSelected, 1);
+          newVal.splice(allSelected, 1)
         }
-        newVal.push(catId);
-        return this.$emit("input", newVal);
+        newVal.push(catId)
+        return this.$emit('input', newVal)
       }
     },
     categoriesStyles(catId) {
-      return { "--st-selected": this.value.includes(catId) };
+      return { '--st-selected': this.value.includes(catId) }
     },
   },
-};
+}
 
 /**
  * Клик по категории

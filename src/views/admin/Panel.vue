@@ -37,37 +37,37 @@
 </template>
 
 <script>
-import LayoutAdmin from "../../layouts/LayoutAdmin";
-import { mapGetters } from "vuex";
-import AdminBoardProducts from "../../components/admin/boards/AdminBoardProducts";
-import AdminBoardSettings from "../../components/admin/boards/AdminBoardSettings";
-import AdminBoardProductsSkeleton from "../../components/admin/skeleton/AdminBoardProductsSkeleton";
-import { convertToFormData } from "../../utils/servers";
+import LayoutAdmin from '../../layouts/LayoutAdmin'
+import { mapGetters } from 'vuex'
+import AdminBoardProducts from '../../components/admin/boards/AdminBoardProducts'
+import AdminBoardSettings from '../../components/admin/boards/AdminBoardSettings'
+import AdminBoardProductsSkeleton from '../../components/admin/skeleton/AdminBoardProductsSkeleton'
+import { convertToFormData } from '../../utils/servers'
 
-const START_APP_BOARD = 1;
+const START_APP_BOARD = 1
 const APP_BOARDS = {
   products: {
-    title: "Товары",
+    title: 'Товары',
     id: 1,
     elem: AdminBoardProducts,
   },
   settings: {
-    title: "Настройки",
+    title: 'Настройки',
     id: 2,
     elem: AdminBoardSettings,
   },
-};
+}
 
 export default {
-  name: "Panel",
+  name: 'Panel',
   components: {
     LayoutAdmin,
     AdminBoardProductsSkeleton,
   },
   async created() {
-    this.$store.dispatch("GET_DATA").then(() => {
-      this.loading = false;
-    });
+    this.$store.dispatch('GET_DATA').then(() => {
+      this.loading = false
+    })
   },
   data() {
     return {
@@ -75,66 +75,66 @@ export default {
       navigation: APP_BOARDS,
       loading: true,
       hiddenBoard: false,
-    };
+    }
   },
   computed: {
-    ...mapGetters(["PRODUCTS", "ADDONS"]),
+    ...mapGetters(['PRODUCTS', 'ADDONS']),
     currentBoard() {
       switch (this.activeBoardId) {
         case APP_BOARDS.products.id:
-          return APP_BOARDS.products.elem;
+          return APP_BOARDS.products.elem
         case APP_BOARDS.settings.id:
-          return APP_BOARDS.settings.elem;
+          return APP_BOARDS.settings.elem
         default:
-          return APP_BOARDS.products.elem;
+          return APP_BOARDS.products.elem
       }
     },
   },
   methods: {
     changeBoard(newBoardId) {
-      this.activeBoardId = newBoardId;
+      this.activeBoardId = newBoardId
     },
     isLinkActive(boardId) {
-      return boardId === this.activeBoardId;
+      return boardId === this.activeBoardId
     },
     async createProduct(product) {
-      this.hiddenBoard = true;
+      this.hiddenBoard = true
 
       await this.$store
-        .dispatch("CREATE_PIZZA", convertToFormData(product))
+        .dispatch('CREATE_PIZZA', convertToFormData(product))
         .then(() => {
-          this.updateBoard();
+          this.updateBoard()
         })
         .catch(() => {
-          this.$store.commit("SET_ERROR", { message: "Ошибка :(" });
+          this.$store.commit('SET_ERROR', { message: 'Ошибка :(' })
         })
         .finally(() => {
-          this.hiddenBoard = false;
-        });
+          this.hiddenBoard = false
+        })
     },
     async updateProduct(product) {
-      this.hiddenBoard = true;
+      this.hiddenBoard = true
 
       await this.$store
-        .dispatch("UPDATE_PIZZA", convertToFormData(product))
+        .dispatch('UPDATE_PIZZA', convertToFormData(product))
         .then(() => {
-          this.updateBoard();
+          this.updateBoard()
         })
         .catch(() => {
-          this.$store.commit("SET_ERROR", { message: "Ошибка :(" });
+          this.$store.commit('SET_ERROR', { message: 'Ошибка :(' })
         })
         .finally(() => {
-          this.hiddenBoard = false;
-        });
+          this.hiddenBoard = false
+        })
     },
     async deleteProduct(id) {
-      await this.$store.dispatch("DELETE_PRODUCT", id);
+      await this.$store.dispatch('DELETE_PRODUCT', id)
     },
     updateBoard() {
       setTimeout(() => {
-        this.hiddenBoard = false;
-      }, 150);
+        this.hiddenBoard = false
+      }, 150)
     },
   },
-};
+}
 </script>
