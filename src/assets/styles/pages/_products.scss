@@ -2,6 +2,14 @@
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
   grid-gap: 3.5rem;
+
+  @include respond(tablet) {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  @include respond(mobile) {
+    grid-template-columns: 1fr;
+  }
 }
 
 .button-main {
@@ -26,6 +34,11 @@
 
   padding: 0 2rem;
 
+  @include respond(mobile) {
+    height: 3.5rem;
+    padding: 0 1rem;
+  }
+
   &:hover {
     color: #FE5F1E;
     border: 2px solid #FE5F1E;
@@ -42,6 +55,12 @@
     font-size: 1.6rem;
     line-height: 2rem;
     height: 5.5rem;
+    
+    @include respond(mobile) {
+      font-size: 1.4rem;
+      line-height: 1.8rem;
+      height: 4rem;
+    }
   }
 
   &.--sz-small {

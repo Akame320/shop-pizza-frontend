@@ -1,0 +1,80 @@
+.products-page {
+  @include respond(mobile) {
+    padding-top: 5rem;
+    position: relative;
+  }
+
+  &__header {
+    padding: 0 0 4rem 0;
+    border-bottom: 2px solid #F6F6F6;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    @include respond(tablet) {
+      padding-bottom: 2rem;
+    }
+
+    @include respond(mobile) {
+      position: absolute;
+      z-index: 100;
+      top: 0;
+      left: 0;
+      right: 0;
+      padding-bottom: 2rem;
+
+      &.st-fixed {
+        position: fixed;
+        z-index: 100;
+        top: 0;
+        left: 0;
+        right: 0;
+        padding: 1rem 1.5rem;
+        background: white;
+        box-shadow: 3px 19px 20px 0px #0000000a;
+      }
+    }
+  }
+
+  &__profile {
+    margin-left: auto;
+    margin-right: 0;
+  }
+
+  &__logo {
+    @include respond(mobile) {
+      display: none;
+    }
+  }
+
+  &__title-wrapper {
+    margin: 3rem 0;
+  }
+
+  &__title {
+    font-size: 3.2rem;
+    line-height: 3.6rem;
+    font-weight: 700;
+    color: $text-color-black;
+
+    @include respond(mobile) {
+      font-size: 2.5rem;
+      line-height: 2.9rem;
+    }
+  }
+
+  &__aside {
+    display: grid;
+    grid-template-columns: max-content max-content max-content;
+    grid-gap: 2rem;
+    align-items: center;
+
+    @include respond(mobile) {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+    }
+  }
+}

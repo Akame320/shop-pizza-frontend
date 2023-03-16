@@ -1,8 +1,13 @@
 <template>
   <LayoutPublic>
     <div class="products-page-settings">
-      <UITabsButton v-model="filterCategorise" :categories="categories"/>
-      <UIFilterSelect :options="sortOptions" v-model="sorting"/>
+      <UITabsButton class="u-desktop-small-hidden" v-model="filterCategorise" :categories="categories"/>
+      <div class="products-page-settings__select">
+        <UIMultiSelect :styles="['th-yellow']" :options="categories" v-model="filterCategorise"/>
+      </div>
+      <div class="products-page-settings__filter">
+        <UIFilterSelect :options="sortOptions" v-model="sorting"/>
+      </div>
     </div>
 
     <div class="products-page__title-wrapper">
@@ -22,6 +27,7 @@ import LayoutPublic from "../layouts/LayoutPublic";
 import UIFilterSelect from "../components/ui/selects/UIFilterSelect";
 import UITabsButton from "../components/ui/tabs/UITabsButton";
 import AppProductBoard from "../components/home/AppProductBoard";
+import UIMultiSelect from "../components/ui/selects/UIMultiSelect";
 
 const SORT_PRICE = {
   title: 'по Цене',
@@ -48,7 +54,8 @@ export default {
     LayoutPublic,
     UIFilterSelect,
     UITabsButton,
-    AppProductBoard
+    AppProductBoard,
+    UIMultiSelect
   },
   created() {
     this.$store.dispatch('GET_PRODUCTS');

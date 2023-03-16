@@ -2,9 +2,35 @@
   <li class="product-card">
     <header class="product-card__header">
       <img class="product-card__img" :src="img"/>
-      <div class="product-card__title">{{ product.name }}</div>
+
+      <main class="product-card__main-mobile">
+        <div class="product-card__title">{{ product.name }}</div>
+        <main class="product-card__main">
+          <UIInputItems
+              class="product-card__row-type"
+              :product-value="product.types"
+              :is-multi="false"
+              v-model="settings.selectTypeValue"
+              :options="addons.types"
+          />
+          <UIInputItems
+              class="product-card__row-size"
+              :product-value="product.sizes"
+              :is-multi="false"
+              v-model="settings.selectSizeValue"
+              :options="addons.sizes"
+          />
+          <template v-if="isAdmin">
+            <UIMultiSelect
+                placeholder="Категории" :value="product.categories"
+                :options="addons.categories"
+                :clickable="false"
+            />
+          </template>
+        </main>
+      </main>
     </header>
-    <main class="product-card__main">
+    <main class="product-card__main u-mobile-hidden">
       <UIInputItems
           class="product-card__row-type"
           :product-value="product.types"
@@ -144,18 +170,4 @@ export default {
     }
   }
 }
-
-
-/**
- * Задача
- * Есть карточка пиццы. Есть корзина.
- * Нужно добавлять данные с карточки пиццы в корзину.
- * В корзине должен быть
- *  - Размер
- *  - Тип
- *  - id
- *  - Актуальная цена
- *
- *  При изменения актуального типа или размера цена и корзина должны обновляться. Если пицца есть в ней.
- */
 </script>

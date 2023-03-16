@@ -1,0 +1,55 @@
+.layout-user {
+  background-color: #FFDF8C;
+  width: 100%;
+  height: 100vh;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.layout-user-form {
+  background-color: white;
+  border-radius: 2rem;
+  padding: 4rem;
+  min-width: 40rem;
+}
+
+.layout-user-header {
+  margin-bottom: 3rem;
+
+  &__title {
+    font-size: 2.2rem;
+    line-height: 2.6rem;
+    font-weight: 700;
+    text-align: center;
+  }
+}
+
+.layout-user-main {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-gap: 2rem;
+}
+
+.layout-user-footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin-top: 3rem;
+
+  &__list {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &__item {
+    list-style-type: none;
+
+    &:not(:last-child) {
+      margin-right: 2rem;
+    }
+  }
+}

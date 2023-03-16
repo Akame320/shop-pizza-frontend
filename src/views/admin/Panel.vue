@@ -39,7 +39,6 @@ import LayoutAdmin from "../../layouts/LayoutAdmin";
 import { mapGetters } from "vuex";
 import AdminBoardProducts from "../../components/admin/boards/AdminBoardProducts";
 import AdminBoardSettings from "../../components/admin/boards/AdminBoardSettings";
-import AdminProductCard from "../../components/ui/products-cards/AdminProductCard";
 import AdminBoardProductsSkeleton from "../../components/admin/skeleton/AdminBoardProductsSkeleton";
 import { convertToFormData } from "../../utils/servers";
 
@@ -61,7 +60,6 @@ export default {
   name: "Panel",
   components: {
     LayoutAdmin,
-    AdminProductCard,
     AdminBoardProductsSkeleton,
   },
   async created() {

@@ -59,15 +59,20 @@
                 <div class="page-basket-footer__top">
                   <h3 class="page-basket-footer__title">Всего пицц: <strong>{{ BASKET_COUNT }} шт.</strong></h3>
                 </div>
-                <button @click="$router.push('/')" class="button-main --th-outline-grey --sz-big basket-big-btn">Вернуться
+                <button @click="$router.push('/')" class="button-main --th-outline-grey --sz-big basket-big-btn">
+                  Вернуться
+                  <span class="u-mobile-hidden">
                   назад
+                  </span>
                 </button>
               </div>
               <div class="page-basket-footer__col">
                 <div class="page-basket-footer__top">
-                  <h3 class="page-basket-footer__title">Сумма заказа: <strong class="u-color-accept"> {{ BASKET_SUM }} ₽</strong></h3>
+                  <h3 class="page-basket-footer__title">Сумма заказа: <strong class="u-color-accept"> {{ BASKET_SUM }}
+                    ₽</strong></h3>
                 </div>
-                <button class="button-main --sz-big basket-big-btn">Оплатить сейчас</button>
+                <button class="button-main --sz-big basket-big-btn">Оплатить <span
+                    class="u-mobile-hidden"> сейчас</span></button>
               </div>
             </div>
           </footer>
@@ -94,7 +99,7 @@
       </div>
     </div>
 
-    <ModalWarningNotAuth />
+    <ModalWarningNotAuth/>
   </LayoutPublic>
 </template>
 
@@ -122,13 +127,13 @@ export default {
   },
   methods: {
     increment(id) {
-      this.$store.commit('BASK_PRODUCT_INCREMENT', {id});
+      this.$store.commit('BASK_PRODUCT_INCREMENT', { id });
     },
     decrement(id) {
-      this.$store.commit('BASK_PRODUCT_DECREMENT', {id})
+      this.$store.commit('BASK_PRODUCT_DECREMENT', { id })
     },
     remove(id) {
-      this.$store.commit('BASKET_PRODUCT_CLEAR', {id})
+      this.$store.commit('BASKET_PRODUCT_CLEAR', { id })
     },
     clearAllProducts() {
       this.$store.commit('BASKET_CLEAR')

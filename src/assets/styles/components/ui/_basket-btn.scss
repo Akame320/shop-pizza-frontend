@@ -1,0 +1,91 @@
+.basket {
+  height: 4.5rem;
+  background-color: $accept-color;
+  border-radius: 100px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 0 2rem;
+
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: all 0.05s linear;
+  border: none;
+  outline: none;
+
+  @include respond(mobile) {
+    height: 3.5rem;
+    padding: 0 1.5rem;
+  }
+
+  &:hover {
+    opacity: 0.9;
+  }
+
+  &:active {
+    opacity: 0.75;
+  }
+
+  &__left {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+
+    &:after {
+      content: "";
+      display: block;
+      width: 0.1rem;
+      height: 2rem;
+      margin: 0 1.3rem;
+      background: white;
+    }
+  }
+
+  &__right {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+  }
+
+  &__count {
+    font-size: 1.6rem;
+    line-height: 2rem;
+    font-weight: 700;
+    color: white;
+
+    @include respond(mobile) {
+      font-size: 1.4rem;
+      line-height: 1.6rem;
+    }
+  }
+
+  &__sum {
+    font-size: 1.6rem;
+    line-height: 2rem;
+    font-weight: 700;
+    color: white;
+
+    @include respond(mobile) {
+      font-size: 1.4rem;
+      line-height: 1.6rem;
+    }
+  }
+
+  &__icon {
+    font-size: 0;
+    line-height: 0;
+
+    margin-right: 0.8rem;
+    width: 1.6rem;
+    height: 1.6rem;
+    display: inline-block;
+    transform: translateY(-0.2rem);
+
+    @include respond(mobile) {
+      width: 1.2rem;
+      height: 1.2rem;
+    }
+  }
+}

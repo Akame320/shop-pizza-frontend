@@ -1,0 +1,11 @@
+.u-desktop-small-hidden {
+  @include respond(desktop-small) {
+    display: none;
+  }
+}
+
+.u-mobile-hidden {
+  @include respond(mobile) {
+    display: none!important;
+  }
+}

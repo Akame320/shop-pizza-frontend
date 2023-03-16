@@ -1,5 +1,12 @@
 .admin-product-card {
   position: relative;
+  min-height: 50rem;
+
+  &.--th-edit {
+    position: relative;
+    box-shadow: 0 0 20px 2px rgb(0 0 0 / 25%);
+    border-radius: 2rem;
+  }
 
   &.--th-edit & {
     &__title-wrapper {
@@ -142,9 +149,181 @@
   }
 }
 
-.admin-product-card-placeholder-img {
-  width: 90%;
-  padding-bottom: 90%;
-  border-radius: 50%;
-  border: 2px solid grey;
+.admin-product-card-price {
+  &__row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    &:not(:last-child) {
+      margin-bottom: 2rem;
+    }
+
+    &.--th-disabled {
+      opacity: 0.5;
+    }
+  }
+
+  &__left {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex: 1 1 auto;
+  }
+
+  &__state {
+    width: 2rem;
+    margin-right: 2rem;
+  }
+
+  &__input {
+    margin-right: 2rem;
+    max-width: 10rem;
+    width: 100%;
+  }
+
+  &__out {
+    font-size: 1.4rem;
+    line-height: 1.8rem;
+    font-weight: 700;
+    color: $text-color-dark;
+    min-width: max-content;
+  }
+}
+
+.admin-pizza-card-error {
+  width: 13rem;
+  height: auto;
+  padding: 1rem;
+  border: 1.5px solid #dbdbdb;
+  border-radius: 1rem;
+  background-color: #ffffff;
+  position: absolute;
+  top: 1rem;
+  left: auto;
+  right: 1rem;
+  z-index: 100;
+  box-shadow: 0 0 7px 0 rgb(0 0 0 / 25%);
+  transition: all 0.2s linear;
+  transform: translateY(1rem);
+  opacity: 0;
+  visibility: hidden;
+
+  &.--st-error {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+
+  &__errors-list {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-gap: 1rem;
+  }
+
+  &__errors-item {
+    font-size: 1rem;
+    line-height: 1.4rem;
+    color: #ff4646;
+  }
+}
+
+.create-pizza-card {
+  position: relative;
+  box-shadow: 0 0 20px 2px rgb(0 0 0 / 25%);
+  border-radius: 2rem;
+  min-height: 50rem;
+}
+
+.create-pizza-card-action {
+  position: absolute;
+  top: auto;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 1rem;
+
+  padding: 2rem;
+}
+
+.create-pizza-card-step {
+  background-color: #F3F3F3;
+  border-radius: 2rem;
+  padding: 2rem;
+  height: 100%;
+
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+}
+
+.create-pizza-price {
+  &__title {
+    font-size: 2rem;
+    line-height: 2.4rem;
+    color: $text-color-dark;
+  }
+
+  &__elem {
+    margin-top: 2rem;
+  }
+
+  &:not(:last-child) {
+    margin-bottom: 3rem;
+  }
+}
+
+.card-admin-skeleton {
+  position: relative;
+
+  &__btn {
+    position: absolute;
+    top: 1rem;
+    left: auto;
+    right: 1rem;
+    z-index: 1;
+  }
+
+  &__img {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: 0.5rem;
+  }
+
+  &__title {
+    margin-top: 2.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &__settings {
+    margin-top: 2.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &__price {
+    margin-top: 1.7rem;
+  }
+}
+
+.admin-actions-skeleton {
+  margin-bottom: 2rem;
+
+  display: grid;
+  grid-template-columns: max-content max-content;
+  grid-gap: 2rem;
+
+  &__item {
+    overflow: hidden;
+    border-radius: 20rem;
+  }
 }
