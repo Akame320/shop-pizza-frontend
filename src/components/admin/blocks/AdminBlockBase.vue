@@ -7,7 +7,7 @@
       <span v-if="error" class="admin-settings-block__error">{{ error }}</span>
     </header>
     <main class="admin-settings-block__main">
-      <slot/>
+      <slot />
     </main>
     <footer v-if="button" class="admin-settings-block__footer">
       <UIButton @click="$emit('click')" :styles="['th-orange', 'sz-small']">
@@ -23,26 +23,25 @@ import UIButton from "../../ui/buttons/UIButton";
 export default {
   name: "AdminBlockBase",
   components: {
-    UIButton
+    UIButton,
   },
   props: {
     theme: {
       type: String,
-      default: ''
+      default: "",
     },
     button: {
       type: Object,
-      default: () => {
-      }
+      default: () => {},
     },
     title: {
       type: String,
-      default: ''
+      default: "",
     },
     error: {
       type: String,
-      default: ''
-    }
-  }
-}
+      default: "",
+    },
+  },
+};
 </script>

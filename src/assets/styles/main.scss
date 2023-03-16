@@ -1,4 +1,4 @@
-@use 'sass:math';
+@use "sass:math";
 
 @import "./global/base";
 @import "./global/variables";
@@ -62,7 +62,7 @@
   justify-content: space-between;
 
   padding: 9rem 0 3rem 0;
-  border-bottom: 2px solid #F4F4F4;
+  border-bottom: 2px solid #f4f4f4;
 
   @include respond(mobile) {
     padding: 3.5rem 0 3rem 0;
@@ -92,7 +92,7 @@
     svg {
       width: 100%;
       height: 100%;
-      stroke: #B6B6B6;
+      stroke: #b6b6b6;
     }
   }
 
@@ -119,7 +119,7 @@
   background-color: transparent;
   outline: none;
   border: none;
-  color: #B6B6B6;
+  color: #b6b6b6;
 
   &:hover {
     &,
@@ -139,7 +139,7 @@
     svg {
       width: 100%;
       height: 100%;
-      stroke: #B6B6B6;
+      stroke: #b6b6b6;
     }
   }
 
@@ -191,7 +191,6 @@
 }
 
 .basket-main {
-
 }
 
 .basket-item-row {
@@ -200,7 +199,7 @@
   justify-content: space-between;
   list-style-type: none;
   padding: 2.5rem 0;
-  border-bottom: 2px solid #F4F4F4;
+  border-bottom: 2px solid #f4f4f4;
 
   @include respond(mobile) {
     display: grid;
@@ -324,7 +323,7 @@
   }
 
   &.--th-grey {
-    border-color: #D7D7D7;
+    border-color: #d7d7d7;
 
     &:active {
       border-color: $accept-color;
@@ -343,7 +342,7 @@
     height: 100%;
 
     border-radius: 0.5rem;
-    border: 2px solid #D3D3D3;
+    border: 2px solid #d3d3d3;
     outline: $accept-color;
 
     padding-left: 1.5rem;
@@ -377,7 +376,6 @@
 }
 
 .md-ash-auth {
-
   &__title-wrapper {
     margin-bottom: 2rem;
   }
@@ -666,16 +664,16 @@
   color: red;
 }
 
-
 .card-change-anim-enter-active {
   transition: all 0.15s ease 0.15s;
 }
 
 .card-change-anim-leave-active {
-  transition: all 0.15s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+  transition: all 0.15s cubic-bezier(1, 0.5, 0.8, 1);
 }
 
-.card-change-anim-enter, .card-change-anim-leave-to {
+.card-change-anim-enter,
+.card-change-anim-leave-to {
   transform: translateX(-1rem);
   opacity: 0;
   visibility: hidden;
@@ -711,10 +709,11 @@
 }
 
 .top-change-anim-leave-active {
-  transition: all 0.15s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+  transition: all 0.15s cubic-bezier(1, 0.5, 0.8, 1);
 }
 
-.top-change-anim-enter, .card-change-anim-leave-to {
+.top-change-anim-enter,
+.card-change-anim-leave-to {
   transform: translateY(-1rem);
   opacity: 0;
   visibility: hidden;

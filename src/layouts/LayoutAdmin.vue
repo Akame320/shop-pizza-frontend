@@ -4,7 +4,9 @@
       <LogoDark sub-title="Vue pizza :)" />
     </div>
     <div class="layout-profile__inner">
-      <aside class="layout-profile__aside"><slot name="aside"/></aside>
+      <aside class="layout-profile__aside">
+        <slot name="aside" />
+      </aside>
       <main class="layout-profile__content">
         <div class="layout-profile__top">
           <div class="layout-profile__title-wrapper">
@@ -14,7 +16,8 @@
             <UIProfile />
           </div>
         </div>
-        <slot name="board"/></main>
+        <slot name="board" />
+      </main>
     </div>
   </div>
 </template>
@@ -27,7 +30,7 @@ export default {
   name: "LayoutAdmin",
   components: {
     LogoDark,
-    UIProfile
-  }
-}
+    UIProfile,
+  },
+};
 </script>

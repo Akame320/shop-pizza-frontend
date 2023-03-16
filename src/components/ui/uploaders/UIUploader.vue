@@ -1,10 +1,19 @@
 <template>
   <div class="uploader-block" :class="classes">
-    <input ref="input" type="file" @input="inputHandler" class="uploader-block__input"/>
-    <img class="uploader-block__img" :class="{'th-gray': !localImg}" :src="imgPreview"/>
+    <input
+      ref="input"
+      type="file"
+      @input="inputHandler"
+      class="uploader-block__input"
+    />
+    <img
+      class="uploader-block__img"
+      :class="{ 'th-gray': !localImg }"
+      :src="imgPreview"
+    />
     <div class="uploader-block__action">
       <UIButton :styles="btnStyles" @click="addFile">
-        <slot/>
+        <slot />
       </UIButton>
     </div>
   </div>
@@ -23,51 +32,55 @@ export default {
   props: {
     btnText: {
       type: String,
-      default: '',
+      default: "",
     },
     id: {
       type: String,
-      default: ''
+      default: "",
     },
     simple: {
       type: Boolean,
-      default: false
+      default: false,
     },
     btnStyles: {
       type: Array,
-      default: () => []
+      default: () => [],
     },
     imgSrc: {
       type: String,
-      default: ''
-    }
+      default: "",
+    },
   },
   data() {
     return {
-      localImg: null
-    }
+      localImg: null,
+    };
   },
   computed: {
     imgPreview() {
-      return this.localImg ? this.localImg : this.imgSrc ? 'http://localhost:5000/' + this.imgSrc : '/static/img/product-mocks/pizza.jpg'
+      return this.localImg
+        ? this.localImg
+        : this.imgSrc
+        ? "http://localhost:5000/" + this.imgSrc
+        : "/static/img/product-mocks/pizza.jpg";
     },
   },
   methods: {
     addFile() {
-      this.$refs.input.click()
+      this.$refs.input.click();
     },
     inputHandler(event) {
-      const file = event.target.files[0]
-      this.$emit('input', file)
-      this.updatePhoto(file)
+      const file = event.target.files[0];
+      this.$emit("input", file);
+      this.updatePhoto(file);
     },
     updatePhoto(file) {
       let reader = new FileReader();
       reader.onload = (event) => {
-        this.localImg = event.target.result
-      }
+        this.localImg = event.target.result;
+      };
       reader.readAsDataURL(file);
-    }
-  }
-}
+    },
+  },
+};
 </script>

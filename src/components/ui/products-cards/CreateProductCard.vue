@@ -1,5 +1,5 @@
 <template>
-  <li class="create-pizza-card" >
+  <li class="create-pizza-card">
     <ProductCardEditBoards
       :addons="addons"
       :product="form"
@@ -10,20 +10,19 @@
 </template>
 
 <script>
-
 import ProductCardEditBoards from "./ProductCardEditBoards";
 import { convertAddonToForm } from "./utilites";
 
 export default {
   name: "CreateProductCard",
   components: {
-    ProductCardEditBoards
+    ProductCardEditBoards,
   },
   props: {
     addons: {
       type: Object,
-      default: () => {}
-    }
+      default: () => {},
+    },
   },
   data() {
     return {
@@ -33,14 +32,14 @@ export default {
         sizes: convertAddonToForm(this.addons.sizes),
         types: convertAddonToForm(this.addons.types),
         categories: [],
-        name: ''
-      }
-    }
+        name: "",
+      },
+    };
   },
   methods: {
     saveHandler(product) {
-      this.$emit('create', product)
+      this.$emit("create", product);
     },
-  }
-}
+  },
+};
 </script>

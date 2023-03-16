@@ -6,6 +6,6 @@
 
 .u-mobile-hidden {
   @include respond(mobile) {
-    display: none!important;
+    display: none !important;
   }
 }

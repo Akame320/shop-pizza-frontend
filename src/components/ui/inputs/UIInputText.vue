@@ -1,6 +1,14 @@
 <template>
   <div class="main-input">
-    <input :disabled="disabled" :type="type" :name="name" :value="value" @input="onInput" class="main-input__elem" :placeholder="placeholder">
+    <input
+      :disabled="disabled"
+      :type="type"
+      :name="name"
+      :value="value"
+      @input="onInput"
+      class="main-input__elem"
+      :placeholder="placeholder"
+    />
     <div v-if="error" class="main-input__error">
       {{ error }}
     </div>
@@ -13,34 +21,34 @@ export default {
   props: {
     value: {
       type: [String, Number],
-      default: ''
+      default: "",
     },
     name: {
       type: String,
-      default: ''
+      default: "",
     },
     placeholder: {
       type: String,
-      default: ''
+      default: "",
     },
     error: {
       type: String,
-      default: ''
+      default: "",
     },
     disabled: {
       type: Boolean,
-      default: false
+      default: false,
     },
     type: {
       type: String,
-      default: 'text'
-    }
+      default: "text",
+    },
   },
   methods: {
     onInput(event) {
-      let { value } = event.target
-      this.$emit('input', value)
+      let { value } = event.target;
+      this.$emit("input", value);
     },
-  }
-}
+  },
+};
 </script>

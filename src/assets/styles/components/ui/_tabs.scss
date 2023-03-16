@@ -11,7 +11,7 @@
   line-height: 2rem;
   font-weight: 700;
   color: $text-color-black;
-  background-color: #F9F9F9;
+  background-color: #f9f9f9;
   border-radius: 100px;
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
@@ -19,7 +19,7 @@
   padding: 1rem 3rem;
 
   &:not(.--st-selected):hover {
-    background-color: #FE8756;
+    background-color: #fe8756;
     color: white;
   }
 

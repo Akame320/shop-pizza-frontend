@@ -5,20 +5,25 @@
     </header>
     <main class="layout-user-main">
       <UIInputText
-          v-model="v$.form.email.$model"
-          :error="v$.form.email.$errors[0]?.$message || error"
-          name="email"
+        v-model="v$.form.email.$model"
+        :error="v$.form.email.$errors[0]?.$message || error"
+        name="email"
       />
       <UIInputText
-          v-model="v$.form.password.$model"
-          :error="v$.form.password.$errors[0]?.$message"
-          name="password"
+        v-model="v$.form.password.$model"
+        :error="v$.form.password.$errors[0]?.$message"
+        name="password"
       />
     </main>
     <footer class="layout-user-footer">
       <ul class="layout-user-footer__list">
         <li class="layout-user-footer__item">
-          <button @click="$router.push('/')" class="button-main --th-outline-grey">Назад</button>
+          <button
+            @click="$router.push('/')"
+            class="button-main --th-outline-grey"
+          >
+            Назад
+          </button>
         </li>
         <li class="layout-user-footer__item">
           <button @click="submit" class="button-main">Отправить</button>
@@ -39,54 +44,60 @@ export default {
   name: "Login",
   components: {
     LayoutUser,
-    UIInputText
+    UIInputText,
   },
   setup() {
-    return { v$: useVuelidate() }
+    return { v$: useVuelidate() };
   },
   data() {
     return {
       form: {
-        email: '',
-        password: ''
+        email: "",
+        password: "",
       },
-      error: ''
-    }
+      error: "",
+    };
   },
   computed: {
-    ...mapGetters(['IS_ADMIN'])
+    ...mapGetters(["IS_ADMIN"]),
   },
   methods: {
     async submit() {
-      const email = this.form.email
-      const password = this.form.password
+      const email = this.form.email;
+      const password = this.form.password;
 
-      this.$store.dispatch('LOGIN', { email, password }).then(() => {
-        if (this.IS_ADMIN) this.$router.push('/admin/panel')
-        else this.$router.push('/')
-      }).catch(e => {
-        this.error = e.response.data.message
-      })
+      this.$store
+        .dispatch("LOGIN", { email, password })
+        .then(() => {
+          if (this.IS_ADMIN) this.$router.push("/admin/panel");
+          else this.$router.push("/");
+        })
+        .catch((e) => {
+          this.error = e.response.data.message;
+        });
     },
   },
   validations() {
     return {
       form: {
         email: {
-          required: helpers.withMessage('Обязательное поле', required),
-          email: helpers.withMessage('Введите email', email),
+          required: helpers.withMessage("Обязательное поле", required),
+          email: helpers.withMessage("Введите email", email),
         },
         password: {
-          required: helpers.withMessage('Обязательное поле', required),
-          minLength: helpers.withMessage('Минимальная длина 6 символов ', minLength(6)),
-        }
-      }
-    }
+          required: helpers.withMessage("Обязательное поле", required),
+          minLength: helpers.withMessage(
+            "Минимальная длина 6 символов ",
+            minLength(6)
+          ),
+        },
+      },
+    };
   },
   watch: {
-    'form.email'() {
-      this.error = ''
-    }
-  }
-}
+    "form.email"() {
+      this.error = "";
+    },
+  },
+};
 </script>

@@ -16,8 +16,8 @@
   height: 4rem;
 
   color: white;
-  background: #FE5F1E;
-  border: 2px solid #FE5F1E;
+  background: #fe5f1e;
+  border: 2px solid #fe5f1e;
   border-radius: 30px;
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
@@ -40,14 +40,14 @@
   }
 
   &:hover {
-    color: #FE5F1E;
-    border: 2px solid #FE5F1E;
+    color: #fe5f1e;
+    border: 2px solid #fe5f1e;
     background-color: #fff;
   }
 
   &.--st-active {
-    color: #FE5F1E;
-    border: 2px solid #FE5F1E;
+    color: #fe5f1e;
+    border: 2px solid #fe5f1e;
     background-color: #fff;
   }
 
@@ -55,7 +55,7 @@
     font-size: 1.6rem;
     line-height: 2rem;
     height: 5.5rem;
-    
+
     @include respond(mobile) {
       font-size: 1.4rem;
       line-height: 1.8rem;
@@ -71,17 +71,17 @@
   }
 
   &.--th-outline-grey {
-    color: #CACACA;
+    color: #cacaca;
     background-color: white;
-    border: 2px solid #CACACA;
+    border: 2px solid #cacaca;
 
     &:hover {
       opacity: 0.8;
     }
 
     &:active {
-      color: #FE5F1E;
-      border: 2px solid #FE5F1E;
+      color: #fe5f1e;
+      border: 2px solid #fe5f1e;
     }
   }
 

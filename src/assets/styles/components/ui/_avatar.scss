@@ -75,7 +75,7 @@
     font-weight: 700;
     font-family: $font-secondary;
     color: white;
-    background-color: #D9D9D9;
+    background-color: #d9d9d9;
     position: relative;
 
     @include respond(mobile) {
@@ -163,7 +163,7 @@
     }
 
     &:hover {
-      background-color: #FFF7F3;
+      background-color: #fff7f3;
       color: $accept-color;
     }
   }

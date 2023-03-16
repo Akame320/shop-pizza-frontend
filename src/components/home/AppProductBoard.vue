@@ -1,13 +1,13 @@
 <template>
   <ul class="products-cards-list">
     <MainProductCard
-        v-for="pizza of products"
-        :key="pizza.name"
-        :product="pizza"
-        :addons="addons"
-        :basket="getBasket(pizza.id)"
-        @add="addToBasket"
-        @updateBask="updateBasket"
+      v-for="pizza of products"
+      :key="pizza.name"
+      :product="pizza"
+      :addons="addons"
+      :basket="getBasket(pizza.id)"
+      @add="addToBasket"
+      @updateBask="updateBasket"
     />
   </ul>
 </template>
@@ -19,31 +19,31 @@ import { mapGetters } from "vuex";
 export default {
   name: "AppProductBoard",
   components: {
-    MainProductCard
+    MainProductCard,
   },
   props: {
     products: {
       type: Array,
-      default: () => []
+      default: () => [],
     },
     addons: {
       type: Object,
-      default: () => {}
-    }
+      default: () => {},
+    },
   },
   computed: {
-    ...mapGetters(['GET_BASKET']),
+    ...mapGetters(["GET_BASKET"]),
   },
   methods: {
     getBasket(id) {
-      return this.GET_BASKET.find(item => item.id === id)
+      return this.GET_BASKET.find((item) => item.id === id);
     },
     addToBasket(data) {
-      this.$emit('addCount', data)
+      this.$emit("addCount", data);
     },
     updateBasket(data) {
-      this.$emit('updateBask', data)
-    }
-  }
-}
+      this.$emit("updateBask", data);
+    },
+  },
+};
 </script>

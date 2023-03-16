@@ -1,16 +1,25 @@
 <template>
-  <div class="admin-product-card-price__row" :class="{'--th-disabled': !value.isActive}">
+  <div
+    class="admin-product-card-price__row"
+    :class="{ '--th-disabled': !value.isActive }"
+  >
     <div class="admin-product-card-price__left">
       <div class="admin-product-card-price__state">
-        <UICheckbox :value="value.isActive" @input="(val) => update('isActive', val)"/>
+        <UICheckbox
+          :value="value.isActive"
+          @input="(val) => update('isActive', val)"
+        />
       </div>
       <div class="admin-product-card-price__input">
-        <UIInputText :disabled="!value.isActive" type="text" :value="v$.value.price.$model" @input="(val) => update('price', val)"/>
+        <UIInputText
+          :disabled="!value.isActive"
+          type="text"
+          :value="v$.value.price.$model"
+          @input="(val) => update('price', val)"
+        />
       </div>
     </div>
-    <div class="admin-product-card-price__out">
-      См: {{ value.price }}
-    </div>
+    <div class="admin-product-card-price__out">См: {{ value.price }}</div>
   </div>
 </template>
 
@@ -25,32 +34,35 @@ export default {
   name: "CustomComponent",
   components: {
     UIInputText,
-    UICheckbox
+    UICheckbox,
   },
   setup() {
-    return { v$: useVuelidate() }
+    return { v$: useVuelidate() };
   },
   validations() {
     return {
       value: {
         price: {
-          minLength: helpers.withMessage('Поле цены не должно быть пустым', requiredIf(this.value.isActive))
-        }
-      }
-    }
+          minLength: helpers.withMessage(
+            "Поле цены не должно быть пустым",
+            requiredIf(this.value.isActive)
+          ),
+        },
+      },
+    };
   },
   props: {
     value: {
       type: Object,
-      default: () => {}
-    }
+      default: () => {},
+    },
   },
   methods: {
     update(key, value) {
-      const newValue = { ...this.value }
-      newValue[key] = value
-      this.$emit('input', newValue)
-    }
-  }
-}
+      const newValue = { ...this.value };
+      newValue[key] = value;
+      this.$emit("input", newValue);
+    },
+  },
+};
 </script>

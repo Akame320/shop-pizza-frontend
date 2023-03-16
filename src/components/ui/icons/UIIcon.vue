@@ -1,15 +1,17 @@
 <template>
-  <component :class="styles" :is="isIcon"/>
+  <component :class="styles" :is="isIcon" />
 </template>
 
 <script>
 import mixinStyle from "@/mixins/UIComponent";
 import BasketSVG from "./components/BasketSVG";
 
-const icons = [{
-  name: 'basket',
-  elem: BasketSVG
-}]
+const icons = [
+  {
+    name: "basket",
+    elem: BasketSVG,
+  },
+];
 
 export default {
   name: "UIIcon",
@@ -17,14 +19,14 @@ export default {
   props: {
     name: {
       type: String,
-      required: true
+      required: true,
     },
   },
   computed: {
     isIcon() {
-      const searchIcon = icons.find(icon => icon.name === this.name)
-      return searchIcon.elem
-    }
-  }
-}
+      const searchIcon = icons.find((icon) => icon.name === this.name);
+      return searchIcon.elem;
+    },
+  },
+};
 </script>

@@ -1,13 +1,9 @@
-<template>
-
-</template>
+<template></template>
 
 <script>
 export default {
-  name: "AuthLayout"
-}
+  name: "AuthLayout",
+};
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

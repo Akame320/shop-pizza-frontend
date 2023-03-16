@@ -75,12 +75,12 @@
     transition: all 0.05s linear;
 
     &:hover {
-      background-color: #FFF7F3;
+      background-color: #fff7f3;
       color: $accept-color;
     }
 
     &.--st-active {
-      background-color: #FFF7F3;
+      background-color: #fff7f3;
       color: $accept-color;
     }
   }

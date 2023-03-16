@@ -1,13 +1,14 @@
 <template>
   <ul class="product-card-settings">
-    <li class="product-card-settings__item"
-        v-for="option of options"
-        :key="option.value"
-        :class="{
-          '--th-selected': isSelectedItem(option.value),
-          '--st-clicked': hasClicked(option.value)
-        }"
-        @click="toggleOption(option.value)"
+    <li
+      class="product-card-settings__item"
+      v-for="option of options"
+      :key="option.value"
+      :class="{
+        '--th-selected': isSelectedItem(option.value),
+        '--st-clicked': hasClicked(option.value),
+      }"
+      @click="toggleOption(option.value)"
     >
       {{ option.value }}
     </li>
@@ -37,36 +38,36 @@ export default {
     isMulti: {
       type: Boolean,
       default: true,
-    }
+    },
   },
   methods: {
     isSelectedItem(value) {
       if (!this.isMulti) {
-        return this.value === value
+        return this.value === value;
       }
-      return this.value.find(val => val === value)
+      return this.value.find((val) => val === value);
     },
     toggleOption(value) {
-      if (!this.clickable) return
+      if (!this.clickable) return;
 
       if (!this.isMulti) {
-        return this.$emit('input', value)
+        return this.$emit("input", value);
       }
 
-      const newValue = [...this.value]
-      const index = this.value.findIndex(item => item === value)
+      const newValue = [...this.value];
+      const index = this.value.findIndex((item) => item === value);
 
       if (index !== -1) {
-        newValue.splice(index, 1)
+        newValue.splice(index, 1);
       } else {
-        newValue.push(value)
+        newValue.push(value);
       }
 
-      this.$emit('input', newValue)
+      this.$emit("input", newValue);
     },
     hasClicked(value) {
-      return this.productValue.find(item => item.value === value)
-    }
-  }
-}
+      return this.productValue.find((item) => item.value === value);
+    },
+  },
+};
 </script>

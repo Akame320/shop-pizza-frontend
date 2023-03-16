@@ -123,12 +123,12 @@
     }
 
     &:hover {
-      background-color: #FFF7F3;
+      background-color: #fff7f3;
       color: $accept-color;
     }
 
     &.--st-active {
-      background-color: #FFF7F3;
+      background-color: #fff7f3;
       color: $accept-color;
     }
   }
@@ -139,7 +139,7 @@
     border-radius: 50%;
 
     svg {
-      stroke: $accept-color
+      stroke: $accept-color;
     }
   }
 }

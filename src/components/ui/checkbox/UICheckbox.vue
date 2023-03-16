@@ -1,12 +1,12 @@
 <template>
   <div class="checkbox">
     <input
-        class="checkbox__input"
-        type="checkbox"
-        :checked="value"
-        @change="$emit('input', $event.target.checked)"
-    >
-    <div class="checkbox__elem"/>
+      class="checkbox__input"
+      type="checkbox"
+      :checked="value"
+      @change="$emit('input', $event.target.checked)"
+    />
+    <div class="checkbox__elem" />
   </div>
 </template>
 
@@ -16,8 +16,8 @@ export default {
   props: {
     value: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
   },
-}
+};
 </script>

@@ -12,7 +12,11 @@
       </li>
     </ul>
     <div class="admin-products__products-list">
-      <div class="card-admin-skeleton"  v-for="item in skeletonCards" :key="item">
+      <div
+        class="card-admin-skeleton"
+        v-for="item in skeletonCards"
+        :key="item"
+      >
         <div class="card-admin-skeleton__btn">
           <Skeleton width="4rem" height="4rem" :circle="true" />
         </div>
@@ -34,18 +38,17 @@
 </template>
 
 <script>
-
 import { Skeleton } from "vue-loading-skeleton";
 
 export default {
   name: "AdminBoardProductsSkeleton",
   components: {
-    Skeleton
+    Skeleton,
   },
   data() {
     return {
-      skeletonCards: 10
-    }
-  }
-}
+      skeletonCards: 10,
+    };
+  },
+};
 </script>

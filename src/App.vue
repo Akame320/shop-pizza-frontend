@@ -14,12 +14,10 @@
 import { mapGetters } from "vuex";
 
 export default {
-  name: 'App',
+  name: "App",
   computed: {
-    ...mapGetters(['HAS_AUTH', 'GET_ERROR'])
+    ...mapGetters(["HAS_AUTH", "GET_ERROR"]),
   },
-  methods: {
-
-  }
-}
+  methods: {},
+};
 </script>
