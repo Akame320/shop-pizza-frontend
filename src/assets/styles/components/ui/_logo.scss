@@ -7,15 +7,22 @@
   -webkit-tap-highlight-color: transparent;
 
   &__icon {
-    width: 3.8rem;
+    min-width: 3.8rem;
+    width: 0;
     height: 3.8rem;
 
     margin-right: 1.7rem;
 
     @include respond(tablet) {
-      width: 3rem;
+      min-width: 3rem;
       height: 3rem;
       margin-right: 1rem;
+    }
+
+    @include respond(mobile) {
+      min-width: 2.3rem;
+      height: 2.3rem;
+      margin-right: 0.5rem;
     }
 
     img {
@@ -41,6 +48,11 @@
       font-size: 2rem;
       line-height: 2.4rem;
     }
+
+    @include respond(mobile) {
+      font-size: 1.2rem;
+      line-height: 1.4rem;
+    }
   }
 
   &__subtitle {
@@ -52,6 +64,11 @@
     @include respond(tablet) {
       font-size: 1.3rem;
       line-height: 1.7rem;
+    }
+
+    @include respond(mobile) {
+      font-size: 0.9rem;
+      line-height: 1.2rem;
     }
   }
 }

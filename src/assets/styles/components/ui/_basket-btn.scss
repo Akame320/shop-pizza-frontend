@@ -89,3 +89,12 @@
     }
   }
 }
+
+.basket-float {
+  position: fixed;
+  top: auto;
+  bottom: 3rem;
+  left: auto;
+  right: 3rem;
+  z-index: 1000;
+}

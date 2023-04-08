@@ -46,7 +46,7 @@ const routes = [
     path: ROUTES.ADMIN.PRODUCTS.path,
     name: ROUTES.ADMIN.PRODUCTS.name,
     component: Panel,
-    beforeEnter: routeMiddleware.isAdmin,
+    beforeEnter: routeMiddleware.adminValidator,
   },
 
   // 404

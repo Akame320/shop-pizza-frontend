@@ -68,15 +68,17 @@ const actions = {
   },
 
   CHECK_TOKEN: async (context) => {
-    const { data } = await api.check()
-    if (data) {
-      context.commit('SET_USER', { user: data })
-    } else {
-      localStorage.removeItem('token')
-    }
+    api.check().then((res) => {
+      context.commit('SET_USER', { user: res.data })
+    }).catch(() => {
+      context.dispatch('LOGOUT')
+    })
   },
 
-  LOGOUT: (context) => {
+  LOGOUT: async (context) => {
+    localStorage.removeItem('token')
+    await api.logout()
+
     context.commit('REMOVE_USER')
   },
 }

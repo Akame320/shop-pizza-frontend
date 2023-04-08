@@ -2,6 +2,7 @@
   <li class="product-card">
     <header class="product-card__header">
       <img class="product-card__img" :src="img" />
+      <div class="product-card__title">{{ product.name }}</div>
 
       <main class="product-card__main-mobile">
         <div class="product-card__title">{{ product.name }}</div>

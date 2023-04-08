@@ -43,9 +43,6 @@
   }
 
   &__logo {
-    @include respond(mobile) {
-      display: none;
-    }
   }
 
   &__title-wrapper {
@@ -66,7 +63,7 @@
 
   &__aside {
     display: grid;
-    grid-template-columns: max-content max-content max-content;
+    grid-template-columns: max-content;
     grid-gap: 2rem;
     align-items: center;
 

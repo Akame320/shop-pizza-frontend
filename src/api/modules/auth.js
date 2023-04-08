@@ -1,4 +1,5 @@
 import axios from 'axios'
+axios.defaults.withCredentials = true;
 
 export default {
   registration(email, password, role = '') {
@@ -14,7 +15,9 @@ export default {
       password,
     })
   },
-  logout() {},
+  logout() {
+    return axios.get('http://localhost:5000/api/user/logout')
+  },
   check() {
     return axios.get('http://localhost:5000/api/user/check')
   },

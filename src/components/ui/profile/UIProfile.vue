@@ -13,35 +13,49 @@
       <div class="avatar-block__initials">A.P.</div>
 
       <button @click="toggle" class="avatar-block__arrow">
-        <svg
-          version="1.1"
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 44 44"
-          xmlns:xlink="http://www.w3.org/1999/xlink"
-          enable-background="new 0 0 44 44"
-        >
-          <path
-            d="m22,0c-12.2,0-22,9.8-22,22s9.8,22 22,22 22-9.8 22-22-9.8-22-22-22zm12,31c0,0.6-0.4,1-1,1h-22c-0.6,0-1-0.4-1-1v-2c0-0.6 0.4-1 1-1h22c0.6,0 1,0.4 1,1v2zm0-8c0,0.6-0.4,1-1,1h-22c-0.6,0-1-0.4-1-1v-2c0-0.6 0.4-1 1-1h22c0.6,0 1,0.4 1,1v2zm0-8c0,0.6-0.4,1-1,1h-22c-0.6,0-1-0.4-1-1v-2c0-0.6 0.4-1 1-1h22c0.6,0 1,0.4 1,1v2z"
-          />
-        </svg>
+        <UIIcon name="menu" :styles="['sz-20-20', 'fill-accept']" />
       </button>
     </aside>
 
     <ul class="avatar-block__list">
-      <li class="avatar-block__option">Админ панель</li>
-      <li class="avatar-block__option">Корзина</li>
-      <li class="avatar-block__option">Выйти</li>
+      <li
+        class="avatar-block__option"
+        @click="$router.push(routes.ADMIN.PRODUCTS.path)"
+      >
+        <UIIcon :styles="['sz-20-20', 'mr-10', 'fill-accept']" name="user" />
+        <span>Админ панель</span>
+      </li>
+      <li
+        class="avatar-block__option"
+        @click="$router.push(routes.PUBLIC.BASKET.path)"
+      >
+        <UIIcon
+          :styles="['sz-11-11', 'fill-white']"
+          :circle="['sz-20-20', 'mr-10', 'fill-accept']"
+          name="basket-fill"
+        />
+        <span>Корзина</span>
+      </li>
+      <li class="avatar-block__option" @click="logout">
+        <UIIcon :styles="['sz-20-20', 'mr-10', 'fill-accept']" name="logout" />
+        <span>Выйти</span>
+      </li>
     </ul>
   </div>
 </template>
 
 <script>
 import { directive } from 'v-click-outside'
+import UIIcon from '@/components/ui/icons/UIIcon'
+import routes from '@/router/const.js'
 
 export default {
   name: 'UIProfile',
   directives: {
     clickOutside: directive,
+  },
+  components: {
+    UIIcon,
   },
   props: {
     profile: {
@@ -52,6 +66,7 @@ export default {
   data() {
     return {
       opened: false,
+      routes: routes,
     }
   },
   methods: {
@@ -60,6 +75,9 @@ export default {
     },
     hideList() {
       this.opened = false
+    },
+    logout() {
+      this.$store.dispatch('LOGOUT')
     },
   },
 }

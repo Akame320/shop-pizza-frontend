@@ -10,21 +10,6 @@
             <LogoDark />
           </main>
           <aside class="products-page__aside">
-            <!-- Basket -->
-            <template v-if="hasBasket">
-              <button @click="basketHandler" class="basket">
-                <div class="basket__left">
-                  <span class="basket__sum"> {{ basketSum }} ₽ </span>
-                </div>
-                <div class="basket__right">
-                  <span class="basket__icon">
-                    <UIIcon name="basket" />
-                  </span>
-                  <span class="basket__count">{{ basketCount }}</span>
-                </div>
-              </button>
-            </template>
-
             <!-- Login, Registration -->
             <template v-if="hasActions">
               <button @click="pushLogin" class="button-main --th-outline-grey">
@@ -41,6 +26,23 @@
                 <UIProfile />
               </div>
             </template>
+
+            <!-- Basket -->
+            <template v-if="hasBasket">
+              <div class="basket-float">
+                <button @click="basketHandler" class="basket">
+                  <div class="basket__left">
+                    <span class="basket__sum"> {{ basketSum }} ₽ </span>
+                  </div>
+                  <div class="basket__right">
+                    <span class="basket__icon">
+                      <UIIcon name="basket" />
+                    </span>
+                    <span class="basket__count">{{ basketCount }}</span>
+                  </div>
+                </button>
+              </div>
+            </template>
           </aside>
         </header>
         <main class="products-page__main">
@@ -52,45 +54,46 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
-import ROUTES from "../router/const";
-import LogoDark from "../components/ui/logos/LogoDark";
-import UIProfile from "@/components/ui/profile/UIProfile";
-import UIIcon from "@/components/ui/icons/UIIcon";
+import { mapGetters } from 'vuex'
+import ROUTES from '../router/const'
+import LogoDark from '../components/ui/logos/LogoDark'
+import UIProfile from '@/components/ui/profile/UIProfile'
+import UIIcon from '@/components/ui/icons/UIIcon'
 
-const HEADER_FIXED = 200;
+const HEADER_FIXED = 200
 
 export default {
-  name: "LayoutPublic",
+  name: 'LayoutPublic',
   components: {
     LogoDark,
     UIProfile,
     UIIcon,
   },
   created() {
-    window.addEventListener("scroll", () => {
-      this.headerFixed = window.scrollY > HEADER_FIXED;
-    });
+    window.addEventListener('scroll', this.resize)
   },
   destroyed() {
-    window.removeEventListener("scroll");
+    window.removeEventListener('scroll', this.resize)
   },
   methods: {
     basketHandler() {
-      this.$router.push(ROUTES.PUBLIC.BASKET.path);
+      this.$router.push(ROUTES.PUBLIC.BASKET.path)
     },
     logout() {
-      this.$store.dispatch("LOGOUT");
-      this.$router.push(ROUTES.AUTH.LOGIN.path);
+      this.$store.dispatch('LOGOUT')
+      this.$router.push(ROUTES.AUTH.LOGIN.path)
     },
     pushAdminPanel() {
-      this.$router.push(ROUTES.ADMIN.PRODUCTS.path);
+      this.$router.push(ROUTES.ADMIN.PRODUCTS.path)
     },
     pushRegistration() {
-      this.$router.push(ROUTES.AUTH.REGISTRATION.path);
+      this.$router.push(ROUTES.AUTH.REGISTRATION.path)
     },
     pushLogin() {
-      this.$router.push(ROUTES.AUTH.LOGIN.path);
+      this.$router.push(ROUTES.AUTH.LOGIN.path)
+    },
+    resize() {
+      this.headerFixed = window.scrollY > HEADER_FIXED
     },
   },
   props: {
@@ -102,19 +105,19 @@ export default {
   data() {
     return {
       headerFixed: false,
-    };
+    }
   },
   computed: {
-    ...mapGetters(["HAS_AUTH", "IS_ADMIN", "BASKET_SUM", "BASKET_COUNT"]),
+    ...mapGetters(['HAS_AUTH', 'IS_ADMIN', 'BASKET_SUM', 'BASKET_COUNT']),
     basketSum() {
-      return this.BASKET_SUM;
+      return this.BASKET_SUM
     },
     basketCount() {
-      return this.BASKET_COUNT;
+      return this.BASKET_COUNT
     },
     hasActions() {
-      return !this.HAS_AUTH;
+      return !this.HAS_AUTH
     },
   },
-};
+}
 </script>
