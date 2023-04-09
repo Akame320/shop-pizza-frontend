@@ -72,7 +72,7 @@
 
   &.--th-outline-grey {
     color: #cacaca;
-    background-color: white;
+    background-color: transparent;
     border: 2px solid #cacaca;
 
     &:hover {
@@ -89,6 +89,20 @@
     background-color: black;
     color: white;
     border: none;
+
+    &:hover {
+      opacity: 0.75;
+    }
+
+    &:active {
+      opacity: 0.5;
+    }
+  }
+
+  &.--th-gold {
+    background-color: transparent;
+    color: #E9BE4B;
+    border: 2px solid #E9BE4B;
 
     &:hover {
       opacity: 0.75;

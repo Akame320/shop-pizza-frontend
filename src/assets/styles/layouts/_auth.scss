@@ -1,43 +1,103 @@
 .layout-user {
-  background-color: #ffdf8c;
+  background: #ffdf8c url('../img/auth/bg.png') center no-repeat;
+  background-size: cover;
   width: 100%;
   height: 100vh;
 
   display: flex;
   align-items: center;
   justify-content: center;
+
+  &__header {
+    display: flex;
+    align-content: center;
+    justify-content: space-between;
+
+    padding: 3rem;
+
+  }
+
+  &__aside {
+    display: flex;
+    align-content: center;
+    justify-content: flex-end;
+    gap: 2rem;
+  }
+
+  &__container {
+    max-width: 160rem;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0;
+
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1;
+  }
+}
+
+.layout-user-checkbox {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 1rem;
+
+  &.--st-active & {
+    &__text {
+      opacity: 1;
+    }
+  }
+
+  &__text {
+    opacity: 0.5;
+    font-size: 1.6rem;
+    line-height: 2rem;
+    font-weight: 400;
+    color: #E9BE4B;
+    cursor: pointer;
+    user-select: none;
+  }
 }
 
 .layout-user-form {
-  background-color: white;
-  border-radius: 2rem;
-  padding: 4rem;
-  min-width: 40rem;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-10%, -50%);
 }
 
 .layout-user-header {
-  margin-bottom: 3rem;
+  margin-bottom: 5rem;
 
   &__title {
-    font-size: 2.2rem;
-    line-height: 2.6rem;
+    font-size: 3.2rem;
+    line-height: 3.6rem;
     font-weight: 700;
-    text-align: center;
+    text-align: left;
+    color: #E9BE4B;
+    opacity: 0.5;
   }
 }
 
 .layout-user-main {
   display: grid;
-  grid-template-columns: 1fr;
-  grid-gap: 2rem;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 3rem;
+  min-width: 65.6rem;
+
+  &__checkbox {
+    grid-column: 1 / 3;
+  }
 }
 
 .layout-user-footer {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
 
-  margin-top: 3rem;
+  margin-top: 5rem;
 
   &__list {
     display: flex;
@@ -52,4 +112,10 @@
       margin-right: 2rem;
     }
   }
+}
+
+.base-link {
+  font-size: inherit;
+  color: inherit;
+  font-weight: 700;
 }

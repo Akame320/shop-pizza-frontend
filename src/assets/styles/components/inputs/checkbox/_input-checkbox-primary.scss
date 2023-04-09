@@ -53,4 +53,29 @@
       background-color: $accept-color;
     }
   }
+
+  &.--th-gold &{
+    &__elem {
+      opacity: 0.5;
+      border-color: #E9BE4B;
+
+      &:after {
+        background-color: #E9BE4B;
+      }
+    }
+  }
+
+  &__input:checked + &__elem {
+    opacity: 1;
+  }
+
+  &.--st-error &{
+    &__elem {
+      border-color: red;
+
+      &:after {
+        background-color: red;
+      }
+    }
+  }
 }

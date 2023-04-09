@@ -71,4 +71,11 @@
       line-height: 1.2rem;
     }
   }
+  
+  &.--th-yellow &{
+    &__subtitle,
+    &__title {
+      color: #E9BE4B;
+    }
+  }
 }

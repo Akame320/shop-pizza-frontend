@@ -1,5 +1,5 @@
 <template>
-  <div class="logo" @click="pushHome">
+  <div class="logo" :class="classes" @click="pushHome">
     <div class="logo__icon">
       <img src="/static/img/logos/logo.png" alt="" />
     </div>
@@ -12,9 +12,11 @@
 
 <script>
 import ROUTES from '../../../router/const'
+import UIComponent from "../../../mixins/UIComponent";
 
 export default {
   name: 'LogoDark',
+  mixins: [UIComponent],
   props: {
     subTitle: {
       type: String,

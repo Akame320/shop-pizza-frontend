@@ -1,23 +1,30 @@
 <template>
-  <div class="main-input">
-    <input
-      :disabled="disabled"
-      :type="type"
-      :name="name"
-      :value="value"
-      @input="onInput"
-      class="main-input__elem"
-      :placeholder="placeholder"
-    />
-    <div v-if="error" class="main-input__error">
-      {{ error }}
+  <div class="main-input" :class="classes">
+    <div class="main-input__label">
+      {{ placeholder }}
+
+      <span v-if="error" class="main-input__error">
+        {{ error }}
+      </span>
     </div>
+    <input
+        :disabled="disabled"
+        :type="type"
+        :name="name"
+        :value="value"
+        @input="onInput"
+        class="main-input__elem"
+    />
+
   </div>
 </template>
 
 <script>
+import UIComponent from "../../../mixins/UIComponent";
+
 export default {
   name: 'UIInputText',
+  mixins: [UIComponent],
   props: {
     value: {
       type: [String, Number],

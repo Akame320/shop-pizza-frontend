@@ -47,7 +47,7 @@ const mutations = {
 const actions = {
   REGISTRATION: async (context, payload) => {
     const { email, password, role } = payload
-    const res = await api.registration(email, password, role)
+    const res = await api.registration(email, password, role, payload.other)
     const { data } = res
     const { token, user } = data
     context.commit('SET_TOKEN', { token })
@@ -68,11 +68,14 @@ const actions = {
   },
 
   CHECK_TOKEN: async (context) => {
-    api.check().then((res) => {
-      context.commit('SET_USER', { user: res.data })
-    }).catch(() => {
-      context.dispatch('LOGOUT')
-    })
+    api
+      .check()
+      .then((res) => {
+        context.commit('SET_USER', { user: res.data })
+      })
+      .catch(() => {
+        context.dispatch('LOGOUT')
+      })
   },
 
   LOGOUT: async (context) => {

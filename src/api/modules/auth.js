@@ -1,11 +1,12 @@
 import axios from 'axios'
-axios.defaults.withCredentials = true;
+axios.defaults.withCredentials = true
 
 export default {
-  registration(email, password, role = '') {
+  registration(email, password, role = '', other = {}) {
     return axios.post('http://localhost:5000/api/user/registration', {
       email,
       password,
+      other,
       role,
     })
   },
