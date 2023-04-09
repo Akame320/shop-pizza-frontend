@@ -8,11 +8,14 @@
         v-model="v$.form.email.$model"
         :error="v$.form.email.$errors[0]?.$message || error"
         name="email"
+         :styles="['sz-base', 'th-gold']"
       />
       <UIInputText
         v-model="v$.form.password.$model"
         :error="v$.form.password.$errors[0]?.$message"
         name="password"
+        type="password"
+         :styles="['sz-base', 'th-gold']"
       />
     </main>
     <footer class="layout-user-footer">

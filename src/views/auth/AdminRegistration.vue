@@ -7,18 +7,23 @@
       <UIInputText
         placeholder="Введите email"
         name="email"
+        :styles="['sz-base', 'th-gold']"
         :error="v$.form.email.$errors[0]?.$message"
         v-model="v$.form.email.$model"
       />
       <UIInputText
         placeholder="Введите пароль"
         name="password"
+        type="password"
+        :styles="['sz-base', 'th-gold']"
         :error="v$.form.password.$errors[0]?.$message"
         v-model="v$.form.password.$model"
       />
       <UIInputText
         placeholder="Подтвердите пароль"
         name="confirmPassword"
+        type="password"
+        :styles="['sz-base', 'th-gold']"
         :error="v$.form.confirmPassword.$errors[0]?.$message"
         v-model="v$.form.confirmPassword.$model"
       />
